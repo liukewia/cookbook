@@ -2,3 +2,50 @@ __pycache__/
 *.pyc
 venv/
 .idea/
+
+
+
+
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+**/node_modules
+# roadhog-api-doc ignore
+cookbook-web/src/utils/request-temp.js
+cookbook-web/_roadhog-api-doc
+
+# production
+cookbook-web/dist
+cookbook-web/.vscode
+
+# misc
+.DS_Store
+cookbook-web/npm-debug.log*
+cookbook-web/yarn-error.log
+
+cookbook-web/coverage
+cookbook-web/yarn.lock
+cookbook-web/package-lock.json
+*bak
+.vscode
+
+# visual studio code
+cookbook-web/.history
+cookbook-web/*.log
+cookbook-web/functions/*
+cookbook-web/.temp/**
+
+# umi
+cookbook-web/.umi
+cookbook-web/.umi-production
+
+# screenshot
+cookbook-web/screenshot
+cookbook-web/.firebase
+cookbook-web/.eslintcache
+
+cookbook-web/build
+cookbook-web/src/.umi
+/cookbook-web/src/.umi/
