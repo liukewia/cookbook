@@ -14,7 +14,19 @@ def index(request):
 
 
 def user_operation_demo(request):
-    return JsonResponse({'foo': 'bar'})
+    return JsonResponse({
+        'success': True,
+        'data': {
+            'name': 'mockusername',
+            'avatar': 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+            'firstName': 'mock',
+            'lastName': 'user',
+            'userid': 1,
+            'email': 'antdesign@alipay.com',
+            'access': 'user',
+            # 'guest' means not logged in, 'user' means logged in, 'admin' means logged in and is super user.
+        },
+    })
 
 
 # def user_login(request):
