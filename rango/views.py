@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -10,6 +11,10 @@ from rango.models import Category, Page, Recipe
 
 def index(request):
     return render(request, 'index.html')
+
+
+def user_operation_demo(request):
+    return JsonResponse({'foo': 'bar'})
 
 
 # def user_login(request):
@@ -38,7 +43,6 @@ def show_recipe(request, recipe_title):
     context_dict['recipe'] = recipe
 
     render(request, '', context=context_dict)
-
 
 
 # def index(request):

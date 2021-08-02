@@ -15,17 +15,24 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
+from django.urls import path, include, re_path
 
-# from rango import views
+from rango import views
 
 urlpatterns = [
-                  path('', include('rango.urls')),
+                  # match the root
+                  path('', views.index),
+
+                  # 后端接口放root和re_path中间
+                  path('api/', include('rango.urls')),
+
+                  # match all other pages
+                  # https://stackoverflow.com/questions/40826295/react-routing-and-django-url-conflict
+                  re_path(r'^(?:.*)/?$', views.index),
+
                   # path('user/login/', views.user_login),
                   # path('', views.index, name='index'),
                   # path('rango/', include('rango.urls')),
                   # path('admin/', admin.site.urls),
                   # path('accounts/', include('registration.backends.simple.urls')),
               ] + static(settings.STATIC_URL)
-# print("settings.STATIC_URL", settings.STATIC_URL)
-# + static(settings.STATIC_DIR, document_root=settings.STATIC_ROOT)
