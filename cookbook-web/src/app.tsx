@@ -24,11 +24,13 @@ export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
+  console.log('In getInitialState');
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
       return msg.data;
     } catch (error) {
+      console.log('getInitialState error: ', error);
       history.push(loginPath);
     }
     return undefined;
@@ -36,7 +38,7 @@ export async function getInitialState(): Promise<{
   // 如果是登录页面，不执行
   if (history.location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
-    console.log(': ', {
+    console.log('InitialState, not loginPath: ', {
       fetchUserInfo,
       currentUser,
       settings: {},
@@ -47,7 +49,11 @@ export async function getInitialState(): Promise<{
       settings: {},
     };
   }
-  
+
+  console.log('InitialState, is loginPath: ', {
+    fetchUserInfo,
+    settings: {},
+  });
   return {
     fetchUserInfo,
     settings: {},
@@ -64,11 +70,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     // },
     footerRender: () => <Footer />,
     onPageChange: () => {
-      const { location } = history;
-      // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
-      }
+      // const { location } = history;
+      // // 如果没有登录，重定向到 login
+      // // dont redirect for guest
+      // if (!initialState?.currentUser && location.pathname !== loginPath) {
+      //   history.push(loginPath);
+      // }
     },
     links: isDev
       ? [
@@ -86,5 +93,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     // customized 403 page
     unAccessible: <Exception403Page />,
     ...initialState?.settings,
+    // locale: 'en-US',
   };
 };

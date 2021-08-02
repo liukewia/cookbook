@@ -12,13 +12,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+print("BASE_DIR", BASE_DIR)
 
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
@@ -31,8 +27,7 @@ SECRET_KEY = '4238z&mtzi76b6_5s#lr0mv6s_#(jx_*l&(5vhas8g=jw399gh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -62,7 +57,7 @@ ROOT_URLCONF = 'tango_with_django_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR, ],
+        'DIRS': [os.path.join(BASE_DIR, 'cookbook-web', 'dist'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tango_with_django_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -89,7 +83,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -99,7 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': { 'min_length': 6, }
+        'OPTIONS': {'min_length': 6, }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -108,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -123,12 +115,22 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR, ]
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+# This directory is used for the production, this is the directory on which static files will be put (collected) by collectstatic.
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+    # STATIC_DIR,
+    os.path.join(BASE_DIR, 'cookbook-web', 'dist'),
+    os.path.join(BASE_DIR, 'cookbook-web', 'public'),
+]
+
+# print("STATICFILES_DIRS", STATICFILES_DIRS)
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
@@ -138,5 +140,6 @@ LOGIN_URL = 'rango:login'
 # registration package's configuration
 REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = 'rango:index'
-LOGIN_URL = 'auth_login'
+
+# LOGIN_REDIRECT_URL = 'rango:index'
+# LOGIN_URL = 'auth_login'

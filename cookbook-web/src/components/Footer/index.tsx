@@ -1,8 +1,11 @@
 import { GithubOutlined } from '@ant-design/icons';
 import { DefaultFooter } from '@ant-design/pro-layout';
+import { useModel } from 'umi';
 
 export default () => {
-  const defaultMessage = 'Presented by the Yellow Ducks';
+  const { initialState } = useModel('@@initialState');
+  console.log('initialState: ', initialState);
+  const defaultMessage = 'Crafted with ❤ by the Yellow Duck';
   return (
     <DefaultFooter
       copyright={`2021 ${defaultMessage}`}
@@ -20,10 +23,10 @@ export default () => {
           blankTarget: true,
         },
         {
-          key: 'User Agreement',
-          title: 'User Agreement',
-          href: '/',
-          blankTarget: true,
+          key: 'About',
+          title: 'About',
+          href: '/about',
+          blankTarget: false,
         },
       ]}
     />

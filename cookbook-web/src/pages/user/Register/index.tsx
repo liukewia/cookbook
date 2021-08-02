@@ -40,7 +40,7 @@ const passwordProgressMap: {
   poor: 'exception',
 };
 
-const Register: FC = () => {
+const Register: FC = (props) => {
   // const [count, setCount]: [number, any] = useState(0);
   const [visible, setVisible]: [boolean, any] = useState(false);
   // const [prefix, setPrefix]: [string, any] = useState('86');
@@ -149,35 +149,50 @@ const Register: FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <h3>Register</h3>
+        <h1>Register</h1>
         <Form form={form} name="UserRegister" onFinish={onFinish}>
           <FormItem
-            name="First Name"
+            name="Username"
             rules={[
               {
                 required: true,
-                message: 'Please enter your first name!',
+                message: 'Please enter your username!',
               },
               {
                 type: 'string',
-                message: 'Wrong name format!',
+                message: 'Wrong username format!',
               },
             ]}
+          >
+            <Input size="large" placeholder="Username" />
+          </FormItem>
+          <FormItem
+            name="First Name"
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: 'Please enter your first name!',
+            //   },
+            //   {
+            //     type: 'string',
+            //     message: 'Wrong name format!',
+            //   },
+            // ]}
           >
             <Input size="large" placeholder="First Name" />
           </FormItem>
           <FormItem
             name="Last Name"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter your last name!',
-              },
-              {
-                type: 'string',
-                message: 'Wrong name format!',
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: 'Please enter your last name!',
+            //   },
+            //   {
+            //     type: 'string',
+            //     message: 'Wrong name format!',
+            //   },
+            // ]}
           >
             <Input size="large" placeholder="Last Name" />
           </FormItem>
@@ -303,7 +318,7 @@ const Register: FC = () => {
               type="primary"
               htmlType="submit"
             >
-              <span>Register</span>
+              <span>Sign up</span>
             </Button>
             <Link className={styles.login} to="/user/login">
               <span>Login with existing account</span>

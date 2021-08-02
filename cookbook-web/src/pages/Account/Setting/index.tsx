@@ -18,9 +18,9 @@ type AccountSettingsState = {
 const AccountSettings: React.FC = () => {
   const menuMap: Record<string, React.ReactNode> = {
     base: 'Basic Settings',
-    security: '安全设置',
-    binding: '账号绑定',
-    notification: '新消息通知',
+    security: 'Password Settings',
+    // binding: '账号绑定',
+    // notification: '新消息通知',
   };
 
   const [initConfig, setInitConfig] = useState<AccountSettingsState>({
@@ -65,8 +65,8 @@ const AccountSettings: React.FC = () => {
     switch (selectKey) {
       case 'base':
         return <BaseView />;
-      // case 'security':
-      //   return <SecurityView />;
+      case 'security':
+        return <SecurityView />;
       // case 'binding':
       //   return <BindingView />;
       // case 'notification':

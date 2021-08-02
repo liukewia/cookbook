@@ -61,4 +61,36 @@ export default defineConfig({
   // mfsu: {},
   webpack5: {},
   exportStatic: {},
+  locale: {
+    default: 'en-US',
+    antd: true,
+  },
+  // chainWebpack(config) {
+  //   const isDev = process.env.NODE_ENV === 'development';
+  //   const hash = !isDev ? '.[contenthash:8]' : '';
+  //   config.output.chunkFilename(`static/[name]${hash}.async.js`);
+
+  //   config.plugin('extract-css').tap((args) => [
+  //     {
+  //       ...args[0],
+  //       chunkFilename: `static/[name]${hash}.chunk.css`,
+  //     },
+  //   ]);
+  //   config.output.filename(`static/[name]${hash}.js`);
+  //   config.output.filename(`static/[name]${hash}.css`);
+  // },
+  // chainWebpack(config, { webpack }) {
+  //   const isDev = process.env.NODE_ENV === 'development';
+  //   const hash = !isDev ? '.[contenthash:8]' : '';
+  //   config.output.chunkFilename(`static/[name]${hash}.async.js`);
+  //   config.output.filename(`static/[name]${hash}.js`);
+  //   config.plugin('extract-css').tap((args) => [
+  //     {
+  //       ...args[0],
+  //       chunkFilename: `static/[name]${hash}.chunk.css`,
+  //       filename: `static/[name]${hash}.css`,
+  //     },
+  //   ]);
+  // },
+  publicPath: process.env.NODE_ENV === 'production' ? '/static/' : '/',
 });

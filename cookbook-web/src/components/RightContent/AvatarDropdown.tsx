@@ -30,12 +30,34 @@ const loginOut = async () => {
   }
 };
 
+const login = async () => {
+  const { query = {}, pathname } = history.location;
+  const { redirect } = query;
+  // Note: There may be security issues, please note
+  if (window.location.pathname !== '/user/login' && !redirect) {
+    history.replace({
+      pathname: '/user/login',
+      search: stringify({
+        redirect: pathname,
+      }),
+    });
+  }
+};
+
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
 
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
       const { key } = event;
+      if (key === 'login') {
+        if (initialState?.currentUser?.access === 'guest') {
+          login();
+        } else {
+          window.location.reload();
+        }
+        return;
+      }
       if (key === 'logout') {
         setInitialState((s) => ({ ...s, currentUser: undefined }));
         loginOut();
@@ -84,10 +106,17 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       )}
       {menu && <Menu.Divider />}
 
-      <Menu.Item key="logout">
-        <LogoutOutlined />
-        Logout
-      </Menu.Item>
+      {menu ? (
+        <Menu.Item key="logout">
+          <LogoutOutlined />
+          Logout
+        </Menu.Item>
+      ) : (
+        <Menu.Item key="login">
+          <LogoutOutlined />
+          Login
+        </Menu.Item>
+      )}
     </Menu>
   );
   return (

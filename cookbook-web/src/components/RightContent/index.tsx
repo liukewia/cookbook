@@ -57,7 +57,7 @@ const GlobalHeaderRight: React.FC = () => {
       >
         <QuestionCircleOutlined />
       </span> */}
-      <Avatar menu />
+      <Avatar menu={initialState?.currentUser?.access !== 'guest'} />
     </Space>
   );
 };

@@ -7,7 +7,7 @@ import {
   WeiboCircleOutlined,
 } from '@ant-design/icons';
 import { Alert, Space, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { Link, history, useModel } from 'umi';
 import Footer from '@/components/Footer';
@@ -29,11 +29,22 @@ const LoginMessage: React.FC<{
   />
 );
 
-const Login: React.FC = () => {
+const Login: React.FC = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
+
+  // go to the redirect url if already logged in
+  useEffect(() => {
+    if (
+      initialState?.currentUser?.access === 'admin' ||
+      initialState?.currentUser?.access === 'user'
+    ) {
+      message.info('You have already logged in.');
+      history.push((history?.location?.query?.redirect as string) || '/');
+    }
+  }, []);
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();

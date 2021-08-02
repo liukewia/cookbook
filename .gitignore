@@ -17,7 +17,7 @@ cookbook-web/src/utils/request-temp.js
 cookbook-web/_roadhog-api-doc
 
 # production
-cookbook-web/dist
+#cookbook-web/dist
 cookbook-web/.vscode
 
 # misc
@@ -49,3 +49,4 @@ cookbook-web/.eslintcache
 cookbook-web/build
 cookbook-web/src/.umi
 /cookbook-web/src/.umi/
+cookbook-web/src/.umi-production/

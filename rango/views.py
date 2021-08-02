@@ -1,27 +1,34 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from rango.models import Category, Page
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
-from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
+from rango.forms import CategoryForm, PageForm
+from rango.models import Category, Page
 
 
 def index(request):
-    category_list = Category.objects.order_by('-likes')[:5]
-    page_list = Page.objects.order_by('-views')[:5]
+    return render(request, 'index.html')
 
-    context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = page_list
 
-    visitor_cookie_handler(request)
+def user_login(request):
+    return render(request, 'user/login/index.html')
 
-    response = render(request, 'rango/index.html', context=context_dict)
-    return response
+
+# def index(request):
+#     category_list = Category.objects.order_by('-likes')[:5]
+#     page_list = Page.objects.order_by('-views')[:5]
+#
+#     context_dict = {}
+#     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+#     context_dict['categories'] = category_list
+#     context_dict['pages'] = page_list
+#
+#     visitor_cookie_handler(request)
+#
+#     response = render(request, 'rango/index.html', context=context_dict)
+#     return response
 
 
 def about(request):
@@ -88,7 +95,7 @@ def add_page(request, category_name_slug):
 
                 return redirect(reverse('rango:show_category',
                                         kwargs={'category_name_slug':
-                                                category_name_slug}))
+                                                    category_name_slug}))
         else:
             print(form.errors)
 
@@ -116,13 +123,10 @@ def visitor_cookie_handler(request):
     last_visit_time = datetime.strptime(last_visit_cookie[:-7],
                                         '%Y-%m-%d %H:%M:%S')
 
-    if(datetime.now() - last_visit_time).days > 0:
+    if (datetime.now() - last_visit_time).days > 0:
         visits = visits + 1
         request.session['last_visit'] = str(datetime.now())
     else:
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
-
-
-

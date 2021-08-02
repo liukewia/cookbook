@@ -8,7 +8,8 @@ export default [
     name: 'Home',
     icon: 'Home',
     component: './Home',
-  }, // {
+  },
+  // {
   //   path: '/user',
   //   layout: false,
   //   routes: [
@@ -34,13 +35,13 @@ export default [
       {
         path: '/user/login',
         layout: false,
-        name: 'login',
+        name: 'Login',
         component: './user/Login',
       },
       {
         path: '/user/register',
         layout: false,
-        name: 'register',
+        name: 'Register',
         component: './user/Register',
       },
       {
@@ -81,19 +82,31 @@ export default [
       },
     ],
   },
+  // if 'name' is not presented, it will not be added to header.
   {
-    name: 'Demo Table Page',
+    name: 'Demo Table',
     icon: 'table',
     path: '/list',
     component: './TableList',
   },
+  {
+    path: '/about',
+    routes: [
+      {
+        name: 'About',
+        path: '/about',
+        component: './About',
+      },
+    ],
+  },
+  
   // {
   //   name: '注册页',
   //   icon: 'smile',
   //   path: '/register',
   //   component: './user/Register',
   // },
-  
+
   // not enterable
   // {
   //   path: '/admin',

@@ -8,22 +8,24 @@ const waitTime = (time: number = 100) => {
   });
 };
 
-async function getFakeCaptcha(req: Request, res: Response) {
-  await waitTime(2000);
-  return res.json('captcha-xxx');
-}
+// async function getFakeCaptcha(req: Request, res: Response) {
+//   await waitTime(2000);
+//   return res.json('captcha-xxx');
+// }
 
-const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
+// const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
 
 /**
  * 当前用户的权限，如果为空代表没登录
  * current user access， if is '', user need login
  * 如果是 pro 的预览，默认是有权限的
  */
-let access = 'admin';
+// let access: AccessType = 'admin';
 
-const getAccess = () => {
-  return true;
+type AccessType = 'admin' | 'user' | 'guest';
+
+const getAccess = (): AccessType => {
+  return 'user';
 };
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
@@ -46,6 +48,8 @@ export default {
       data: {
         name: 'Mock User',
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        firstName: undefined,
+        lastName: undefined,
         userid: '00000001',
         email: 'antdesign@alipay.com',
         // signature: '海纳百川，有容乃大',
@@ -119,7 +123,6 @@ export default {
   ],
   'POST /api/login/account': async (req: Request, res: Response) => {
     const { password, username, type } = req.body;
-    console.log('type: ', type);
     // await waitTime(2000);
     if (password === 'ant.design' && username === 'admin') {
       res.send({
@@ -158,48 +161,48 @@ export default {
   },
 
   'POST /api/logout': (req: Request, res: Response) => {
-    access = '';
+    access = 'guest';
     res.send({ data: {}, success: true });
   },
   'POST /api/register': (req: Request, res: Response) => {
     res.send({ status: 'ok', currentAuthority: 'user', success: true });
   },
-  'GET /api/500': (req: Request, res: Response) => {
-    res.status(500).send({
-      timestamp: 1513932555104,
-      status: 500,
-      error: 'error',
-      message: 'error',
-      path: '/base/category/list',
-    });
-  },
-  'GET /api/404': (req: Request, res: Response) => {
-    res.status(404).send({
-      timestamp: 1513932643431,
-      status: 404,
-      error: 'Not Found',
-      message: 'No message available',
-      path: '/base/category/list/2121212',
-    });
-  },
-  'GET /api/403': (req: Request, res: Response) => {
-    res.status(403).send({
-      timestamp: 1513932555104,
-      status: 403,
-      error: 'Forbidden',
-      message: 'Forbidden',
-      path: '/base/category/list',
-    });
-  },
-  'GET /api/401': (req: Request, res: Response) => {
-    res.status(401).send({
-      timestamp: 1513932555104,
-      status: 401,
-      error: 'Unauthorized',
-      message: 'Unauthorized',
-      path: '/base/category/list',
-    });
-  },
+  // 'GET /api/500': (req: Request, res: Response) => {
+  //   res.status(500).send({
+  //     timestamp: 1513932555104,
+  //     status: 500,
+  //     error: 'error',
+  //     message: 'error',
+  //     path: '/base/category/list',
+  //   });
+  // },
+  // 'GET /api/404': (req: Request, res: Response) => {
+  //   res.status(404).send({
+  //     timestamp: 1513932643431,
+  //     status: 404,
+  //     error: 'Not Found',
+  //     message: 'No message available',
+  //     path: '/base/category/list/2121212',
+  //   });
+  // },
+  // 'GET /api/403': (req: Request, res: Response) => {
+  //   res.status(403).send({
+  //     timestamp: 1513932555104,
+  //     status: 403,
+  //     error: 'Forbidden',
+  //     message: 'Forbidden',
+  //     path: '/base/category/list',
+  //   });
+  // },
+  // 'GET /api/401': (req: Request, res: Response) => {
+  //   res.status(401).send({
+  //     timestamp: 1513932555104,
+  //     status: 401,
+  //     error: 'Unauthorized',
+  //     message: 'Unauthorized',
+  //     path: '/base/category/list',
+  //   });
+  // },
 
   // 'GET  /api/login/captcha': getFakeCaptcha,
 };
