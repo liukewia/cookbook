@@ -7,13 +7,24 @@ import routes from './routes';
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
-  antd: {},
+  locale: {
+    default: 'en-US',
+
+  },
+  antd: {
+    config: {
+      locale: 'en-US',
+      antd: true,
+      baseNavigator: false,
+      baseSeparator: '-',
+    },
+  },
   dva: {
     hmr: true,
   },
   layout: {
     // https://umijs.org/zh-CN/plugins/plugin-layout
-    locale: false,
+    // locale: 'en-US',
     siderWidth: 208,
     ...defaultSettings,
   },
@@ -57,19 +68,13 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  // http://localhost:8000
   // mfsu: {},
   webpack5: {},
   exportStatic: {},
-  locale: {
-    default: 'en-US',
-    antd: true,
-  },
   // chainWebpack(config) {
   //   const isDev = process.env.NODE_ENV === 'development';
   //   const hash = !isDev ? '.[contenthash:8]' : '';
   //   config.output.chunkFilename(`static/[name]${hash}.async.js`);
-
   //   config.plugin('extract-css').tap((args) => [
   //     {
   //       ...args[0],

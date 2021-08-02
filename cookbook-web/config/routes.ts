@@ -59,7 +59,6 @@ export default [
       },
     ],
   },
-  // 'layout: false' means a component will not be wrapped in BasicLayout.
   {
     path: '/account',
     routes: [

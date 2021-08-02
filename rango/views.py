@@ -12,8 +12,8 @@ def index(request):
     return render(request, 'index.html')
 
 
-def user_login(request):
-    return render(request, 'user/login/index.html')
+# def user_login(request):
+#     return render(request, 'user/login/index.html')
 
 
 # def index(request):

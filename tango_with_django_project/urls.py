@@ -15,21 +15,17 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, re_path
+from django.urls import path, include
 
-from rango import views
+# from rango import views
 
 urlpatterns = [
-                  # match the root
-                  path('', views.index),
-                  # match all other pages
-                  re_path(r'^(?:.*)/?$', views.index),
-                  # path('', include('rango.urls')),
+                  path('', include('rango.urls')),
                   # path('user/login/', views.user_login),
                   # path('', views.index, name='index'),
                   # path('rango/', include('rango.urls')),
                   # path('admin/', admin.site.urls),
                   # path('accounts/', include('registration.backends.simple.urls')),
-              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+              ] + static(settings.STATIC_URL)
 # print("settings.STATIC_URL", settings.STATIC_URL)
 # + static(settings.STATIC_DIR, document_root=settings.STATIC_ROOT)

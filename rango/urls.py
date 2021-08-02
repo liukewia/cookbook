@@ -1,7 +1,15 @@
+from django.urls import path, re_path
+
+from rango import views
+
 app_name = 'rango'
 
 urlpatterns = [
-    # path('', views.index),
+    # match the root
+    path('', views.index),
+    # match all other pages
+    # https://stackoverflow.com/questions/40826295/react-routing-and-django-url-conflict
+    re_path(r'^(?:.*)/?$', views.index),
     # path('user/login/', views.user_login),
 
     # path('about/', views.about, name="about"),
