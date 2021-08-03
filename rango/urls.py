@@ -9,6 +9,8 @@ urlpatterns = [
          views.show_category, name='show_category'),
     path('currentUser', views.user_operation_demo),
     path('add_category/', views.add_category, name='add_category'),
+    path('show_favourite_recipe', views.show_favourite_recipe, name='show_favourite_recipe'),
+    path('add_to_favourite_recipe', views.add_to_favourite_recipe, name='add_to_favourite_recipe'),
 
     # path('about/', views.about, name="about"),
     # path('user/login/', views.user_login),

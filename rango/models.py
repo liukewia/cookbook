@@ -21,20 +21,6 @@ class Category(models.Model):
         return self.name
 
 
-class Recipe(models.Model):
-    TITLE_MAX_LENGTH = 128
-    URL_MAX_LENGTH = 200
-
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    title = models.CharField(max_length=TITLE_MAX_LENGTH)
-    likes = models.IntegerField(default=0)
-    ingredients = models.CharField(max_length=500)
-    directions = models.CharField(max_length=2083)
-
-    def __str__(self):
-        return self.title
-
-
 class Page(models.Model):
     TITLE_MAX_LENGTH = 128
     URL_MAX_LENGTH = 200
@@ -56,3 +42,29 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class FavouriteRecipe(models.Model):
+    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self
+
+
+class Recipe(models.Model):
+    TITLE_MAX_LENGTH = 128
+    URL_MAX_LENGTH = 200
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    favouriteRecipe = models.ManyToManyField(FavouriteRecipe)
+    title = models.CharField(max_length=TITLE_MAX_LENGTH)
+    likes = models.IntegerField(default=0)
+    ingredients = models.CharField(max_length=500)
+    directions = models.CharField(max_length=2083)
+
+
+    def __str__(self):
+        return self.title
+
+
+

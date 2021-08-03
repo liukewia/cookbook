@@ -1,12 +1,13 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from rango.forms import CategoryForm, PageForm
-from rango.models import Category, Page, Recipe
+from rango.models import Category, Page, Recipe, FavouriteRecipe
 
 
 def index(request):
@@ -65,17 +66,37 @@ def add_category(request):
     return render(request, 'rango/add_category.html', {'form': form})
 
 
-
-
-
-
 def show_recipe(request, recipe_title):
     context_dict = {}
 
     recipe = Recipe.objects.get(title=recipe_title)
     context_dict['recipe'] = recipe
 
-    render(request, '', context=context_dict)
+    return render(request, '', context=context_dict)
+
+
+@login_required
+def show_favourite_recipe(request):
+    context_dict = {}
+
+    favourite_recipe = FavouriteRecipe.objects.get(id=request.GET.get('id'))
+    recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
+    context_dict['recipes'] = recipes
+
+    return render(request, '', context=context_dict)
+
+
+@login_required
+def add_to_favourite_recipe(request):
+    username = request.user.get_username
+    recipe_id = request.GET.get('id')
+
+    user = User.objects.filter(username=username).first()
+    recipe = Recipe.objects.filter(id=recipe_id)
+    favourite_recipe = FavouriteRecipe.objects.filter(user=user)
+    recipe.favouriteRecipe.add(favourite_recipe)
+
+    return render(request, '', context=None)
 
 
 # def index(request):
