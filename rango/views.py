@@ -14,6 +14,28 @@ def index(request):
     return render(request, 'index.html')
 
 
+def get_all_categories(request):
+    category_list = Category.objects.order_by('id')
+    categories = []
+    for category in category_list:
+        category_dict = {
+            'categoryName': category.name,
+            'categorySlug': category.slug,
+        }
+        categories.append(category_dict)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'categories': categories
+        }
+    }
+
+    return JsonResponse(context_dict)
+
+
+
+
 def user_operation_demo(request):
     return JsonResponse({
         'success': True,
@@ -42,9 +64,7 @@ def show_category(request, category_name_slug):
         category = None
         recipes = None
 
-
-    recipes_dict = {}
-    a = 1
+    recipes_dict = []
     for recipe in recipes:
         recipe_dict = {
             'recipe_id': recipe.id,
@@ -52,8 +72,7 @@ def show_category(request, category_name_slug):
             'recipe_like': recipe.likes,
             'recipe_url': recipe.url,
         }
-        recipes_dict[f'recipe_{a}'] = recipe_dict
-        a = a+1
+        recipes_dict.append(recipe_dict)
 
     context_dict = {
         'success': True,
@@ -63,7 +82,6 @@ def show_category(request, category_name_slug):
             'category_likes': category.likes,
             'category_slug': category.slug,
             'recipes': recipes_dict,
-            # 'recipes': recipes,
         }
     }
 
@@ -91,7 +109,7 @@ def add_category(request):
         }
     }
 
-    return render(request, 'rango/add_category.html', {'form': form})
+    return JsonResponse(context_dict)
 
 
 def show_recipe(request, recipe_title):
