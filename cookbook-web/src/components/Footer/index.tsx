@@ -4,7 +4,7 @@ import { useModel } from 'umi';
 
 export default () => {
   const { initialState } = useModel('@@initialState');
-  console.log('initialState: ', initialState);
+  // console.log('initialState: ', initialState);
   const defaultMessage = 'Crafted with ❤ by the Yellow Duck';
   return (
     <DefaultFooter

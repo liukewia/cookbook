@@ -254,7 +254,7 @@ const Register: FC = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please enter repeated password',
+                message: 'Please confirm password!',
               },
               {
                 validator: checkConfirm,

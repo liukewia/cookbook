@@ -2,16 +2,20 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from rango.forms import CategoryForm, PageForm
-from rango.models import Category, Page, Recipe, FavouriteRecipe, Review
+from rango.models import Category, Recipe, FavouriteRecipe, Review
 
 
 def index(request):
     return render(request, 'index.html')
+
+
+def illegal_request_handler(request):
+    return HttpResponse(status=404)
 
 
 def get_all_categories(request):
@@ -300,6 +304,7 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
+
 
 '''auth_user: 先写下简单的逻辑
 id int

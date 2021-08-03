@@ -1,12 +1,13 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import type { RunTimeLayoutConfig } from 'umi';
+import { request, RunTimeLayoutConfig } from 'umi';
 import { history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import Exception403Page from './pages/403';
+import { message } from 'antd';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -24,7 +25,7 @@ export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
-  console.log('In getInitialState');
+  // console.log('In getInitialState');
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
@@ -96,3 +97,45 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     // locale: 'en-US',
   };
 };
+
+let extraRoutes: any;
+
+export function render(oldRender: any) {
+  request('/api/get_all_categories/')
+    .then((res) => {
+      // console.log('res?.data: ', res?.data?.categories);
+      extraRoutes = res?.data?.categories?.map((cat: any) => ({
+        name: cat.categoryName,
+        path: `/${cat.categorySlug}`,
+      }));
+      // console.log('extraRoutes: ', extraRoutes);
+      oldRender();
+    })
+    .catch((err) => {
+      message.error('Cannot fetch categories!');
+      oldRender();
+    });
+}
+
+// https://github.com/umijs/umi/issues/2511
+// https://www.codenong.com/cs109219288/
+// https://umijs.org/zh-CN/docs/runtime-config
+export function patchRoutes({ routes }) {
+  console.log('extraRoutes: ', extraRoutes);
+  if (extraRoutes) {
+    const _routes = routes.find((ele) => ele.path === '/').routes;
+    const tmpRouteIdx = _routes.indexOf(_routes.find((ele) => ele.routeKey === 'tmp'));
+    const comp = _routes[tmpRouteIdx].component;
+    _routes.splice(
+      tmpRouteIdx,
+      1,
+      ...extraRoutes.map((r) => {
+        r.component = comp;
+        r.exact = true;
+        return r;
+      }),
+    );
+  }
+
+  console.log('routes: ', routes);
+}

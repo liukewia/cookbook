@@ -77,7 +77,7 @@ const Login: React.FC = (props) => {
 
       setUserLoginState(msg);
     } catch (error) {
-      const defaultLoginFailureMessage = 'Login failed, please retry！';
+      const defaultLoginFailureMessage = 'Login failed, please check!';
       message.error(defaultLoginFailureMessage);
     }
 
@@ -91,7 +91,11 @@ const Login: React.FC = (props) => {
         <div className={styles.top}>
           <div className={styles.header}>
             <Link to="/">
-              <img alt="logo" className={styles.logo} src="/logo.svg" />
+              <img
+                alt="logo"
+                className={styles.logo}
+                src={`${process.env.NODE_ENV === 'production' ? '/static/' : '/'}logo.svg`}
+              />
               <span className={styles.title}>{businessTitle}</span>
             </Link>
           </div>

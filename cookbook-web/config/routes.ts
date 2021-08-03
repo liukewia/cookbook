@@ -5,8 +5,6 @@ export default [
   },
   {
     path: '/home',
-    name: 'Home',
-    icon: 'Home',
     component: './Home',
   },
   // {
@@ -82,23 +80,20 @@ export default [
     ],
   },
   // if 'name' is not presented, it will not be added to header.
-  {
-    name: 'Demo Table',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
-  },
+  // {
+  //   path: '/about',
+  //   routes: [
+  //     {
+  //       name: 'About',
+  //       path: '/about',
+  //       component: './About',
+  //     },
+  //   ],
+  // },
   {
     path: '/about',
-    routes: [
-      {
-        name: 'About',
-        path: '/about',
-        component: './About',
-      },
-    ],
+    component: './About',
   },
-  
   // {
   //   name: '注册页',
   //   icon: 'smile',
@@ -125,6 +120,11 @@ export default [
   //     },
   //   ],
   // },
+  {
+    path: 'tmp',
+    routeKey: 'tmp',
+    component: './CategoryHub',
+  },
   {
     component: './404',
   },
