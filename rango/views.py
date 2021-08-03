@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from rango.forms import CategoryForm, PageForm
-from rango.models import Category, Page, Recipe, FavouriteRecipe
+from rango.models import Category, Page, Recipe, FavouriteRecipe, Review
 
 
 def index(request):
@@ -34,24 +34,25 @@ def get_all_categories(request):
     return JsonResponse(context_dict)
 
 
-# def get_all_recipes(request):
-#     category_list = Category.objects.order_by('id')
-#     categories = []
-#     for category in category_list:
-#         category_dict = {
-#             'categoryName': category.name,
-#             'categorySlug': category.slug,
-#         }
-#         categories.append(category_dict)
-#
-#     context_dict = {
-#         'success': True,
-#         'data': {
-#             'categories': categories
-#         }
-#     }
-#
-#     return JsonResponse(context_dict)
+def get_all_recipes(request):
+    recipe_list = Recipe.objects.order_by('-likes')
+    recipes = []
+    for recipe in recipe_list:
+        recipe_dict = {
+            'recipeTitle': recipe.title,
+            'recipeDirection': recipe.directions,
+            'recipePicture': recipe.url,
+        }
+        recipes.append(recipe_dict)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'recipes': recipes
+        }
+    }
+
+    return JsonResponse(context_dict)
 
 
 def user_operation_demo(request):
@@ -130,13 +131,33 @@ def add_category(request):
     return JsonResponse(context_dict)
 
 
-def show_recipe(request, recipe_title):
-    context_dict = {}
+def show_recipe(request, recipe_title_slug):
+    try:
+        recipe = Recipe.objects.get(slug=recipe_title_slug)
+        reviews = Review.objects.filter(recipe=recipe)
+    except Recipe.DoesNotExist:
+        recipe = None
+        reviews = None
 
-    recipe = Recipe.objects.get(title=recipe_title)
-    context_dict['recipe'] = recipe
+    reviews_dict = []
+    for review in reviews:
+        review_content = {'reviewContent': review.content}
+        reviews_dict.append(review_content)
 
-    return render(request, '', context=context_dict)
+    context_dict = {
+        'success': True,
+        'data': {
+            'recipe_id': recipe.id,
+            'recipe_title': recipe.title,
+            'recipe_like': recipe.likes,
+            'recipe_url': recipe.url,
+            'recipe_ingredients': recipe.ingredients,
+            'recipe_directions': recipe.directions,
+            'reviews': reviews_dict,
+        }
+    }
+
+    return JsonResponse(context_dict)
 
 
 @login_required

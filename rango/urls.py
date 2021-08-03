@@ -11,7 +11,9 @@ urlpatterns = [
     path('add_category/', views.add_category, name='add_category'),
     path('show_favourite_recipe/', views.show_favourite_recipe, name='show_favourite_recipe'),
     path('add_to_favourite_recipe/', views.add_to_favourite_recipe, name='add_to_favourite_recipe'),
-    path('get_all_categories', views.get_all_categories)
+    path('get_all_categories', views.get_all_categories),
+    path('get_all_recipes', views.get_all_recipes),
+    path('recipe/<slug:recipe_title_slug>/', views.show_recipe),
 
     # path('about/', views.about, name="about"),
     # path('user/login/', views.user_login),

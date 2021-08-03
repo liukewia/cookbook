@@ -57,14 +57,32 @@ class Recipe(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     favouriteRecipe = models.ManyToManyField(FavouriteRecipe)
+    slug = models.SlugField(unique=True, null=True)
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     likes = models.IntegerField(default=0)
     ingredients = models.CharField(max_length=500)
     directions = models.CharField(max_length=2083)
     url = models.URLField(max_length=URL_MAX_LENGTH, null=True)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Recipe, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.title
+
+
+class Review(models.Model):
+    CONTENT_MAX_LENGTH = 256
+
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    content = models.CharField(max_length=CONTENT_MAX_LENGTH)
+
+    def __str__(self):
+        return f'{self.recipe.title}_{self.user_profile.user.username}'
+
+
 
 
 
