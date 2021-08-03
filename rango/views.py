@@ -42,11 +42,28 @@ def show_category(request, category_name_slug):
         category = None
         recipes = None
 
+
+    recipes_dict = {}
+    a = 1
+    for recipe in recipes:
+        recipe_dict = {
+            'recipe_id': recipe.id,
+            'recipe_title': recipe.title,
+            'recipe_like': recipe.likes,
+            'recipe_url': recipe.url,
+        }
+        recipes_dict[f'recipe_{a}'] = recipe_dict
+        a = a+1
+
     context_dict = {
         'success': True,
         'data': {
-            'category': category,
-            'recipes': recipes,
+            'category_id': category.id,
+            'category_name': category.name,
+            'category_likes': category.likes,
+            'category_slug': category.slug,
+            'recipes': recipes_dict,
+            # 'recipes': recipes,
         }
     }
 
