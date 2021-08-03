@@ -48,6 +48,27 @@ def show_category(request, category_name_slug):
     return render(request, 'rango/category.html', context=context_dict)
 
 
+@login_required
+def add_category(request):
+    form = CategoryForm()
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            # redirected to home page
+            return redirect('')
+        else:
+            print(form.errors)
+
+    return render(request, 'rango/add_category.html', {'form': form})
+
+
+
+
+
+
 def show_recipe(request, recipe_title):
     context_dict = {}
 
@@ -74,11 +95,10 @@ def show_recipe(request, recipe_title):
 
 def about(request):
     context_dict = {}
-    context_dict['userName'] = 'John Snow'
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
 
-    return render(request, 'rango/about.html', context=context_dict)
+    return render(request, 'about/index.html', context=context_dict)
 
 
 # def show_category(request, category_name_slug):
@@ -96,20 +116,20 @@ def about(request):
 #     return render(request, 'rango/category.html', context=context_dict)
 
 
-@login_required
-def add_category(request):
-    form = CategoryForm()
-
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('/rango/')
-        else:
-            print(form.errors)
-
-    return render(request, 'rango/add_category.html', {'form': form})
+# @login_required
+# def add_category(request):
+#     form = CategoryForm()
+#
+#     if request.method == 'POST':
+#         form = CategoryForm(request.POST)
+#
+#         if form.is_valid():
+#             form.save(commit=True)
+#             return redirect('/rango/')
+#         else:
+#             print(form.errors)
+#
+#     return render(request, 'rango/add_category.html', {'form': form})
 
 
 @login_required
