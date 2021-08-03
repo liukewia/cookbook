@@ -61,7 +61,7 @@ class Recipe(models.Model):
     likes = models.IntegerField(default=0)
     ingredients = models.CharField(max_length=500)
     directions = models.CharField(max_length=2083)
-
+    url = models.URLField(max_length=URL_MAX_LENGTH, null=True)
 
     def __str__(self):
         return self.title

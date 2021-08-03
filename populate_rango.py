@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 
 import django
 django.setup()
-from rango.models import Category, Page
+from rango.models import Category, Recipe
 
 
 def populate():
@@ -12,58 +12,57 @@ def populate():
     python_pages = [
         {'title': 'Official Python Tutorial',
          'url':'http://docs.python.org/3/tutorial/',
-         'views': 30},
+         'likes': 30},
         {'title': 'How to Think like a Computer Scientist',
          'url':'http://www.greenteapress.com/thinkpython/',
-         'views': 26},
+         'likes': 26},
         {'title': 'Learn Python in 10 Minutes',
          'url':'http://www.korokithakis.net/tutorials/python/',
-         'views': 23} ]
+         'likes': 23} ]
 
     django_pages = [
         {'title':'Official Django Tutorial',
          'url':'https://docs.djangoproject.com/en/2.1/intro/tutorial01/',
-         'views': 20},
+         'likes': 20},
         {'title': 'Django Rocks',
          'url':'http://www.djangorocks.com/',
-         'views': 50},
+         'likes': 50},
         {'title': 'How to Tango with Django',
          'url': 'http://www.tangowithdjango.com/',
-         'views': 18} ]
+         'likes': 18} ]
 
     other_pages = [
         {'title':'Bottle',
          'url':'http://bottlepy.org/docs/dev/',
-         'views': 15},
+         'likes': 15},
         {'title': 'Flask',
          'url':'http://flask.pocoo.org',
-         'views': 10} ]
+         'likes': 10} ]
 
-    cats = {'Python': {'pages': python_pages, 'views': 128, 'likes': 64},
-             'Django': {'pages': django_pages, 'views': 64, 'likes': 32},
-             'Other Frameworks': {'pages': other_pages, 'views': 32, 'likes': 16} }
+    cats = {'Python': {'pages': python_pages,  'likes': 64},
+             'Django': {'pages': django_pages, 'likes': 32},
+             'Other Frameworks': {'pages': other_pages,  'likes': 16} }
 
     for cat, cat_data in cats.items():
-        c = add_cat(cat, views=cat_data['views'], likes=cat_data['likes'])
+        c = add_cat(cat, likes=cat_data['likes'])
         for p in cat_data['pages']:
-            add_page(c, p['title'], p['url'], views=p['views'])
+            add_page(c, p['title'], p['url'], likes=p['likes'])
 
     for c in Category.objects.all():
-        for p in Page.objects.filter(category=c):
+        for p in Recipe.objects.filter(category=c):
             print(f'- {c}: {p}')
 
 
-def add_page(cat, title, url, views=0):
-    p = Page.objects.get_or_create(category=cat, title=title)[0]
+def add_page(cat, title, url, likes=0):
+    p = Recipe.objects.get_or_create(category=cat, title=title)[0]
     p.url=url
-    p.views=views
+    p.likes=likes
     p.save()
     return p
 
 
-def add_cat(name, views=0, likes=0):
+def add_cat(name, likes=0):
     c = Category.objects.get_or_create(name=name)[0]
-    c.views = views
     c.likes = likes
     c.save()
     return c

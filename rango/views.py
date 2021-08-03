@@ -35,18 +35,22 @@ def user_operation_demo(request):
 
 
 def show_category(request, category_name_slug):
-    context_dict = {}
-
     try:
         category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
-        context_dict['pages'] = pages
-        context_dict['category'] = category
+        recipes = Recipe.objects.filter(category=category)
     except Category.DoesNotExist:
-        context_dict['category'] = None
-        context_dict['pages'] = None
+        category = None
+        recipes = None
 
-    return render(request, 'rango/category.html', context=context_dict)
+    context_dict = {
+        'success': True,
+        'data': {
+            'category': category,
+            'recipes': recipes,
+        }
+    }
+
+    return JsonResponse(context_dict)
 
 
 @login_required
@@ -62,6 +66,13 @@ def add_category(request):
             return redirect('')
         else:
             print(form.errors)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'form': form,
+        }
+    }
 
     return render(request, 'rango/add_category.html', {'form': form})
 
