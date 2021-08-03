@@ -297,3 +297,81 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
+
+'''auth_user: 先写下简单的逻辑
+id int
+password string
+last_login datetime
+is_superuser bool
+username string
+first_name string
+email string
+is_staff bool
+is_active
+date_joined
+last_name
+
+
+
+# 注册页面
+def register():
+    if request.method == 'GET':
+        getusername = session.get('username')  # 从前端得到用户名
+        getpassword = session.get('password')  # 从前端得到密码
+        getfirst_name = session.get('first_name')  # 从前端得到用户名
+        getlast_name = session.get('last_name')  # 从前端得到用户名
+        getemail = session.get('email')  # 从前端得到邮箱
+        # getuser_id = session.get('id')  # 从前端得到用户id
+        # 获得当前时间curr_time_str
+        curr_time = datetime.now()
+        date_joined = datetime.strftime(curr_time, '%Y-%m-%d %H:%M:%S')
+        # 将cdate_joined这个当前时间存入数据库
+        db.session.commit()  # 存入数据库
+
+    if request.method == 'POST':
+        return redirect('/login')
+
+
+# 登录页面
+def login():
+    if request.method == 'GET':
+        # 用户输入
+        enterusername = request.form.get('username')
+        enterpassword = request.form.get('password')
+        u1 = username.query.filter_by(username=enterusername).first()
+        if enterpassword == u1.password:
+            print("密码正确")
+            # 改变用户状态登录中
+            getusername = session.get('username')  # 前端得到顾客的username
+            u_1 = user.query.filter_by(username=getusername).first()  # 得到id
+            u_1.is_active = 'online'
+            db.session.commit()  # 存入数据库
+            return render_template('user.html')  # 进入用户页面
+        else:
+            print("密码错误")
+            return render_template('login.html')  # 返回登录页面
+    if request.method == 'POST':
+        return redirect('/login')
+
+
+# 登出页面
+def logout():
+    if request.method == 'GET':
+    if request.method == 'POST':
+            # 改变用户状态离线
+            getusername = session.get('username')  # 前端得到顾客的username
+            u_1 = user.query.filter_by(username=getusername).first()  # 通过username查询数据库得到id
+            u_1.is_active = 'offline'
+            db.session.commit()  # 存入数据库
+            return redirect('/login')
+
+# 个人密码更新
+def changeinfo():
+    if request.method == 'POST':
+        getusername = session.get('username')  # 从前端得到用户名
+        u1 = user.query.filter_by(username=getusername).first()  # 从数据库查到用户
+        newpassword = session.get('password')  # 从前端得到新密码
+        u1.password = newpassword  # 存入新密码
+        db.session.commit()  # 保持数据库
+
+'''
