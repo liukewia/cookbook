@@ -139,6 +139,9 @@ def show_recipe(request, recipe_title_slug):
         recipe = None
         reviews = None
 
+    ingredients = recipe.ingredients.split('\n')
+    directions = recipe.directions.split('\n')
+
     reviews_dict = []
     for review in reviews:
         review_content = {'reviewContent': review.content}
@@ -151,8 +154,8 @@ def show_recipe(request, recipe_title_slug):
             'recipe_title': recipe.title,
             'recipe_like': recipe.likes,
             'recipe_url': recipe.url,
-            'recipe_ingredients': recipe.ingredients,
-            'recipe_directions': recipe.directions,
+            'recipe_ingredients': ingredients,
+            'recipe_directions': directions,
             'reviews': reviews_dict,
         }
     }
