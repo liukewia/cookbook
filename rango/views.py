@@ -34,6 +34,24 @@ def get_all_categories(request):
     return JsonResponse(context_dict)
 
 
+def get_all_categories(request):
+    category_list = Category.objects.order_by('id')
+    categories = []
+    for category in category_list:
+        category_dict = {
+            'categoryName': category.name,
+            'categorySlug': category.slug,
+        }
+        categories.append(category_dict)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'categories': categories
+        }
+    }
+
+    return JsonResponse(context_dict)
 
 
 def user_operation_demo(request):
