@@ -1,10 +1,11 @@
+import json
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.shortcuts import render
+
 from rango.models import Category, Recipe, FavouriteRecipe, Review, UserProfile
 
 
@@ -110,14 +111,26 @@ def show_category(request, category_name_slug):
     return JsonResponse(context_dict)
 
 
-@login_required
+# @login_required
 def add_category(request):
-    cat_tuple = Category.objects.get_or_create(name=request.POST.get('name'))
-    context_dict = {
-        'success': True,
-    }
-    if not cat_tuple[1]:
-        context_dict['error'] = "the category is already existed"
+    print(json.loads(request.body).get('name'))
+    cat_tuple = Category.objects.get_or_create(name=json.loads(request.body).get('name'))
+    print(cat_tuple)
+    if cat_tuple[1]:
+        context_dict = {
+            'success': True,
+            'data': {
+                'status': 'ok'
+            }
+
+        }
+    else:
+        context_dict = {
+            'success': False,
+            'data': {
+                'message': 'The category already exists.'
+            }
+        }
 
     return JsonResponse(context_dict)
 
@@ -188,7 +201,6 @@ def add_review(request, recipe_title_slug):
     context_dict = {'success': True, }
 
     return JsonResponse(context_dict)
-
 
 
 @login_required

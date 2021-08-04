@@ -1,1 +1,0 @@
-(self.webpackChunkcookbook_web=self.webpackChunkcookbook_web||[]).push([[196],{34246:function(e,t,o){"use strict";o.r(t),o.d(t,{default:function(){return u}});var n=o(70844),d=o(85893);function u(){return(0,d.jsx)(n.ZP,{title:"Add Category",children:"AddCategory"})}}}]);

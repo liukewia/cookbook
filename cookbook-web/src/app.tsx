@@ -1,6 +1,6 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import { request, RunTimeLayoutConfig } from 'umi';
+import { request as umiRequest, RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
@@ -99,10 +99,18 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   };
 };
 
+// https://umijs.org/plugins/plugin-request#%E8%BF%90%E8%A1%8C%E6%97%B6%E9%85%8D%E7%BD%AE
+export const request: RequestConfig = {
+  errorHandler: (err) => {
+    // console.log('err', JSON.stringify(err));
+    message.error(err.data?.data?.message || `${err.request?.options?.method} ${err.request?.url} Failed`);
+  },
+};
+
 let extraRoutes: any;
 
 export function render(oldRender: any) {
-  request('/api/get_all_categories/')
+  umiRequest('/api/get_all_categories/')
     .then((res) => {
       // console.log('res?.data: ', res?.data?.categories);
       extraRoutes = res?.data?.categories?.map((cat: any) => ({

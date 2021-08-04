@@ -3,6 +3,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography, Image, Space, Descriptions } from 'antd';
 import styles from './Home.less';
 import { Link, useRequest } from 'umi';
+import LoadingFailureTip from '@/components/loading-failure-tip';
 
 // const CodePreview: React.FC = ({ children }) => (
 //   <pre className={styles.pre}>
@@ -19,23 +20,27 @@ export default (): React.ReactNode => {
     <PageContainer>
       <Card title="Most Liked Recipes">
         <Space direction="vertical">
-          {data?.recipes?.map((recipe: any) => (
-            <Link to={`/recipe/${recipe.recipeId}/`} key={`/recipe/${recipe.recipeId}/`}>
-              <Card hoverable>
-                <Space size='large'>
-                  <Image
-                    preview={false}
-                    alt={`${recipe.recipeTitle} Picture`}
-                    style={{ width: 200, height: 200 }}
-                    src={recipe.recipePicture}
-                  />
-                  <Descriptions title={recipe.recipeTitle}>
-                    <Descriptions.Item>{recipe.recipeDirection}</Descriptions.Item>
-                  </Descriptions>
-                </Space>
-              </Card>
-            </Link>
-          ))}
+          {data?.recipes ? (
+            data?.recipes?.map((recipe: any) => (
+              <Link to={`/recipe/${recipe.recipeId}/`} key={`/recipe/${recipe.recipeId}/`}>
+                <Card hoverable>
+                  <Space size="large">
+                    <Image
+                      preview={false}
+                      alt={`${recipe.recipeTitle} Picture`}
+                      style={{ width: 200, height: 200 }}
+                      src={recipe.recipePicture}
+                    />
+                    <Descriptions title={recipe.recipeTitle}>
+                      <Descriptions.Item>{recipe.recipeDirection}</Descriptions.Item>
+                    </Descriptions>
+                  </Space>
+                </Card>
+              </Link>
+            ))
+          ) : (
+            <LoadingFailureTip />
+          )}
         </Space>
       </Card>
       {/* <Card
