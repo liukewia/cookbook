@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
@@ -112,7 +113,7 @@ def show_category(request, category_name_slug):
 
 @login_required
 def add_category(request):
-    cat_tuple = Category.objects.get_or_create(name=request.POST.get('name'))
+    cat_tuple = Category.objects.get_or_create(name=json.loads(request.body).get('name'))
     context_dict = {
         'success': True,
     }
@@ -159,7 +160,7 @@ def add_recipe(request):
     context_dict = {
         'success': True,
     }
-    category_name_slug = request.POST.get('slug')
+    category_name_slug = json.loads(request.body).get('slug')
     try:
         category = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
@@ -170,39 +171,39 @@ def add_recipe(request):
         return JsonResponse(context_dict)
 
     recipe = Recipe.objects.create(category=category,
-                                   title=request.POST.get('title'),
-                                   ingredients=request.POST.get('ingredients'),
-                                   directions=request.POST.get('directions'),
-                                   url=request.POST.get('url'))
+                                   title=json.loads(request.body).get('title'),
+                                   ingredients=json.loads(request.body).get('ingredients'),
+                                   directions=json.loads(request.body).get('directions'),
+                                   url=json.loads(request.body).get('url'))
 
     return JsonResponse(context_dict)
 
 
 @login_required
-def add_review(request, recipe_title_slug):
-    recipe = Recipe.objects.get(slug=recipe_title_slug)
-    user = User.objects.get(id=request.POST.get('id'))
+def add_review(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    user = User.objects.get(id=json.loads(request.body).get('id'))
     user_profile = UserProfile.objects.get(user=user)
 
-    review = Review.objects.create(user_profile=user_profile, recipe=recipe, content=request.POST.get('content'))
+    review = Review.objects.create(user_profile=user_profile, recipe=recipe, content=json.loads(request.body).get('content'))
     context_dict = {'success': True, }
 
     return JsonResponse(context_dict)
 
 
-
 @login_required
 def show_favourite_recipe(request):
-    # user = User.objects.get(request.)
-    # favourite_recipe = FavouriteRecipe.objects.get(user=)
+    user = User.objects.get(id=json.loads(request.body).get('id'))
+    user_profile = UserProfile.objects.get(user=user)
+    favourite_recipe = FavouriteRecipe.objects.get(user=user_profile)
     recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
 
     recipes_dict = []
     for recipe in recipes:
         recipe = {
             'recipeId': recipe.id,
-            'recipe_slug': recipe.slug,
-            'recipe_title': recipe.title,
+            'recipeSlug': recipe.slug,
+            'recipeTitle': recipe.title,
         }
         recipes_dict.append(recipe)
 
@@ -213,20 +214,20 @@ def show_favourite_recipe(request):
         }
     }
 
-    return render(request, '', context=context_dict)
+    return JsonResponse(context_dict)
 
 
 @login_required
 def add_to_favourite_recipe(request):
-    username = request.user.get_username
-    recipe_id = request.GET.get('id')
+    context_dict = {'success': True, }
 
-    user = User.objects.filter(username=username).first()
-    recipe = Recipe.objects.filter(id=recipe_id)
-    favourite_recipe = FavouriteRecipe.objects.filter(user=user)
+    user = User.objects.get(id=json.loads(request.body).get('userId'))
+    recipe = Recipe.objects.get(id=json.loads(request.body).get('recipeId'))
+    user_profile = UserProfile.objects.get(user=user)
+    favourite_recipe = FavouriteRecipe.objects.filter(user=user_profile)[0]
     recipe.favouriteRecipe.add(favourite_recipe)
 
-    return render(request, '', context=None)
+    return JsonResponse(context_dict)
 
 
 # def index(request):
