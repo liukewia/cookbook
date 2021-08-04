@@ -91,16 +91,20 @@ Place the dish on the preheated grill; cook until cabbage is tender, about 30 mi
             # 'Main Dishes': {'recipes': BBQ_recipes, 'likes': 32},
             }
 
-    favs = {'user': 'mockusername', 'recipe': 'Best Steak Marinade in Existence'}
+    # favs = {'user': 'mockusername', 'recipe': 'Best Steak Marinade in Existence'}
 
-    for cat, cat_data in cats.items():
-        c = add_cat(cat, likes=cat_data['likes'])
-        for r in cat_data['recipes']:
-            add_recipe(c, r['title'], r['ingredients'], r['directions'], r['url'], likes=r['likes'])
+    # for cat, cat_data in cats.items():
+    #     c = add_cat(cat, likes=cat_data['likes'])
+    #     for r in cat_data['recipes']:
+    #         add_recipe(c, r['title'], r['ingredients'], r['directions'], r['url'], likes=r['likes'])
+    #
+    # for c in Category.objects.all():
+    #     for r in Recipe.objects.filter(category=c):
+    #         print(f'- {c}: {r}')
 
-    for c in Category.objects.all():
-        for r in Recipe.objects.filter(category=c):
-            print(f'- {c}: {r}')
+    # add_user_profile()
+    create_favourite_recipe()
+
 
     # add_to_favourite_recipe(favs['user'], favs['title'])
 
@@ -120,6 +124,20 @@ def add_cat(name, likes=0):
     c.likes = likes
     c.save()
     return c
+
+
+# def add_user_profile():
+#     user = User.objects.get(id=1)
+#     up = UserProfile.objects.create(user=user)
+#     up.save()
+
+def create_favourite_recipe():
+    user = User.objects.get(id=1)
+    user_profile = UserProfile.objects.get(user=user)
+    favourite_recipe = FavouriteRecipe.objects.get_or_create(user=user_profile)[0]
+    recipe = Recipe.objects.get(id=12)
+    recipe.favouriteRecipe.add(favourite_recipe)
+
 
 
 # def add_to_favourite_recipe(username, title):

@@ -122,7 +122,6 @@ def add_category(request):
             'data': {
                 'status': 'ok'
             }
-
         }
     else:
         context_dict = {
@@ -172,7 +171,7 @@ def add_recipe(request):
     context_dict = {
         'success': True,
     }
-    category_name_slug = request.POST.get('slug')
+    category_name_slug = json.loads(request.body).get('slug')
     try:
         category = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
@@ -183,21 +182,21 @@ def add_recipe(request):
         return JsonResponse(context_dict)
 
     recipe = Recipe.objects.create(category=category,
-                                   title=request.POST.get('title'),
-                                   ingredients=request.POST.get('ingredients'),
-                                   directions=request.POST.get('directions'),
-                                   url=request.POST.get('url'))
+                                   title=json.loads(request.body).get('title'),
+                                   ingredients=json.loads(request.body).get('ingredients'),
+                                   directions=json.loads(request.body).get('directions'),
+                                   url=json.loads(request.body).get('url'))
 
     return JsonResponse(context_dict)
 
 
 @login_required
-def add_review(request, recipe_title_slug):
-    recipe = Recipe.objects.get(slug=recipe_title_slug)
-    user = User.objects.get(id=request.POST.get('id'))
+def add_review(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    user = User.objects.get(id=json.loads(request.body).get('id'))
     user_profile = UserProfile.objects.get(user=user)
 
-    review = Review.objects.create(user_profile=user_profile, recipe=recipe, content=request.POST.get('content'))
+    review = Review.objects.create(user_profile=user_profile, recipe=recipe, content=json.loads(request.body).get('content'))
     context_dict = {'success': True, }
 
     return JsonResponse(context_dict)
@@ -205,16 +204,17 @@ def add_review(request, recipe_title_slug):
 
 @login_required
 def show_favourite_recipe(request):
-    # user = User.objects.get(request.)
-    # favourite_recipe = FavouriteRecipe.objects.get(user=)
+    user = User.objects.get(id=json.loads(request.body).get('id'))
+    user_profile = UserProfile.objects.get(user=user)
+    favourite_recipe = FavouriteRecipe.objects.get(user=user_profile)
     recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
 
     recipes_dict = []
     for recipe in recipes:
         recipe = {
             'recipeId': recipe.id,
-            'recipe_slug': recipe.slug,
-            'recipe_title': recipe.title,
+            'recipeSlug': recipe.slug,
+            'recipeTitle': recipe.title,
         }
         recipes_dict.append(recipe)
 
@@ -225,20 +225,20 @@ def show_favourite_recipe(request):
         }
     }
 
-    return render(request, '', context=context_dict)
+    return JsonResponse(context_dict)
 
 
 @login_required
 def add_to_favourite_recipe(request):
-    username = request.user.get_username
-    recipe_id = request.GET.get('id')
+    context_dict = {'success': True, }
 
-    user = User.objects.filter(username=username).first()
-    recipe = Recipe.objects.filter(id=recipe_id)
-    favourite_recipe = FavouriteRecipe.objects.filter(user=user)
+    user = User.objects.get(id=json.loads(request.body).get('userId'))
+    recipe = Recipe.objects.get(id=json.loads(request.body).get('recipeId'))
+    user_profile = UserProfile.objects.get(user=user)
+    favourite_recipe = FavouriteRecipe.objects.filter(user=user_profile)[0]
     recipe.favouriteRecipe.add(favourite_recipe)
 
-    return render(request, '', context=None)
+    return JsonResponse(context_dict)
 
 
 # def index(request):
@@ -433,3 +433,105 @@ def changeinfo():
         db.session.commit()  # 保持数据库
 
 '''
+# def login(request):
+#     category = Category.objects.get(id=2)
+#     context_dict = {
+#         'success': True,
+#         'data': {
+#             'categoryName': category.name,
+#             'categoryLIkes': category.likes,
+#         }
+#     }
+#
+#     return JsonResponse(context_dict)
+
+
+#注册页面
+# def register(request):
+#     getusername = 'a' # 从前端得到用户名
+#     getpassword = 'b'  # 从前端得到密码
+#     getfirst_name = 'c'  # 从前端得到用户名
+#     getlast_name = 'd'  # 从前端得到用户名
+#     getemail = 'e'  # 从前端得到邮箱
+#
+#     # getusername = request.form.get('username')  # 从前端得到用户名
+#     # getpassword = request.form.get('password')  # 从前端得到密码
+#     # getfirst_name = request.form.get('first_name')  # 从前端得到用户名
+#     # getlast_name = request.form.get('last_name')  # 从前端得到用户名
+#     # getemail = request.form.get('email')  # 从前端得到邮箱
+#     u1 = User.objects.create(username=getusername, password=getpassword,first_name=getfirst_name,last_name=getlast_name,email=getemail)
+#     return render(request, 'rango/login.html', )
+#     # return JsonResponse({
+#     #     'user': u1.username,
+
+# #登录页面
+# def login(request,username,password):
+#     enterusername = request.form.get(username) #从前端获得username
+#     enterpassword = request.form.get(password) #从前端获得password
+#     #enterusername='thl'
+#     #enterpassword='123456'
+#     u1 = User.objects.get(username=enterusername)
+#     if enterpassword == u1.password:
+#         print("密码正确")
+#         # 改变用户状态登录中
+#         u1.is_active = '1'
+#         u1.save()
+#     #return render(request, 'rango/category.html', context=context_dict)
+#         return render(request, 'rango/user.html', )
+#     else:
+#         return render(request, 'rango/login.html', )
+
+# # #用户信息展示
+# def getuserinfo(request,user_id):
+#     #getuserid=user_id #前端传入user_id
+#     getuserid='4'
+#     u1 = User.objects.get(id=getuserid)
+#     context_dict = {
+#                 'success': True,
+#                 'data': {
+#                     'infoName': u1.username,
+#                     'infoEmail': u1.email,
+#                 }
+#             }
+#     return render(request, 'rango/getuserinfo.html', context=context_dict)
+#
+#     # return JsonResponse(context_dict)
+#个人密码修改
+# def changeuserinfo(request):
+#     #getuserid=user_id #前端传入user_id
+#     getuserid='4'
+#     u1 = User.objects.get(id=getuserid)
+#     #getnewpassword = request.form.get(password)#从前端获取新密码
+#     getnewpassword='xxxx' #从前端获取新密码
+#     u1.password=getnewpassword
+#     u1.save()
+#     return render(request, 'rango/getuserinfo.html', )
+#     # context_dict = {
+#     #                 'success': True,
+#     #                 'data': {
+#     #                     'newpassowrd': u1.password,
+#     #
+#     #                 }
+#     #             }
+#     # return JsonResponse(context_dict)
+
+
+
+#登出页面
+# def logout(request):
+#     #getusername = request.form.get(username) #从前端获得username
+#     getusername='a'
+#     u1 = User.objects.get(username=getusername)
+#     u1.is_active ='0'
+#     u1.save()
+#
+#     # context_dict = {
+#     #                 'success': True,
+#     #                 'data': {
+#     #                     'username': u1.username,
+#     #                     "active": u1.is_active
+#     #
+#     #                 }
+#     #             }
+#     # return JsonResponse(context_dict)
+#     return render(request, 'rango/login.html', )
