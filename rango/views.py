@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
-from rango.forms import CategoryForm, RecipeForm
 from rango.models import Category, Recipe, FavouriteRecipe, Review, UserProfile
 
 
@@ -195,14 +193,14 @@ def add_review(request, recipe_title_slug):
 
 @login_required
 def show_favourite_recipe(request):
-
-    favourite_recipe = FavouriteRecipe.objects.get(id=request.GET.get('id'))
+    # user = User.objects.get(request.)
+    # favourite_recipe = FavouriteRecipe.objects.get(user=)
     recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
 
     recipes_dict = []
     for recipe in recipes:
         recipe = {
-            'recipe_id': recipe.id,
+            'recipeId': recipe.id,
             'recipe_slug': recipe.slug,
             'recipe_title': recipe.title,
         }
