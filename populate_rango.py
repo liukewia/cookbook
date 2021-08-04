@@ -123,6 +123,66 @@ Bake in preheated oven for 50 to 60 minutes, until a toothpick inserted into cen
          'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6599025.jpg&w=1200&h=678&c=sc&poi=face&q=85',
          'likes': 23}]
 
+    Breakfast_and_Brunch_recipes = [
+        {'title': 'Breakfast Cups',
+         'ingredients': """cooking spray
+18 refrigerated biscuits (unbaked)
+8 ounces breakfast sausage
+7 large eggs
+1/2 cup milk
+salt and ground black pepper to taste
+1 cup mild shredded Cheddar cheese
+         """,
+         'directions': """
+Preheat oven to 400 degrees F (200 degrees C). Grease 18 muffin cups with cooking spray.
+Roll out biscuit dough on a lightly floured surface to form 5-inch rounds. Place each round in the prepared muffin cups, pressing into the base and sides to form a dough cup.
+Cook and stir sausage in a skillet over medium-high heat until browned and cooked through, 5 to 10 minutes; drain fat. Spoon sausage into dough cups.
+Whisk eggs, milk, salt, and pepper together in a bowl until well-beaten. Pour egg mixture into each dough cup, filling each just below the top of the biscuit dough. Sprinkle Cheddar cheese on top of egg mixture.
+Bake in the preheated oven until eggs are set and biscuit dough is golden, 15 to 18 minutes.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1784092.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 30},
+        {'title': 'Easy Shakshuka',
+         'ingredients': """1 tablespoon olive oil
+2 cloves garlic, minced
+1 onion, cut into 2 inch pieces
+1 green bell pepper, cut into 2 inch pieces
+1 (28 ounce) can whole peeled plum tomatoes with juice
+1 teaspoon paprika, or to taste
+2 slices pickled jalapeno pepper, finely chopped
+4 eggs
+4 (6 inch) pita bread (Optional)
+""",
+         'directions': """Heat the vegetable oil in a deep skillet over medium heat. Stir in the garlic, onion, and bell pepper; cook and stir until the onion has softened and turned translucent, about 5 minutes. Add the canned tomatoes, paprika and jalapenos; stir, using the back of a spoon to break up the tomatoes. Simmer for about 25 minutes.
+Crack an egg into a small bowl, then gently slip the egg into the tomato sauce. Repeat with the remaining eggs. Cook the eggs until the whites are firm and the yolks have thickened but are not hard, 2 1/2 to 3 minutes. If the tomato sauce gets dry, add a few tablespoons of water. Remove the eggs with a slotted spoon, place onto a warm plate, and serve with the tomato sauce and pita bread.
+""",
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F400925.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 26},
+        {'title': 'Lemon-Ricotta Cornmeal Waffles',
+         'ingredients': """
+        1 cup all-purpose flour
+        1/2 cup cornmeal
+        1/4 cup white sugar
+        1/2 teaspoons baking powder
+        1/2 teaspoon baking soda
+        1/4 teaspoon salt
+        3/4 cup half-and-half
+        1/2cup ricotta cheese
+        2 large eggs
+        2 tablespoons melted butter
+        1 teaspoon lemon extract
+        cooking spray
+
+         """,
+         'directions': """
+        Preheat a waffle iron according to manufacturer's instructions.
+        Whisk flour, cornmeal, sugar, baking powder, baking soda, and salt together in a large mixing bowl.
+        Whisk half-and-half, ricotta cheese, eggs, melted butter, and lemon extract together in a separate bowl until smooth. Pour into the flour mixture and mix until thoroughly combined.
+        Coat the preheated waffle iron with cooking spray. Pour batter into waffle iron in batches and cook until crisp and golden brown and the iron stops steaming, about 5 minutes.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6879705.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 23}]
+
     django_pages = [
         {'title': 'Official Django Tutorial',
          'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/',
