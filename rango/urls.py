@@ -13,7 +13,7 @@ urlpatterns = [
     path('add_to_favourite_recipe/', views.add_to_favourite_recipe, name='add_to_favourite_recipe'),
     path('get_all_categories/', views.get_all_categories),
     path('get_all_recipes/', views.get_all_recipes),
-    path('recipe/<slug:recipe_title_slug>/', views.show_recipe),
+    path('recipe/<id:recipe_id>/', views.show_recipe),
     path('add_recipe/', views.add_recipe),
     path('<slug:recipe_title_slug>/add_review/', views.add_review),
 

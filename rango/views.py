@@ -91,20 +91,20 @@ def show_category(request, category_name_slug):
     recipes_dict = []
     for recipe in recipes:
         recipe_dict = {
-            'recipe_id': recipe.id,
-            'recipe_title': recipe.title,
-            'recipe_like': recipe.likes,
-            'recipe_url': recipe.url,
+            'recipeId': recipe.id,
+            'recipeTitle': recipe.title,
+            'recipeLike': recipe.likes,
+            'recipeUrl': recipe.url,
         }
         recipes_dict.append(recipe_dict)
 
     context_dict = {
         'success': True,
         'data': {
-            'category_id': category.id,
-            'category_name': category.name,
-            'category_likes': category.likes,
-            'category_slug': category.slug,
+            'categoryId': category.id,
+            'categoryName': category.name,
+            'categoryLikes': category.likes,
+            'categorySlug': category.slug,
             'recipes': recipes_dict,
         }
     }
@@ -124,9 +124,9 @@ def add_category(request):
     return JsonResponse(context_dict)
 
 
-def show_recipe(request, recipe_title_slug):
+def show_recipe(request, recipe_id):
     try:
-        recipe = Recipe.objects.get(slug=recipe_title_slug)
+        recipe = Recipe.objects.get(id=recipe_id)
         reviews = Review.objects.filter(recipe=recipe)
     except Recipe.DoesNotExist:
         recipe = None
@@ -143,12 +143,12 @@ def show_recipe(request, recipe_title_slug):
     context_dict = {
         'success': True,
         'data': {
-            'recipe_id': recipe.id,
-            'recipe_title': recipe.title,
-            'recipe_like': recipe.likes,
-            'recipe_url': recipe.url,
-            'recipe_ingredients': ingredients,
-            'recipe_directions': directions,
+            'recipeId': recipe.id,
+            'recipeTitle': recipe.title,
+            'recipeLike': recipe.likes,
+            'recipeUrl': recipe.url,
+            'recipeIngredients': ingredients,
+            'recipeDirections': directions,
             'reviews': reviews_dict,
         }
     }
