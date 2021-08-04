@@ -183,6 +183,63 @@ Crack an egg into a small bowl, then gently slip the egg into the tomato sauce. 
          'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6879705.jpg&w=1200&h=678&c=sc&poi=face&q=85',
          'likes': 23}]
 
+    Desserts_recipes = [
+        {'title': 'Strawberry-Rhubarb Buckle',
+         'ingredients': """1/2 cups diced fresh rhubarb
+ 1/2 cups diced fresh strawberries
+1/2 cup white sugar
+1 tablespoon lemon juice
+3 tablespoons water, divided
+2 tablespoons cornstarch
+         """,
+         'directions': """
+         Combine rhubarb, strawberries, 1/2 cup sugar, lemon juice and 1 tablespoon of water in a saucepan. Cook, covered, over medium-low heat, stirring occasionally until mixture begins to boil, about 5 minutes. Reduce heat to low.
+        In a small bowl, stir together remaining 2 tablespoons of water with cornstarch until cornstarch is dissolved. Add mixture to the saucepan and continue cooking fruit until mixture begins to thicken, about 2 minutes. Remove from stove and set aside to cool.
+        Preheat the oven to 350 degrees F (175 degrees C). Spray a 9-inch deep dish pie pan with non-stick cooking spray, and place on a baking sheet.
+        Beat 1/2 cup of butter and 1/2 cup of sugar with an electric mixer in a bowl until light and fluffy. Beat in egg, vanilla extract, and yogurt. Add flour, baking powder, baking soda, and salt; mix until just combined. Spread 2/3 of the batter into the prepared pan. Pour strawberry-rhubarb filling on top of the batter. Spread remaining 1/3 of the batter in small mounds atop the filling. Set aside.
+        Combine brown sugar, 1/4 cup flour, and 2 tablespoons of butter in a small bowl. Mix using a fork, a pastry blender, or your hands, until the mixture resembles coarse crumbs. Sprinkle on top of the batter and filling.
+        Bake in the preheated oven until the cake topping is nicely browned, about 35 minutes.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6614329.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 30},
+        {'title': 'One Bowl Chocolate Cake III',
+         'ingredients': """2 cups white sugar
+3/4 cups all-purpose flour
+3/4 cup unsweetened cocoa powder
+1/2 teaspoons baking powder
+1/2 teaspoons baking soda
+1 teaspoon salt
+2 eggs
+1 cup milk
+1/2 cup vegetable oil
+2 teaspoons vanilla extract
+1 cup boiling water
+""",
+         'directions': """Preheat oven to 350 degrees F (175 degrees C). Grease and flour two nine inch round pans.
+In a large bowl, stir together the sugar, flour, cocoa, baking powder, baking soda and salt. Add the eggs, milk, oil and vanilla, mix for 2 minutes on medium speed of mixer. Stir in the boiling water last. Batter will be thin. Pour evenly into the prepared pans.
+Bake 30 to 35 minutes in the preheated oven, until the cake tests done with a toothpick. Cool in the pans for 10 minutes, then remove to a wire rack to cool completely.
+""",
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4554958.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 26},
+        {'title': 'The Best Lemon Bars',
+         'ingredients': """
+        1 cup butter, softened
+        1/2 cup white sugar
+        2 cups all-purpose flour
+        4 eggs
+        1/2 cups white sugar
+        1/4 cup all-purpose flour
+        2 lemons, juiced
+         """,
+         'directions': """
+        Preheat oven to 350 degrees F (175 degrees C).
+        In a medium bowl, blend together softened butter, 2 cups flour and 1/2 cup sugar. Press into the bottom of an ungreased 9x13 inch pan.
+        Bake for 15 to 20 minutes in the preheated oven, or until firm and golden. In another bowl, whisk together the remaining 1 1/2 cups sugar and 1/4 cup flour. Whisk in the eggs and lemon juice. Pour over the baked crust.
+        Bake for an additional 20 minutes in the preheated oven. The bars will firm up as they cool. For a festive tray, make another pan using limes instead of lemons and adding a drop of green food coloring to give a very pale green. After both pans have cooled, cut into uniform 2 inch squares and arrange in a checker board fashion.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F3598469.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 23}]
+
     django_pages = [
         {'title': 'Official Django Tutorial',
          'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/',
