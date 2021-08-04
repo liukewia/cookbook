@@ -117,19 +117,28 @@ def add_category(request):
     form = CategoryForm()
 
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form.name = request.POST.get('name')
+        # form = CategoryForm(request.POST)
 
         if form.is_valid():
             form.save(commit=True)
-            # redirected to home page
             return redirect('')
         else:
             print(form.errors)
 
+    elements = []
+    for field in form.visible_fields():
+        element = {
+            'field': field.name,
+            'fieldError': field.errors,
+            'fieldHelpText': field.help_text,
+        }
+        elements.append(element)
+
     context_dict = {
         'success': True,
         'data': {
-            'form': form,
+            'form': elements,
         }
     }
 
@@ -190,9 +199,6 @@ def add_recipe(request, category_name_slug):
                 recipe.likes = 0
                 recipe.save()
 
-                # return redirect(reverse('rango:show_category',
-                #                         kwargs={'category_name_slug':
-                #                                     category_name_slug}))
         else:
             print(form.errors)
 
