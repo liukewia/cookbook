@@ -392,6 +392,64 @@ Cover pot with the lid, leaving the steam vent open. Select Slow Cooker function
          'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5281437.jpg&w=1200&h=678&c=sc&poi=face&q=85',
          'likes': 23}]
 
+    Lunch_Recipes_recipes = [
+        {'title': 'Virgina Tuna Salad',
+         'ingredients': """1 egg
+1 (5 ounce) can tuna, drained and flaked
+3 tablespoons mayonnaise
+2 stalks celery, chopped
+2 tablespoons sweet pickle relish
+1 pinch ground black pepper
+         """,
+         'directions': """
+         Place egg in a saucepan and cover with cold water. Bring water to a boil and immediately remove from heat. Cover and let egg stand in hot water for 10 to 12 minutes. Remove from hot water; cool for 5 minutes. Peel and chop into bite-sized pieces.
+        In a medium bowl, mix together tuna and mayonnaise. Mix in egg, celery, relish, and black pepper.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F44694.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 30},
+        {'title': 'Spicy Grilled Cheese Sandwich',
+         'ingredients': """2 tablespoons butter or margarine
+4 slices white bread
+2 slices American cheese
+1 roma (plum) tomato, thinly sliced
+1/4 small onion, chopped
+1 jalapeno pepper, chopped
+""",
+         'directions': """Heat a large skillet over low heat. Spread butter or margarine onto one side of two slices of bread. Place both pieces buttered side down in the skillet. Lay a slice of cheese on each one, and top with slices of tomato, onion and jalapeno. Butter one side of the remaining slices of bread, and place on top buttered side up. When the bottom of the sandwiches are toasted, flip and fry until brown on the other side.
+""",
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5434462.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 26},
+        {'title': 'Chicago-Inspired Italian Beef Sandwich',
+         'ingredients': """
+        1/2 pounds boneless beef chuck, cut into 2-inch pieces
+        salt and ground black pepper to taste
+        1 tablespoon vegetable oil
+        6 cloves garlic, sliced
+        2 tablespoons white vinegar
+        1 tablespoon dried oregano
+        1/2 teaspoons salt, or to taste
+        1 teaspoon dried thyme
+        1 teaspoon dried rosemary
+        1 teaspoon freshly ground black pepper
+        1 bay leaf
+        1/4 teaspoon red pepper flakes, or to taste
+        3 cups chicken broth, or as needed
+        4 ciabatta rolls, sliced in half
+        1 cup chopped giardiniera (pickled Italian vegetables)
+        2 teaspoons chopped fresh flat-leaf parsley
+         """,
+         'directions': """
+        Season beef with a pinch of salt and black pepper. Heat vegetable oil in a heavy pot over high heat. Cook and stir beef in hot oil until browned, 5 to 8 minutes.
+        Stir garlic, vinegar, oregano, 1 1/2 teaspoons salt, thyme, rosemary, 1 teaspoon black pepper, bay leaf, and red pepper flakes into beef. Pour enough chicken broth into beef mixture to cover the meat by 1 inch and bring to a simmer.
+        Cover pot with a lid, reduce heat to low, and simmer until meat is fork-tender, 1 to 1 1/2 hours.
+        Transfer meat with a strainer or slotted spoon to a separate pot; pour about 1/4 cup of meat broth into pot. Use a wooden spoon to gently break meat into smaller chunks. Cover pot with a lid or aluminum foil and keep warm.
+        Skim excess grease from top of broth remaining in the first pot; season with salt and pepper to taste. Cover pot with a lid or aluminum foil and keep broth warm.
+        Lay halves of a roll out on a work surface and spoon 2 to 3 tablespoons meat broth over each half. Top bottom half of roll with a generous portion of meat and a spoonful of pickled vegetables. Place tops on sandwich. Repeat with remaining buns, broth, meat, and pickled vegetables to make 3 more sandwiches.
+        Spoon hot meat broth into ramekins and top each ramekin with 1/2 teaspoon parsley. Serve sandwiches with hot broth for dipping.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1100724.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 23}]
+
     django_pages = [
         {'title': 'Official Django Tutorial',
          'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/',
