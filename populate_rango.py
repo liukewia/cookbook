@@ -240,6 +240,80 @@ Bake 30 to 35 minutes in the preheated oven, until the cake tests done with a to
          'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F3598469.jpg&w=1200&h=678&c=sc&poi=face&q=85',
          'likes': 23}]
 
+    Dinner_Recipes_recipes = [
+        {'title': 'Chicken, Apple, and Brussels Sprout Sheet Pan Dinner',
+         'ingredients': """2 cups Brussels sprouts, halved
+1 red apple, cut into 1-inch cubes
+1 (4 ounce) package pancetta
+2 tablespoons olive oil, divided
+1 teaspoon minced fresh rosemary
+6 skinless, boneless chicken thighs
+salt and ground black pepper to taste
+         """,
+         'directions': """
+        Preheat the oven to 425 degrees F (220 degrees C).
+        Toss Brussels sprouts, apple, and pancetta with 1 tablespoon olive oil and rosemary in a bowl. Spread into a single layer on a sheet pan.
+        Leave space on the pan for the chicken thighs. Toss chicken with the remaining 1 tablespoon oil in the same bowl; place on the sheet pan. Sprinkle salt and pepper on top.
+        Bake in the preheated oven, stirring the Brussels sprouts mixture every 15 minutes, until chicken is no longer pink in the center and the juices run clear, 40 to 45 minutes. An instant-read thermometer inserted into the center should read at least 165 degrees F (74 degrees C).
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5078300.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 30},
+        {'title': 'Tennessee Meatloaf',
+         'ingredients': """1/2 cup ketchup
+1/4cup brown sugar
+2 tablespoons cider vinegar
+Meatloaf:
+cooking spray
+1 onion, chopped
+1/2 green bell pepper, chopped
+2 cloves garlic, minced
+2 large eggs, lightly beaten
+1 teaspoon dried thyme
+1 teaspoon seasoned salt
+1/2 teaspoon ground black pepper
+2 teaspoons prepared mustard
+2 teaspoons Worcestershire sauce
+1/2 teaspoon hot pepper sauce (such as Tabasco®)
+1/2 cup milk
+2/3 cup quick cooking oats
+1 pound ground beef
+1/2 pound ground pork
+1/2 pound ground veal
+""",
+         'directions': """Combine ketchup, brown sugar, and cider vinegar in a bowl; mix well.
+Preheat oven to 350 degrees F (175 degrees C). Spray two 9x5-inch loaf pans with cooking spray or line with aluminum foil for easier cleanup (see Cook's Note).
+Place onion and green pepper in covered microwave container and cook until softened, 1 to 2 minutes. Set aside to cool.
+In large mixing bowl, combine garlic, eggs, thyme, seasoned salt, black pepper, mustard, Worcestershire sauce, hot sauce, milk, and oats. Mix well. Stir in cooked onion and green pepper. Add ground beef, pork, and veal. With gloved hands, work all ingredients together until completely mixed and uniform.
+Divide meatloaf mixture in half and pat half of mixture into each prepared loaf pan. Brush loaves with half of the glaze; set remainder of glaze aside.
+Bake in preheated oven for 50 minutes. Remove pans from oven; carefully drain fat. Brush loaves with remaining glaze. Return to oven and bake for 10 minutes more. Remove pans from oven and allow meatloaf to stand for 15 minutes before slicing.
+""",
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1092268.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 26},
+        {'title': 'Tasty Baked Mac n Cheese',
+         'ingredients': """
+        1 (16 ounce) package elbow macaroni
+        1/2 teaspoon salt
+        3/4 cup butter, softened - divided
+        1 cup sour cream
+        1 tablespoon cream cheese, softened
+        1 (8 ounce) package shredded sharp Cheddar cheese
+        1 egg yolk
+        2 tablespoons all-purpose flour
+        1/2 teaspoon salt
+        1/2 teaspoon ground cayenne pepper
+        1 cup milk
+        1 (8 ounce) package shredded mild Cheddar cheese
+         """,
+         'directions': """
+        Preheat oven to 375 degrees F (190 degrees C). Line a 9x13-inch baking dish with parchment paper.
+        Bring a large pot of water to a boil. Cook elbow macaroni in the boiling water, stirring occasionally until almost cooked through and firm to the bite, about 7 minutes. Drain and transfer to a large bowl. Sprinkle macaroni with 1/2 teaspoon salt and stir 1/2 cup butter into the pasta.
+        Mix 1/4 cup butter, sour cream, cream cheese, sharp Cheddar cheese, and egg yolk together in a bowl. Stir flour, 1/2 teaspoon salt, cayenne pepper, and milk into the sour cream mixture.
+        Spread 1/4 cup sour cream sauce over bottom of prepared baking dish. Stir remaining sour cream sauce into macaroni. Pour macaroni into baking dish atop sauce layer; sprinkle mild Cheddar cheese over the casserole.
+        Bake in the preheated oven until heated through and cheese topping has melted, about 15 minutes.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6100203.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 23}]
+
     django_pages = [
         {'title': 'Official Django Tutorial',
          'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/',
