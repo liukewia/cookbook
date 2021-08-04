@@ -314,6 +314,84 @@ Bake in preheated oven for 50 minutes. Remove pans from oven; carefully drain fa
          'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6100203.jpg&w=1200&h=678&c=sc&poi=face&q=85',
          'likes': 23}]
 
+    Everyday_Cooking_recipes = [
+        {'title': 'Stove Pot Roast With Mashed Potatoes',
+         'ingredients': """Pot Roast:
+1 (3 pound) beef chuck roast
+salt and ground black pepper to taste
+4 (10.5 ounce) cans condensed beef broth (such as Campbell's®)
+1 cup water
+1 white onion, cut into large wedges
+5 cloves garlic
+1 (16 ounce) package carrots, peeled
+1 sprig fresh rosemary
+Mashed Potatoes:
+5 pounds Yukon Gold potatoes, peeled and diced
+1 (12 ounce) can evaporated milk, or as needed
+1/2 cup butter
+salt to taste
+         """,
+         'directions': """
+        Season chuck roast with salt and black pepper; sear in a large, deep skillet or Dutch oven over medium heat until browned, about 10 minutes per side.
+        Pour beef broth and water into the skillet with roast. Arrange onion wedges and garlic cloves around the meat. Spread carrots atop roast and place sprig of rosemary atop carrots. Turn heat to medium-low and simmer until tender, about 6 hours.
+        Cover potatoes with water in a large pot and bring to a boil; reduce heat to low and simmer until tender, about 30 minutes. Drain. Mash potatoes with butter and half the evaporated milk until smooth; slowly mash remaining evaporated milk into potatoes to achieve the desired consistency. Season with salt.
+        Remove 1 or 2 cloves of garlic from skillet and mash cloves on top of the roast; serve with mashed potatoes.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F949315.jpg&w=330&h=330&c=sc&poi=face&q=85',
+         'likes': 30},
+        {'title': 'Instant Pot® Chicken and Dumplings',
+         'ingredients': """1/2 tablespoon olive oil
+1 cup diced onion
+1/2 cup diced carrot
+1/2 cup diced celery
+1 bay leaf
+4 cups low-sodium chicken broth
+1 pound boneless, skinless chicken thighs
+1 pound bone-in chicken breasts, skin removed
+1/2 teaspoon thyme (Optional)
+1/2 teaspoon dried marjoram
+1 teaspoon salt (Optional)
+1/4 teaspoon freshly ground black pepper
+2 tablespoons unsalted butter, softened
+2 tablespoons all-purpose flour
+salt and ground black pepper to taste (Optional)
+1/2 cup frozen petite peas
+1/2 cup frozen cut green beans
+Dumplings:
+1 cup all-purpose flour
+1 teaspoon baking powder
+1/2 teaspoon salt (Optional)
+2 tablespoons cold unsalted butter
+1 tablespoon chopped fresh flat-leaf parsley
+1/2 cup buttermilk
+""",
+         'directions': """Pour the olive oil into a multi-functional pressure cooker (such as an Instant Pot®) and select the Saute function. Cook onion, carrot, celery, and bay leaf until the vegetables are soft and the onion has turned translucent, about 5 minutes.
+Add chicken broth, chicken thighs, chicken breasts, thyme, marjoram, salt, and pepper. Close and lock the lid. Select high pressure according to manufacturer's instructions; set timer for 9 minutes. Allow 10 to 15 minutes for pressure to build.
+Release pressure carefully using the quick-release method according to manufacturer's instructions, about 5 minutes. Carefully remove the chicken pieces with tongs and place them in a bowl to cool slightly; discard bay leaf.
+Mash butter with the flour to make a smooth paste; set aside.
+Combine flour, baking powder, and salt in a bowl for the dumplings. Cut in cold butter until mixture is the texture of cornmeal. Stir in parsley and set aside.
+Shred cooled chicken and return to the pot. Taste the broth and adjust the seasoning if needed. Add peas and green beans. Stir in the flour-butter paste. Select Saute function to bring broth back to a boil.
+Pour buttermilk into the dumpling mixture and stir until combined. Drop the dumpling dough by heaping spoonfuls on top of the stew; a small cookie scoop works well.
+Cover pot with the lid, leaving the steam vent open. Select Slow Cooker function and simmer on Low, covered, until dumplings are cooked through, 10 to 12 minutes. A skewer inserted in the center of a dumpling should come out clean.
+""",
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F7242436.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 26},
+        {'title': 'Taco Meat',
+         'ingredients': """
+        1 pound lean ground beef
+        1/2 teaspoon onion powder
+        1/2 teaspoon garlic salt
+        1/2 teaspoon celery salt
+        1/2 teaspoon ground cumin
+        1 (8 ounce) can tomato sauce, or more to taste
+         """,
+         'directions': """
+        Heat a large skillet over medium-high heat. Cook and stir beef in the hot skillet until browned and crumbly, 5 to 7 minutes.
+        Season beef with onion powder, garlic salt, celery salt, and cumin. Pour tomato sauce over the beef, stir to coat, and simmer until thickened, slightly, about 5 minutes.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5281437.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 23}]
+
     django_pages = [
         {'title': 'Official Django Tutorial',
          'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/',
