@@ -3,6 +3,7 @@ import {
   LockOutlined,
   MobileOutlined,
   TaobaoCircleOutlined,
+  TwitterCircleFilled,
   UserOutlined,
   WeiboCircleOutlined,
 } from '@ant-design/icons';
@@ -14,7 +15,7 @@ import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import styles from './index.less';
-import { businessTitle } from '@/global';
+import { businessTitle, isDev } from '@/global';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -94,7 +95,7 @@ const Login: React.FC = (props) => {
               <img
                 alt="logo"
                 className={styles.logo}
-                src={`${process.env.NODE_ENV === 'production' ? '/static/' : '/'}logo.svg`}
+                src={`${isDev ? '/' : '/static/'}logo.svg`}
               />
               <span className={styles.title}>{businessTitle}</span>
             </Link>
@@ -240,12 +241,13 @@ const Login: React.FC = (props) => {
               </Link>
             </div>
           </ProForm>
-          {/* <Space className={styles.other}>
+          <Space className={styles.other}>
             Other login methods:
-            <AlipayCircleOutlined className={styles.icon} />
+            <TwitterCircleFilled className={styles.icon} />
+            {/* <AlipayCircleOutlined className={styles.icon} />
             <TaobaoCircleOutlined className={styles.icon} />
-            <WeiboCircleOutlined className={styles.icon} />
-          </Space> */}
+            <WeiboCircleOutlined className={styles.icon} /> */}
+          </Space>
         </div>
       </div>
       <Footer />

@@ -8,8 +8,9 @@ import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import Exception403Page from './pages/403';
 import { message } from 'antd';
+import { isDev } from './global';
 
-const isDev = process.env.NODE_ENV === 'development';
+// const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -121,7 +122,7 @@ export function render(oldRender: any) {
 // https://www.codenong.com/cs109219288/
 // https://umijs.org/zh-CN/docs/runtime-config
 export function patchRoutes({ routes }) {
-  console.log('extraRoutes: ', extraRoutes);
+  // console.log('extraRoutes: ', extraRoutes);
   if (extraRoutes) {
     const _routes = routes.find((ele) => ele.path === '/').routes;
     const tmpRouteIdx = _routes.indexOf(_routes.find((ele) => ele.routeKey === 'tmp'));
@@ -137,5 +138,5 @@ export function patchRoutes({ routes }) {
     );
   }
 
-  console.log('routes: ', routes);
+  // console.log('routes: ', routes);
 }

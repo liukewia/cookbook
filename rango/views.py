@@ -43,6 +43,7 @@ def get_all_recipes(request):
     recipes = []
     for recipe in recipe_list:
         recipe_dict = {
+            'recipeId': recipe.id,
             'recipeTitle': recipe.title,
             'recipeDirection': recipe.directions,
             'recipePicture': recipe.url,
