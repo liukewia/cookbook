@@ -114,33 +114,12 @@ def show_category(request, category_name_slug):
 
 @login_required
 def add_category(request):
-    form = CategoryForm()
-
-    if request.method == 'POST':
-        form.name = request.POST.get('name')
-        # form = CategoryForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('')
-        else:
-            print(form.errors)
-
-    elements = []
-    for field in form.visible_fields():
-        element = {
-            'field': field.name,
-            'fieldError': field.errors,
-            'fieldHelpText': field.help_text,
-        }
-        elements.append(element)
-
+    cat_tuple = Category.objects.get_or_create(name=request.POST.get('name'))
     context_dict = {
         'success': True,
-        'data': {
-            'form': elements,
-        }
     }
+    if not cat_tuple[1]:
+        context_dict['error'] = "the category is already existed"
 
     return JsonResponse(context_dict)
 
@@ -178,70 +157,38 @@ def show_recipe(request, recipe_title_slug):
 
 
 @login_required
-def add_recipe(request, category_name_slug):
+def add_recipe(request):
+    context_dict = {
+        'success': True,
+    }
+    category_name_slug = request.POST.get('slug')
     try:
         category = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
         category = None
 
-    # if category is None:
-    #     return redirect('/rango/')
+    if category is None:
+        context_dict['success'] = False
+        return JsonResponse(context_dict)
 
-    form = RecipeForm
+    recipe = Recipe.objects.create(category=category,
+                                   title=request.POST.get('title'),
+                                   ingredients=request.POST.get('ingredients'),
+                                   directions=request.POST.get('directions'),
+                                   url=request.POST.get('url'))
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST)
-
-        if form.is_valid():
-            if category:
-                recipe = form.save(commit=False)
-                recipe.category = category
-                recipe.likes = 0
-                recipe.save()
-
-        else:
-            print(form.errors)
-
-    context_dict = {
-        'success': True,
-        'data': {
-            'form': form,
-            'category_name': category.name,
-            'category_slug': category.slug,
-        }
-    }
     return JsonResponse(context_dict)
 
 
 @login_required
 def add_review(request, recipe_title_slug):
     recipe = Recipe.objects.get(slug=recipe_title_slug)
-    user = User.objects.get(id=request.GET.get('id'))
+    user = User.objects.get(id=request.POST.get('id'))
     user_profile = UserProfile.objects.get(user=user)
 
-    form = RecipeForm
+    review = Review.objects.create(user_profile=user_profile, recipe=recipe, content=request.POST.get('content'))
+    context_dict = {'success': True, }
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST)
-
-        if form.is_valid():
-            if recipe:
-                review = form.save(commit=False)
-                review.recipe = recipe
-                review.user_profile = user_profile
-                review.save()
-        else:
-            print(form.errors)
-
-    context_dict = {
-        'success': True,
-        'data': {
-            'form': form,
-            'recipeTitle': recipe.title,
-            'recipeSlug': recipe.slug,
-            'username': user.username,
-        }
-    }
     return JsonResponse(context_dict)
 
 
