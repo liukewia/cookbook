@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 
 import django
 django.setup()
-from rango.models import Category, Recipe
+from rango.models import Category, Recipe, FavouriteRecipe, UserProfile, User
 
 
 def populate():
@@ -91,6 +91,8 @@ Place the dish on the preheated grill; cook until cabbage is tender, about 30 mi
             # 'Main Dishes': {'recipes': BBQ_recipes, 'likes': 32},
             }
 
+    favs = {'user': 'mockusername', 'recipe': 'Best Steak Marinade in Existence'}
+
     for cat, cat_data in cats.items():
         c = add_cat(cat, likes=cat_data['likes'])
         for r in cat_data['recipes']:
@@ -99,6 +101,8 @@ Place the dish on the preheated grill; cook until cabbage is tender, about 30 mi
     for c in Category.objects.all():
         for r in Recipe.objects.filter(category=c):
             print(f'- {c}: {r}')
+
+    # add_to_favourite_recipe(favs['user'], favs['title'])
 
 
 def add_recipe(cat, title, ingredients, directions, url, likes=0):
@@ -116,6 +120,17 @@ def add_cat(name, likes=0):
     c.likes = likes
     c.save()
     return c
+
+
+# def add_to_favourite_recipe(username, title):
+#     r = Recipe.objects.get_or_create(title=title)[0]
+#     u = User.objects.get_or_create(username=username)[0]
+#     up = UserProfile.objects.get_or_create(user=u)[0]
+#     f = FavouriteRecipe.objects.get_or_create(user=up)[0]
+#     r.favouriteRecipe = f
+#
+#     return f
+
 
 
 if __name__=='__main__':

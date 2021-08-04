@@ -6,8 +6,8 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from rango.forms import CategoryForm, PageForm
-from rango.models import Category, Recipe, FavouriteRecipe, Review
+from rango.forms import CategoryForm, RecipeForm
+from rango.models import Category, Recipe, FavouriteRecipe, Review, UserProfile
 
 
 def index(request):
@@ -169,12 +169,98 @@ def show_recipe(request, recipe_title_slug):
 
 
 @login_required
+def add_recipe(request, category_name_slug):
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+        category = None
+
+    # if category is None:
+    #     return redirect('/rango/')
+
+    form = RecipeForm
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+
+        if form.is_valid():
+            if category:
+                recipe = form.save(commit=False)
+                recipe.category = category
+                recipe.likes = 0
+                recipe.save()
+
+                # return redirect(reverse('rango:show_category',
+                #                         kwargs={'category_name_slug':
+                #                                     category_name_slug}))
+        else:
+            print(form.errors)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'form': form,
+            'category_name': category.name,
+            'category_slug': category.slug,
+        }
+    }
+    return JsonResponse(context_dict)
+
+
+@login_required
+def add_review(request, recipe_title_slug):
+    recipe = Recipe.objects.get(slug=recipe_title_slug)
+    user = User.objects.get(id=request.GET.get('id'))
+    user_profile = UserProfile.objects.get(user=user)
+
+    form = RecipeForm
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+
+        if form.is_valid():
+            if recipe:
+                review = form.save(commit=False)
+                review.recipe = recipe
+                review.user_profile = user_profile
+                review.save()
+        else:
+            print(form.errors)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'form': form,
+            'recipeTitle': recipe.title,
+            'recipeSlug': recipe.slug,
+            'username': user.username,
+        }
+    }
+    return JsonResponse(context_dict)
+
+
+
+@login_required
 def show_favourite_recipe(request):
-    context_dict = {}
 
     favourite_recipe = FavouriteRecipe.objects.get(id=request.GET.get('id'))
     recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
-    context_dict['recipes'] = recipes
+
+    recipes_dict = []
+    for recipe in recipes:
+        recipe = {
+            'recipe_id': recipe.id,
+            'recipe_slug': recipe.slug,
+            'recipe_title': recipe.title,
+        }
+        recipes_dict.append(recipe)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'recipes': recipes_dict,
+        }
+    }
 
     return render(request, '', context=context_dict)
 
@@ -246,36 +332,36 @@ def about(request):
 #     return render(request, 'rango/add_category.html', {'form': form})
 
 
-@login_required
-def add_page(request, category_name_slug):
-    try:
-        category = Category.objects.get(slug=category_name_slug)
-    except Category.DoesNotExist:
-        category = None
-
-    if category is None:
-        return redirect('/rango/')
-
-    form = PageForm()
-
-    if request.method == 'POST':
-        form = PageForm(request.POST)
-
-        if form.is_valid():
-            if category:
-                page = form.save(commit=False)
-                page.category = category
-                page.views = 0
-                page.save()
-
-                return redirect(reverse('rango:show_category',
-                                        kwargs={'category_name_slug':
-                                                    category_name_slug}))
-        else:
-            print(form.errors)
-
-    context_dict = {'form': form, 'category': category}
-    return render(request, 'rango/add_page.html', context=context_dict)
+# @login_required
+# def add_page(request, category_name_slug):
+#     try:
+#         category = Category.objects.get(slug=category_name_slug)
+#     except Category.DoesNotExist:
+#         category = None
+#
+#     if category is None:
+#         return redirect('/rango/')
+#
+#     form = PageForm()
+#
+#     if request.method == 'POST':
+#         form = PageForm(request.POST)
+#
+#         if form.is_valid():
+#             if category:
+#                 page = form.save(commit=False)
+#                 page.category = category
+#                 page.views = 0
+#                 page.save()
+#
+#                 return redirect(reverse('rango:show_category',
+#                                         kwargs={'category_name_slug':
+#                                                     category_name_slug}))
+#         else:
+#             print(form.errors)
+#
+#     context_dict = {'form': form, 'category': category}
+#     return render(request, 'rango/add_page.html', context=context_dict)
 
 
 @login_required
