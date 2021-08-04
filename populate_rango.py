@@ -545,13 +545,13 @@ Drizzle sauce over pork, apples, and sweet potatoes. Slice tenderloins and serve
          'likes': 10}]
 
     cats = {'BBQ': {'recipes': BBQ_recipes,  'likes': 64},
-            # 'Bread': {'recipes': BBQ_recipes, 'likes': 32},
-            # 'Breakfast and Brunch': {'recipes': BBQ_recipes,  'likes': 16},
-            # 'Desserts': {'recipes': BBQ_recipes, 'likes': 32},
-            # 'Dinner': {'recipes': BBQ_recipes, 'likes': 32},
-            # 'Everyday Cooking': {'recipes': BBQ_recipes, 'likes': 32},
-            # 'Lunch': {'recipes': BBQ_recipes, 'likes': 32},
-            # 'Main Dishes': {'recipes': BBQ_recipes, 'likes': 32},
+            'Bread': {'recipes': Bread_recipes, 'likes': 32},
+            'Breakfast and Brunch': {'recipes': Breakfast_and_Brunch_recipes,  'likes': 16},
+            'Desserts': {'recipes': Desserts_recipes, 'likes': 32},
+            'Dinner': {'recipes': Dinner_Recipes_recipes, 'likes': 32},
+            'Everyday Cooking': {'recipes': Everyday_Cooking_recipes, 'likes': 32},
+            'Lunch': {'recipes': Lunch_Recipes_recipes, 'likes': 32},
+            'Main Dishes': {'recipes': Main_Dishes_recipes, 'likes': 32},
             }
 
     # favs = {'user': 'mockusername', 'recipe': 'Best Steak Marinade in Existence'}
