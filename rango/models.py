@@ -54,14 +54,16 @@ class FavouriteRecipe(models.Model):
 class Recipe(models.Model):
     TITLE_MAX_LENGTH = 128
     URL_MAX_LENGTH = 200
+    LONG_CONTENT_MAX_LENGTH = 2083
+    SHORT_CONTENT_MAX_LENGHT = 500
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     favouriteRecipe = models.ManyToManyField(FavouriteRecipe)
     slug = models.SlugField(unique=True, null=True)
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     likes = models.IntegerField(default=0)
-    ingredients = models.CharField(max_length=500)
-    directions = models.CharField(max_length=2083)
+    ingredients = models.CharField(max_length=SHORT_CONTENT_MAX_LENGHT)
+    directions = models.CharField(max_length=LONG_CONTENT_MAX_LENGTH)
     url = models.URLField(max_length=URL_MAX_LENGTH, null=True)
 
     def save(self, *args, **kwargs):

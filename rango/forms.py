@@ -1,5 +1,5 @@
 from django import forms
-from rango.models import Page, Category, UserProfile
+from rango.models import Category, UserProfile, Recipe, Review
 from django.contrib.auth.models import User
 
 
@@ -14,26 +14,62 @@ class CategoryForm(forms.ModelForm):
         fields = ('name', )
 
 
-class PageForm(forms.ModelForm):
-    title = forms.CharField(max_length=Page.TITLE_MAX_LENGTH,
+class RecipeForm(forms.ModelForm):
+    title = forms.CharField(max_length=Recipe.TITLE_MAX_LENGTH,
                             help_text="Please enter the title of the page.")
-    url = forms.URLField(max_length=Page.URL_MAX_LENGTH,
-                         help_text="Please enter the URL of the page.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    ingredients = forms.CharField(max_length=Recipe.SHORT_CONTENT_MAX_LENGHT,
+                                  help_text="Please enter the content of ingredients.")
+    directions = forms.CharField(max_length=Recipe.LONG_CONTENT_MAX_LENGTH,
+                                 help_text="Please enter the specify process.")
+    url = forms.URLField(max_length=Recipe.URL_MAX_LENGTH,
+                         help_text="Please enter the URL of the picture.")
+    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
     class Meta:
-        model = Page
+        model = Recipe
         exclude = ('category',)
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        url = cleaned_data.get('url')
 
-        if url and not url.startswith('http://'):
-            url = f'http://{url}'
-            cleaned_data['url'] = url
+    # def clean(self):
+    #     cleaned_data = self.cleaned_data
+    #     url = cleaned_data.get('url')
+    #
+    #     if url and not url.startswith('http://'):
+    #         url = f'http://{url}'
+    #         cleaned_data['url'] = url
+    #
+    #     return cleaned_data
 
-        return cleaned_data
+
+class ReviewForm(forms.ModelForm):
+    content = forms.CharField(max_length=Review.CONTENT_MAX_LENGTH,
+                              help_text="Be nice, do not say fXXX word!")
+
+    class Meta:
+        model = Review
+        fields = ('user_profile', 'recipe', 'content', )
+
+
+# class PageForm(forms.ModelForm):
+#     title = forms.CharField(max_length=Page.TITLE_MAX_LENGTH,
+#                             help_text="Please enter the title of the page.")
+#     url = forms.URLField(max_length=Page.URL_MAX_LENGTH,
+#                          help_text="Please enter the URL of the page.")
+#     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+#
+#     class Meta:
+#         model = Page
+#         exclude = ('category',)
+#
+#     def clean(self):
+#         cleaned_data = self.cleaned_data
+#         url = cleaned_data.get('url')
+#
+#         if url and not url.startswith('http://'):
+#             url = f'http://{url}'
+#             cleaned_data['url'] = url
+#
+#         return cleaned_data
 
 
 class UserForm(forms.ModelForm):
@@ -48,4 +84,3 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('website', 'picture', )
 
-# test
