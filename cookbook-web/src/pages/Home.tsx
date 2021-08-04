@@ -20,20 +20,21 @@ export default (): React.ReactNode => {
       <Card title="Most Liked Recipes">
         <Space direction="vertical">
           {data?.recipes?.map((recipe: any) => (
-            <Card hoverable>
-              <Space>
-                <Image
-                  alt={`${recipe.recipeTitle} Picture`}
-                  style={{ width: 200, height: 200 }}
-                  src={recipe.recipePicture}
-                />
-                <Link to={`/recipe/${recipe.recipeId}/`} key={`/recipe/${recipe.recipeId}/`}>
-                  <Descriptions title={recipe.recipeTitle} style={{ marginLeft: 50 }}>
+            <Link to={`/recipe/${recipe.recipeId}/`} key={`/recipe/${recipe.recipeId}/`}>
+              <Card hoverable>
+                <Space size='large'>
+                  <Image
+                    preview={false}
+                    alt={`${recipe.recipeTitle} Picture`}
+                    style={{ width: 200, height: 200 }}
+                    src={recipe.recipePicture}
+                  />
+                  <Descriptions title={recipe.recipeTitle}>
                     <Descriptions.Item>{recipe.recipeDirection}</Descriptions.Item>
                   </Descriptions>
-                </Link>
-              </Space>
-            </Card>
+                </Space>
+              </Card>
+            </Link>
           ))}
         </Space>
       </Card>

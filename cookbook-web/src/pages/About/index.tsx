@@ -6,7 +6,7 @@ const { Title, Paragraph, Text } = Typography;
 
 export default (): React.ReactNode => {
   return (
-    <PageContainer>
+    <PageContainer title="About">
       <Card>
         <Title>介绍</Title>
         <Paragraph>

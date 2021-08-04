@@ -5,5 +5,6 @@ export default function access(initialState: { currentUser?: API.CurrentUser | u
   const { currentUser } = initialState || {};
   return {
     isAdmin: currentUser?.access === 'admin',
+    isLoggedin: currentUser?.access === 'admin' || currentUser?.access === 'user',
   };
 }

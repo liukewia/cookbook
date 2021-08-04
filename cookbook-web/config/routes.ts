@@ -91,6 +91,12 @@ export default [
   //   ],
   // },
   {
+    path: '/add-category',
+    component: './AddCategory',
+    access: 'isLoggedin',
+  },
+
+  {
     path: '/about',
     component: './About',
   },

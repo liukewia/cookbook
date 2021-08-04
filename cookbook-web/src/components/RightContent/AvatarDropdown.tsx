@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { LoginOutlined, LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginOutlined, LogoutOutlined, PlusOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { history, useModel } from 'umi';
 import { stringify } from 'querystring';
@@ -7,6 +7,7 @@ import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 import { logout } from '@/services/ant-design-pro/api';
 import type { MenuInfo } from 'rc-menu/lib/interface';
+import { useAccess } from 'umi';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -46,6 +47,7 @@ const login = async () => {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
+  const access = useAccess();
 
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
@@ -63,7 +65,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         loginOut();
         return;
       }
-      history.push(`/account/${key}`);
+      // excludes login and logout circumstances
+      history.push(`${key}`);
     },
     [setInitialState],
   );
@@ -92,14 +95,20 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
+      {access.isLoggedin && (
+        <Menu.Item key="/add-category">
+          <PlusOutlined />
+          Add Category
+        </Menu.Item>
+      )}
       {menu && (
-        <Menu.Item key="center">
+        <Menu.Item key="/account/center">
           <UserOutlined />
           Personal Center
         </Menu.Item>
       )}
       {menu && (
-        <Menu.Item key="settings">
+        <Menu.Item key="/account/settings">
           <SettingOutlined />
           Settings
         </Menu.Item>

@@ -52,6 +52,7 @@ export default {
         lastName: undefined,
         userid: '00000001',
         email: 'antdesign@alipay.com',
+        access: 'user',
         // signature: '海纳百川，有容乃大',
         // title: '交互专家',
         // group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
@@ -84,7 +85,6 @@ export default {
         // notifyCount: 12,
         // unreadCount: 11,
         // country: 'China',
-        access: getAccess(),
         // geographic: {
         //   province: {
         //     label: '浙江省',
