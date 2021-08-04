@@ -450,6 +450,81 @@ Cover pot with the lid, leaving the steam vent open. Select Slow Cooker function
          'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1100724.jpg&w=1200&h=678&c=sc&poi=face&q=85',
          'likes': 23}]
 
+    Main_Dishes_recipes = [
+        {'title': 'Cardamom Maple Salmon',
+         'ingredients': """1/2 teaspoons salt
+1 teaspoon paprika
+1 teaspoon ground cardamom
+1 teaspoon ground coriander
+1/2 easpoon ground black pepper
+1/4 cup grapeseed oil
+2 tablespoons maple syrup
+1 (2 pound) salmon fillet, cut into 3-inch pieces
+         """,
+         'directions': """
+        Stir salt, paprika, cardamom, coriander, and black pepper together in a bowl. Add oil and maple syrup and stir until evenly combined.
+        Preheat a non-stick frying pan over medium-high heat, about 350 degrees F (175 degrees C).
+        Dredge salmon pieces through the maple syrup mixture until evenly coated on all sides.
+        Cook salmon in the preheated pan until fish flakes easily with a fork, 5 to 7 minutes per side
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1122494.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 30},
+        {'title': 'Spicy Pork Tenderloin with Apples and Sweet Potatoes',
+         'ingredients': """cooking spray
+1 tablespoon ground ginger
+1 tablespoon light brown sugar
+1 teaspoon chipotle chili powder, or to taste
+salt and ground black pepper to taste
+2 (1 1/2 pound) pork tenderloins
+4 apples, peeled and cut into 8 pieces each
+1 large sweet potato, peeled and cut into 1 1/2-inch pieces
+4 tablespoons butter, cut into small pieces
+1/2 cups apple cider
+1 lime, juiced
+1/2 teaspoon granulated garlic
+1/2 teaspoon ground ginger
+1/8 teaspoon chipotle chile powder
+1/8 teaspoon garam masala
+salt and ground black pepper to taste
+aluminum foil
+""",
+         'directions': """Preheat the oven to 425 degrees F (220 degrees C). Spray a 9x13-inch baking dish with cooking spray.
+Mix together 1 tablespoon ginger, brown sugar, 1 teaspoon chili powder, salt, and pepper in a bowl to create a rub. Rub combined seasonings on all sides of the pork tenderloins, using the entire amount.
+Place apples and sweet potatoes in the bottom of the prepared pan; dot with butter.
+Mix together apple cider, lime juice, garlic, 1/2 teaspoon ginger, 1/8 teaspoon chili powder, garam masala, salt, and pepper in a bowl. Pour over apples and sweet potatoes and place tenderloins on top.
+Bake in the preheated oven for 20 minutes. Ladle cooking liquid over apples and sweet potatoes, turn tenderloins over, and continue baking until pork is slightly pink at the center, about 20 minutes longer. A meat thermometer placed in the center of the thickest tenderloin should read 145 degrees F (63 degrees C).
+Remove apples and sweet potatoes to a serving platter using a slotted spoon. Place tenderloins on top and cover with aluminum foil.
+Pour cooking liquid from the baking dish into a 1-quart saucepan. Heat over medium-high heat until liquid comes to a boil. Boil, stirring occasionally, until the mixture is reduced by one half, 10 to 15 minutes.
+Drizzle sauce over pork, apples, and sweet potatoes. Slice tenderloins and serve.
+""",
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F7251995.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 26},
+        {'title': 'Als Burmese Chicken Curry',
+         'ingredients': """
+        1 teaspoon butter, or as needed
+        8 shallots, thinly sliced
+        3 tablespoons red curry paste, or more to taste
+        2 tablespoons hot curry powder
+        1 tablespoon ground red chile pepper
+        1/2 pounds chicken thighs
+        1 lemongrass, smashed and cut into 1-inch pieces
+        10 bird's eye chile peppers, chopped, or to taste
+        1 tablespoon ground coriander
+        2 kaffir lime leaves, or to taste
+        3 tablespoons fish sauce
+        water to cover
+        1 (14 ounce) can coconut milk
+        4 tomatoes, quartered
+        1/2 small bunch fresh cilantro, chopped, or to taste
+         """,
+         'directions': """
+        Melt butter in a wok over medium heat. Add shallots and fry until golden, about 10 minutes. Remove shallots and set aside. Add curry paste to the wok and toast until fragrant, about 3 minutes. Stir in curry powder and ground chile. Add chicken and cook, stirring, until lightly browned, about 5 minutes. Stir in lemongrass, chiles peppers, coriander, and lime leaves.
+        Pour in fish sauce and enough water to cover chicken. Add coconut milk; cook for 10 minutes. Toss in tomatoes and cook until starting to soften, about 10 minutes more. Reduce heat to low and simmer until flavors blend, 2 to 3 hours.
+        Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cilantro.
+         """,
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F7062050.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'likes': 23}]
+
     django_pages = [
         {'title': 'Official Django Tutorial',
          'url': 'https://docs.djangoproject.com/en/2.1/intro/tutorial01/',
