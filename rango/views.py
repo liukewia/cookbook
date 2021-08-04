@@ -113,9 +113,7 @@ def show_category(request, category_name_slug):
 
 # @login_required
 def add_category(request):
-    print(json.loads(request.body).get('name'))
     cat_tuple = Category.objects.get_or_create(name=json.loads(request.body).get('name'))
-    print(cat_tuple)
     if cat_tuple[1]:
         context_dict = {
             'success': True,
@@ -196,7 +194,8 @@ def add_review(request, recipe_id):
     user = User.objects.get(id=json.loads(request.body).get('id'))
     user_profile = UserProfile.objects.get(user=user)
 
-    review = Review.objects.create(user_profile=user_profile, recipe=recipe, content=json.loads(request.body).get('content'))
+    review = Review.objects.create(user_profile=user_profile, recipe=recipe,
+                                   content=json.loads(request.body).get('content'))
     context_dict = {'success': True, }
 
     return JsonResponse(context_dict)
@@ -446,7 +445,7 @@ def changeinfo():
 #     return JsonResponse(context_dict)
 
 
-#注册页面
+# 注册页面
 # def register(request):
 #     getusername = 'a' # 从前端得到用户名
 #     getpassword = 'b'  # 从前端得到密码
@@ -496,7 +495,7 @@ def changeinfo():
 #     return render(request, 'rango/getuserinfo.html', context=context_dict)
 #
 #     # return JsonResponse(context_dict)
-#个人密码修改
+# 个人密码修改
 # def changeuserinfo(request):
 #     #getuserid=user_id #前端传入user_id
 #     getuserid='4'
@@ -516,8 +515,7 @@ def changeinfo():
 #     # return JsonResponse(context_dict)
 
 
-
-#登出页面
+# 登出页面
 # def logout(request):
 #     #getusername = request.form.get(username) #从前端获得username
 #     getusername='a'

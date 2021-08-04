@@ -22,7 +22,7 @@ export default function AddCategory() {
       manual: true,
       onSuccess: (result) => {
         if (result?.status === 'ok') {
-          message.success('Successfully added');
+          message.success('Successfully added.');
         }
       },
     },
