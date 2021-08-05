@@ -157,8 +157,6 @@ def category_add_like(request, category_name_slug):
     return JsonResponse(context_dict)
 
 
-
-
 def show_recipe(request, recipe_id):
     context_dict = {
         'success': True,
@@ -192,14 +190,14 @@ def show_recipe(request, recipe_id):
         reviews_dict.append(review_content)
 
     context_dict['data'] = {
-            'recipeId': recipe.id,
-            'recipeTitle': recipe.title,
-            'recipeOwner': owner_id,
-            'recipeLike': recipe.likes,
-            'recipeUrl': recipe.url,
-            'recipeIngredients': ingredients,
-            'recipeDirections': directions,
-            'reviews': reviews_dict,
+        'recipeId': recipe.id,
+        'recipeTitle': recipe.title,
+        'recipeOwner': owner_id,
+        'recipeLike': recipe.likes,
+        'recipeUrl': recipe.url,
+        'recipeIngredients': ingredients,
+        'recipeDirections': directions,
+        'reviews': reviews_dict[::-1],
     }
 
     return JsonResponse(context_dict)
@@ -233,7 +231,7 @@ def add_recipe(request):
     return JsonResponse(context_dict)
 
 
-@login_required
+# @login_required
 def add_review(request, recipe_id):
     context_dict = {
         'success': True,
@@ -348,10 +346,9 @@ def add_to_favourite_recipe(request):
 
     return JsonResponse(context_dict)
 
+
 # @login_required
 # def show_my_recipe(request):
-
-
 
 
 def about(request):

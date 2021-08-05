@@ -1,19 +1,80 @@
 import { LikeOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Descriptions, Space, Spin } from 'antd';
-import { Link, useLocation, useParams, useRequest } from 'umi';
-import MultiClamp from 'react-multi-clamp';
+import { Descriptions, List, Space, Spin, Comment, Avatar, Form, Button, message } from 'antd';
+import { useParams, useRequest } from 'umi';
 import ProCard from '@ant-design/pro-card';
 import styles from './index.less';
+import { avatars } from '@/global';
+import TextArea from 'antd/lib/input/TextArea';
+import { useMemo, useState } from 'react';
+
+const Editor = ({ onRefresh }) => {
+  const [form] = Form.useForm();
+  const { recipeId } = useParams<{ recipeId: string }>();
+  const { run } = useRequest(
+    (values) => ({
+      url: `/api/recipe/${recipeId}/add_review/`,
+      method: 'post',
+      data: values,
+    }),
+    {
+      manual: true,
+      onSuccess: (result) => {
+        if (result?.userName) {
+          message.success('Successfully commented.');
+        }
+      },
+    },
+  );
+
+  const { getFieldValue, resetFields, submit } = form;
+
+  const onSubmit = () => {
+    const content = getFieldValue('content');
+    if (!content) {
+      message.warn('Empty content!');
+      return;
+    }
+    submit();
+    run({ id: 3, content });
+    resetFields();
+    setTimeout(() => {
+      onRefresh();
+    }, 100);
+  };
+
+  return (
+    <Form form={form}>
+      <Form.Item name="content">
+        <TextArea rows={4} />
+      </Form.Item>
+      <Form.Item>
+        <Button onClick={onSubmit} type="primary">
+          Add Comment
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
 
 export default function Recipe() {
+  const [randAvatars, setRandAvatars] = useState<string[]>([]);
   const { recipeId } = useParams<{ recipeId: string }>();
-  const { data } = useRequest(`/api/recipe/${recipeId}/`);
-  console.log('data: ', data);
+  const { data, run } = useRequest(`/api/recipe/${recipeId}/`,
+  {
+    onSuccess: (result) => {
+      const newArr = [...randAvatars];
+      for (let i = 0; i < result?.reviews?.length - randAvatars.length; i++) {
+        newArr.unshift(avatars[Math.floor(Math.random() * avatars.length)]);
+      }
+      setRandAvatars(newArr);
+    }
+  });
+  // console.log('data: ', data);
 
   return (
     <PageContainer
-      title={data?.recipeTitle || ''}
+      title={`Recipe: ${data?.recipeTitle}`}
       extra={
         data ? (
           <span>
@@ -23,7 +84,7 @@ export default function Recipe() {
         ) : null
       }
     >
-      <Space size="large" direction="vertical">
+      <Space size="large" direction="vertical" className={styles['page-card']}>
         <ProCard split="vertical" layout="center">
           <ProCard colSpan="30%">
             {data ? (
@@ -47,16 +108,51 @@ export default function Recipe() {
               <Descriptions.Item label="Recipe Name">{data?.recipeTitle}</Descriptions.Item>
               <Descriptions.Item label="Ingredients">
                 {data?.recipeIngredients.map((ingredient: any, index: number) => (
-                  <div key={`ing-idx-${index}`}>{`${index + 1}.${'\u00A0'}${'\u00A0'}${ingredient}`}</div>
+                  <div key={`ing-idx-${index}`}>{`${
+                    index + 1
+                  }.${'\u00A0'}${'\u00A0'}${ingredient}`}</div>
                 ))}
               </Descriptions.Item>
             </Descriptions>
           </ProCard>
         </ProCard>
-        <ProCard title="Direction" style={{ fontSize: '1.005rem' }}>
+        <ProCard title="Directions" className={styles['desc']}>
           {data?.recipeDirections.map((dir: any, index: number) => (
-            <div key={`ing-idx-${index}`}>{`Step ${index + 1}:${'\u00A0'}${'\u00A0'}${dir}`}</div>
+            <div key={`ing-idx-${index}`}>{`Step ${
+              index + 1
+            }:${'\u00A0'}${'\u00A0'}${'\u00A0'}${dir}`}</div>
           ))}
+        </ProCard>
+        <ProCard title="Comment">
+          <Comment
+            avatar={
+              <Avatar
+                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                alt="Han Solo"
+              />
+            }
+            content={<Editor onRefresh={run} />}
+          />
+          {data?.reviews ? (
+            <List
+              className="comment-list"
+              header={`${data?.reviews?.length} repl${data?.reviews?.length > 1 ? 'ies' : 'y'}`}
+              itemLayout="horizontal"
+              dataSource={data?.reviews}
+              renderItem={(item: any, index: number) => {
+                return (
+                  <li>
+                    <Comment
+                      author={item.posterName}
+                      avatar={randAvatars[index]}
+                      content={item.reviewContent}
+                      // datetime={item.datetime}
+                    />
+                  </li>
+                );
+              }}
+            />
+          ) : null}
         </ProCard>
       </Space>
     </PageContainer>
