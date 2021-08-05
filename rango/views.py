@@ -182,7 +182,13 @@ def show_recipe(request, recipe_id):
 
     reviews_dict = []
     for review in reviews:
-        review_content = {'reviewContent': review.content}
+        user_profile = review.user_profile
+        user = user_profile.user
+        review_content = {
+            'posterID': user.id,
+            'posterName': user.username,
+            'reviewContent': review.content
+        }
         reviews_dict.append(review_content)
 
     context_dict['data'] = {
