@@ -71,7 +71,7 @@ export default defineConfig({
   },
   // mfsu: {},
   webpack5: {},
-  exportStatic: {},
+  // exportStatic: {},
   publicPath: process.env.NODE_ENV === 'production' ? '/static/' : '/',
   // https://umijs.org/plugins/plugin-request#datafield
   // request: {
