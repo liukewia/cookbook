@@ -133,6 +133,32 @@ def add_category(request):
     return JsonResponse(context_dict)
 
 
+@login_required
+def category_add_like(request, category_name_slug):
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+        category = None
+
+    if category is None:
+        context_dict['success'] = False
+        return JsonResponse(context_dict)
+
+    likes = category.likes + 1
+    category.likes = likes
+    category.save()
+
+    context_dict['data'] = {'likes': category.likes}
+
+    return JsonResponse(context_dict)
+
+
+
+
 def show_recipe(request, recipe_id):
     context_dict = {
         'success': True,
@@ -179,7 +205,7 @@ def add_recipe(request):
         'success': True,
     }
     category_name_slug = json.loads(request.body).get('slug')
-    user = User.objects.get(json.loads(request.body).get('id'))
+    user = User.objects.get(id=json.loads(request.body).get('id'))
     try:
         category = Category.objects.get(slug=category_name_slug)
         user_profile = UserProfile.objects.get(user=user)
@@ -218,6 +244,62 @@ def add_review(request, recipe_id):
         'userID': user.id,
         'userName': user.username,
     }
+
+    return JsonResponse(context_dict)
+
+
+@login_required
+def recipe_add_like(request, recipe_id):
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
+    try:
+        recipe = Recipe.objects.get(id=recipe_id)
+    except Recipe.DoesNotExist:
+        recipe = None
+
+    if recipe is None:
+        context_dict['success'] = False
+        return JsonResponse(context_dict)
+
+    likes = recipe.likes + 1
+    recipe.likes = likes
+    recipe.save()
+
+    context_dict['data'] = {'likes': recipe.likes}
+
+    return JsonResponse(context_dict)
+
+
+@login_required
+def show_my_recipe(request, user_id):
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
+    try:
+        user = User.objects.get(id=user_id)
+        user_profile = UserProfile.objects.get(user=user)
+    except User.DoesNotExist:
+        user = None
+        user_profile = None
+
+    if user is None:
+        context_dict['success'] = False
+        return JsonResponse(context_dict)
+
+    recipes = Recipe.objects.filter(owner=user_profile)
+    recipe_list = []
+    for recipe in recipes:
+        recipe = {
+            'recipeId': recipe.id,
+            'recipeSlug': recipe.slug,
+            'recipeTitle': recipe.title,
+        }
+        recipe_list.append(recipe)
+
+    context_dict['data'] = {'recipes': recipe_list}
 
     return JsonResponse(context_dict)
 
