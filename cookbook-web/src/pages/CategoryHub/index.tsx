@@ -1,22 +1,39 @@
-import { LikeOutlined } from '@ant-design/icons';
+import { LikeFilled, LikeOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Space } from 'antd';
 import { Link, useLocation, useRequest } from 'umi';
 import MultiClamp from 'react-multi-clamp';
 import styles from './index.less';
+import { createElement, useState } from 'react';
 
 export default function CategoryHub() {
   const { pathname } = useLocation();
-  // const categoryName = pathname.replace(/\//g, '');
-  const { data } = useRequest(`/api/category${pathname}/`);
+  const { data, run: refresh } = useRequest(`/api/category${pathname}/`);
+
+  const [didLike, setDidLike] = useState(false);
+  const { run: runLike } = useRequest(`/api/category${pathname}/cate_add_like/`, {
+    manual: true,
+  });
+
+  const like = () => {
+    if (!didLike) {
+      setDidLike(true);
+      runLike();
+      setTimeout(() => {
+        refresh();
+      }, 100);
+    }
+  };
 
   return (
     <PageContainer
       extra={
         data ? (
-          <span>
-            <LikeOutlined />
-            <span className={styles['comment-action']}>{data?.categoryLikes}</span>
+          <span onClick={like}>
+            {createElement(didLike ? LikeFilled : LikeOutlined)}
+            <span className={didLike ? styles['comment-action-liked'] : styles['comment-action']}>
+              {data?.categoryLikes}
+            </span>
           </span>
         ) : null
       }

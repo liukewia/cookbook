@@ -1,4 +1,4 @@
-import { LikeOutlined } from '@ant-design/icons';
+import { LikeFilled, LikeOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Descriptions, List, Space, Spin, Comment, Avatar, Form, Button, message } from 'antd';
 import { useParams, useRequest } from 'umi';
@@ -6,7 +6,8 @@ import ProCard from '@ant-design/pro-card';
 import styles from './index.less';
 import { avatars } from '@/global';
 import TextArea from 'antd/lib/input/TextArea';
-import { useMemo, useState } from 'react';
+import { createElement, useState } from 'react';
+import { useAccess } from 'umi';
 
 const Editor = ({ onRefresh }) => {
   const [form] = Form.useForm();
@@ -36,7 +37,7 @@ const Editor = ({ onRefresh }) => {
       return;
     }
     submit();
-    run({ id: 3, content });
+    run({ id: 3, content }); // TODO change id
     resetFields();
     setTimeout(() => {
       onRefresh();
@@ -60,26 +61,41 @@ const Editor = ({ onRefresh }) => {
 export default function Recipe() {
   const [randAvatars, setRandAvatars] = useState<string[]>([]);
   const { recipeId } = useParams<{ recipeId: string }>();
-  const { data, run } = useRequest(`/api/recipe/${recipeId}/`,
-  {
+  const { data, run: refresh } = useRequest(`/api/recipe/${recipeId}/`, {
     onSuccess: (result) => {
       const newArr = [...randAvatars];
       for (let i = 0; i < result?.reviews?.length - randAvatars.length; i++) {
         newArr.unshift(avatars[Math.floor(Math.random() * avatars.length)]);
       }
       setRandAvatars(newArr);
-    }
+    },
   });
-  // console.log('data: ', data);
+  const access = useAccess();
+  const [didLike, setDidLike] = useState(false);
+  const { run: runLike } = useRequest(`/api/recipe/${recipeId}/rec_add_like/`, {
+    manual: true,
+  });
+
+  const like = () => {
+    if (!didLike) {
+      setDidLike(true);
+      runLike();
+      setTimeout(() => {
+        refresh();
+      }, 100);
+    }
+  };
 
   return (
     <PageContainer
       title={`Recipe: ${data?.recipeTitle}`}
       extra={
         data ? (
-          <span>
-            <LikeOutlined />
-            <span className={styles['comment-action']}>{data?.recipeLike}</span>
+          <span onClick={like}>
+            {createElement(didLike ? LikeFilled : LikeOutlined)}
+            <span className={didLike ? styles['comment-action-liked'] : styles['comment-action']}>
+              {data?.recipeLike}
+            </span>
           </span>
         ) : null
       }
@@ -124,15 +140,17 @@ export default function Recipe() {
           ))}
         </ProCard>
         <ProCard title="Comment">
-          <Comment
-            avatar={
-              <Avatar
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt="Han Solo"
-              />
-            }
-            content={<Editor onRefresh={run} />}
-          />
+          {access.isLoggedin && (
+            <Comment
+              avatar={
+                <Avatar
+                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                  alt="Han Solo"
+                />
+              }
+              content={<Editor onRefresh={refresh} />}
+            />
+          )}
           {data?.reviews ? (
             <List
               className="comment-list"

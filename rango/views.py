@@ -133,7 +133,7 @@ def add_category(request):
     return JsonResponse(context_dict)
 
 
-@login_required
+# @login_required
 def category_add_like(request, category_name_slug):
     context_dict = {
         'success': True,
@@ -252,7 +252,7 @@ def add_review(request, recipe_id):
     return JsonResponse(context_dict)
 
 
-@login_required
+# @login_required
 def recipe_add_like(request, recipe_id):
     context_dict = {
         'success': True,

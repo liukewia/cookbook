@@ -29,7 +29,7 @@ export default function AddCategory() {
       },
     },
   );
-  console.log('data: ', data);
+  // console.log('data: ', data);
 
   const onFinish = (values: any) => {
     run(values);
