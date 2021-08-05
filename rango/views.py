@@ -531,15 +531,32 @@ def logout(request):
 
 @login_required
 def update_password(request):
-    username = json.loads(request.body).get('username')
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
 
-    u1 = User.objects.get(username=username)
-    new_plain_password = json.loads(request.body).get('password')
-    print(u1.password)
-    same = check_password(new_plain_password, u1.password)
+    username = request.user.username
+    try:
+        u1 = User.objects.get(username=username)
+    except User.DoesNoneExist:
+        u1 = None
 
-    if same:
-        # same password
+    if u1 is None:
+        context_dict['data'] = {'status': 'error'}
+        return JsonResponse(context_dict)
+
+    old_plain_password = json.loads(request.body).get('oldPassword')
+    # depend if user know his/her old password
+    same = check_password(old_plain_password, u1.password)
+    if not same:
+        context_dict['data'] = {'status': 'error'}
+        return JsonResponse(context_dict)
+
+    new_plain_password = json.loads(request.body).get('newPassword')
+
+    if new_plain_password == old_plain_password:
+        # change the password to the same password
         context_dict = {
             'success': True,
             'data': {
