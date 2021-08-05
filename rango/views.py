@@ -2,7 +2,8 @@ import json
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
@@ -442,18 +443,13 @@ last_name
 
 # #注册页面
 def register(request):
-    # getusername = 'q' # 从前端得到用户名
-    # getpassword = 'w'  # 从前端得到密码
-    # getfirst_name = 'e'  # 从前端得到用户名
-    # getlast_name = 'r'  # 从前端得到用户名
-    # getemail = 't'  # 从前端得到邮箱
-
     getusername = json.loads(request.body).get('username')  # 从前端得到用户名
     getpassword = json.loads(request.body).get('password')  # 从前端得到密码
     getfirst_name = json.loads(request.body).get('firstName')  # 从前端得到用户名
     getlast_name = json.loads(request.body).get('lastName')  # 从前端得到用户名
     getemail = json.loads(request.body).get('email')  # 从前端得到邮箱
-    u1 = User.objects.create(username=getusername, password=getpassword,is_superuser=False,first_name=getfirst_name,last_name=getlast_name,email=getemail)
+    u1 = User.objects.create(username=getusername, password=getpassword, is_superuser=False,
+                             first_name=getfirst_name, last_name=getlast_name, email=getemail)
     u1.save()
     context_dict = {
         'success': True,
@@ -470,7 +466,6 @@ def login(request):
                 'data': {}
             }
 
-
     username = json.loads(request.body).get('username')
     password = json.loads(request.body).get('password')
 
@@ -483,7 +478,7 @@ def login(request):
         }
         return JsonResponse(context_dict)
 
-    login(request)
+    auth.login(request, user)
     if user.is_superuser:
         context_dict['data'] = {
             'status': 'ok',
@@ -503,12 +498,9 @@ def getuserinfo(request):
                 'success': True,
                 'data': {}
             }
+    user = request.user
 
-    username = json.loads(request.body).get('username')
-    password = json.loads(request.body).get('password')
-    user = authenticate(username=username, password=password)
-
-    if user is None:
+    if not user.is_authenticated:
         context_dict['success'] = False
         context_dict['data'] = {'access': 'guest'}
         return JsonResponse(context_dict)
@@ -540,19 +532,32 @@ def getuserinfo(request):
 
     return JsonResponse(context_dict)
 
-#个人信息修改
+
+    # request.uesr.is_authenticated
+    #
+    # username = request.user.username
+    # password = request.user.
+    # user = authenticate(username=username, password=password)
+
+    # if user is None:
+    #     context_dict['success'] = False
+    #     context_dict['data'] = {'access': 'guest'}
+    #     return JsonResponse(context_dict)
+
+
+
 
 def updateInfo(request):
     getusername=json.loads(request.body).get('username')
     u1 = User.objects.get(username=getusername)
-    getusername = json.loads(request.body).get('username')  # 从前端得到用户名
-    getfirst_name = json.loads(request.body).get('firstName')  # 从前端得到用户名
-    getlast_name = json.loads(request.body).get('lastName')  # 从前端得到用户名
-    getemail = json.loads(request.body).get('email')  # 从前端得到邮箱
-    u1.username=getusername
-    u1.first_name=getfirst_name
-    u1.last_name=getlast_name
-    u1.email=getemail
+    getusername = json.loads(request.body).get('username')
+    getfirst_name = json.loads(request.body).get('firstName')
+    getlast_name = json.loads(request.body).get('lastName')
+    getemail = json.loads(request.body).get('email')
+    u1.username = getusername
+    u1.first_name = getfirst_name
+    u1.last_name = getlast_name
+    u1.email = getemail
     u1.save()
     context_dict = {
             'success': True,
