@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
+
 from rango.models import Category, Recipe, FavouriteRecipe, Review, UserProfile
 
 
@@ -57,6 +58,26 @@ def get_all_recipes(request):
     }
 
     return JsonResponse(context_dict)
+
+
+def add_recipes_to_dict(recipes):
+    recipes_dict = []
+    for recipe in recipes:
+        recipe = {
+            'recipeId': recipe.id,
+            'recipeSlug': recipe.slug,
+            'recipeTitle': recipe.title,
+        }
+        recipes_dict.append(recipe)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'recipes': recipes_dict,
+        }
+    }
+
+    return context_dict
 
 
 def user_operation_demo(request):
@@ -315,21 +336,7 @@ def show_favourite_recipe(request):
     favourite_recipe = FavouriteRecipe.objects.get(user=user_profile)
     recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
 
-    recipes_dict = []
-    for recipe in recipes:
-        recipe = {
-            'recipeId': recipe.id,
-            'recipeSlug': recipe.slug,
-            'recipeTitle': recipe.title,
-        }
-        recipes_dict.append(recipe)
-
-    context_dict = {
-        'success': True,
-        'data': {
-            'recipes': recipes_dict,
-        }
-    }
+    context_dict = add_recipes_to_dict(recipes)
 
     return JsonResponse(context_dict)
 
@@ -346,6 +353,31 @@ def add_to_favourite_recipe(request):
 
     return JsonResponse(context_dict)
 
+
+@login_required
+def search(request):
+    keyword = json.loads(request.body).get('keyword')
+    recipes = Recipe.objects.all()
+    search_result = []
+    for recipe in recipes:
+        if keyword in recipe.title or keyword in recipe.ingredients:
+            recipe_dict = {
+                'recipeId': recipe.id,
+                'recipeSlug': recipe.slug,
+                'recipeTitle': recipe.title,
+            }
+
+            search_result.append(recipe_dict)
+
+    context_dict = {
+        'success': True,
+        'data': {
+            'keyword': keyword,
+            'recipes': search_result,
+        }
+    }
+
+    return JsonResponse(context_dict)
 
 # @login_required
 # def show_my_recipe(request):
