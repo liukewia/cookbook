@@ -133,12 +133,21 @@ def add_category(request):
 
 
 def show_recipe(request, recipe_id):
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
+
     try:
         recipe = Recipe.objects.get(id=recipe_id)
         reviews = Review.objects.filter(recipe=recipe)
     except Recipe.DoesNotExist:
         recipe = None
         reviews = None
+
+    if recipe is None:
+        context_dict['success'] = False
+        return JsonResponse(context_dict)
 
     ingredients = recipe.ingredients.split('\n')
     directions = recipe.directions.split('\n')
@@ -148,9 +157,7 @@ def show_recipe(request, recipe_id):
         review_content = {'reviewContent': review.content}
         reviews_dict.append(review_content)
 
-    context_dict = {
-        'success': True,
-        'data': {
+    context_dict['data'] = {
             'recipeId': recipe.id,
             'recipeTitle': recipe.title,
             'recipeLike': recipe.likes,
@@ -158,7 +165,6 @@ def show_recipe(request, recipe_id):
             'recipeIngredients': ingredients,
             'recipeDirections': directions,
             'reviews': reviews_dict,
-        }
     }
 
     return JsonResponse(context_dict)
