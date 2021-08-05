@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
+from django.contrib.auth.hashers import make_password, check_password
 
 from rango.models import Category, Recipe, FavouriteRecipe, Review, UserProfile
 
@@ -589,12 +590,15 @@ def logout(request):
 
 
 def updatePassword(request):
-    getusername = json.loads(request.body).get('username')
-    # getusername='a'
-    u1 = User.objects.get(username=getusername)
-    getnewpassword = json.loads(request.body).get('password')  # 从前端获取新密码
-    # getnewpassword='x'
-    if u1.password == getnewpassword:
+    username = json.loads(request.body).get('username')
+
+    u1 = User.objects.get(username=username)
+    new_plain_password = json.loads(request.body).get('password')
+    new_password = make_password(new_plain_password)
+    same = check_password()
+
+
+    if same:
         context_dict = {
             'success': False,
             'data': {
