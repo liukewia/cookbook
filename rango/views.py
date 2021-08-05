@@ -100,10 +100,6 @@ def user_operation_demo(request):
     })
 
 
-# def user_login(request):
-#     return render(request, 'user/login/index.html')
-
-
 def show_category(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -159,7 +155,7 @@ def add_category(request):
     return JsonResponse(context_dict)
 
 
-# @login_required
+@login_required
 def category_add_like(request, category_name_slug):
     context_dict = {
         'success': True,
@@ -259,7 +255,7 @@ def add_recipe(request):
     return JsonResponse(context_dict)
 
 
-# @login_required
+@login_required
 def add_review(request, recipe_id):
     context_dict = {
         'success': True,
@@ -280,7 +276,7 @@ def add_review(request, recipe_id):
     return JsonResponse(context_dict)
 
 
-# @login_required
+@login_required
 def recipe_add_like(request, recipe_id):
     context_dict = {
         'success': True,
@@ -386,22 +382,6 @@ def search(request):
 
     return JsonResponse(context_dict)
 
-# @login_required
-# def show_my_recipe(request):
-
-
-def about(request):
-    context_dict = {}
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-
-    return render(request, 'about/index.html', context=context_dict)
-
-
-# @login_required
-# def restricted(request):
-#     return render(request, 'rango/restricted.html')
-
 
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
@@ -425,21 +405,6 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
-
-'''auth_user: 先写下简单的逻辑
-id int
-password string
-last_login datetime
-is_superuser bool
-username string
-first_name string
-email string
-is_staff bool
-is_active
-date_joined
-last_name
-
-'''
 
 
 def register(request):
@@ -551,32 +516,33 @@ def get_user_info(request):
     return JsonResponse(context_dict)
 
 
-def update_info(request):
-    context_dict = {
-            'success': True,
-            'data': {}
-        }
-    getusername = json.loads(request.body).get('username')
-    try:
-        u1 = User.objects.get(username=getusername)
-    except User.DoesNotExist:
-        u1 = None
+# @login_required
+# def update_info(request):
+#     context_dict = {
+#             'success': True,
+#             'data': {}
+#         }
+#     getusername = json.loads(request.body).get('username')
+#     try:
+#         u1 = User.objects.get(username=getusername)
+#     except User.DoesNotExist:
+#         u1 = None
+#
+#     # if u1 is None:
+#
+#     u1.username = getusername
+#     u1.first_name = json.loads(request.body).get('firstName')
+#     u1.last_name = json.loads(request.body).get('lastName')
+#     u1.email = json.loads(request.body).get('email')
+#     u1.save()
+#     context_dict['success'] = True
+#
+#     return JsonResponse(context_dict)
 
-    # if u1 is None:
 
-    u1.username = getusername
-    u1.first_name = json.loads(request.body).get('firstName')
-    u1.last_name = json.loads(request.body).get('lastName')
-    u1.email = json.loads(request.body).get('email')
-    u1.save()
-    context_dict['success'] = True
-
-    return JsonResponse(context_dict)
-
-
+@login_required
 def logout(request):
-    user = request.user
-    auth.logout(request, user)
+    auth.logout(request)
     context_dict = {
                     'success': True,
                     'data': {}
@@ -584,6 +550,7 @@ def logout(request):
     return JsonResponse(context_dict)
 
 
+@login_required
 def update_password(request):
     username = json.loads(request.body).get('username')
 
