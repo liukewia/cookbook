@@ -16,6 +16,11 @@ urlpatterns = [
     path('recipe/<int:recipe_id>/', views.show_recipe),
     path('add_recipe/', views.add_recipe),
     path('recipe/<int:recipe_id>/add_review/', views.add_review),
+    #path('login/', views.login),
+    #path('register/', views.register),
+    #path('getuserinfo/', views.getuserinfo),
+    #path('changeuserinfo/', views.changeuserinfo),
+    #path('logout/', views.logout),    
 
     # path('about/', views.about, name="about"),
     # path('user/login/', views.user_login),
