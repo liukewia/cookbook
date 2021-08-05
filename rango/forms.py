@@ -3,31 +3,31 @@ from rango.models import Category, UserProfile, Recipe, Review
 from django.contrib.auth.models import User
 
 
-class CategoryForm(forms.ModelForm):
-    name = forms.CharField(max_length=Category.NAME_MAX_LENGTH,
-                           help_text="Please enter the category name.")
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
-
-    class Meta:
-        model = Category
-        fields = ('name', )
-
-
-class RecipeForm(forms.ModelForm):
-    title = forms.CharField(max_length=Recipe.TITLE_MAX_LENGTH,
-                            help_text="Please enter the title of the page.")
-    ingredients = forms.CharField(max_length=Recipe.SHORT_CONTENT_MAX_LENGHT,
-                                  help_text="Please enter the content of ingredients.")
-    directions = forms.CharField(max_length=Recipe.LONG_CONTENT_MAX_LENGTH,
-                                 help_text="Please enter the specify process.")
-    url = forms.URLField(max_length=Recipe.URL_MAX_LENGTH,
-                         help_text="Please enter the URL of the picture.")
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-
-    class Meta:
-        model = Recipe
-        exclude = ('category',)
+# class CategoryForm(forms.ModelForm):
+#     name = forms.CharField(max_length=Category.NAME_MAX_LENGTH,
+#                            help_text="Please enter the category name.")
+#     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+#     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+#
+#     class Meta:
+#         model = Category
+#         fields = ('name', )
+#
+#
+# class RecipeForm(forms.ModelForm):
+#     title = forms.CharField(max_length=Recipe.TITLE_MAX_LENGTH,
+#                             help_text="Please enter the title of the page.")
+#     ingredients = forms.CharField(max_length=Recipe.SHORT_CONTENT_MAX_LENGHT,
+#                                   help_text="Please enter the content of ingredients.")
+#     directions = forms.CharField(max_length=Recipe.LONG_CONTENT_MAX_LENGTH,
+#                                  help_text="Please enter the specify process.")
+#     url = forms.URLField(max_length=Recipe.URL_MAX_LENGTH,
+#                          help_text="Please enter the URL of the picture.")
+#     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+#
+#     class Meta:
+#         model = Recipe
+#         exclude = ('category',)
 
 
     # def clean(self):
@@ -40,15 +40,15 @@ class RecipeForm(forms.ModelForm):
     #
     #     return cleaned_data
 
-
-class ReviewForm(forms.ModelForm):
-    content = forms.CharField(max_length=Review.CONTENT_MAX_LENGTH,
-                              help_text="Be nice, do not say fXXX word!")
-
-    class Meta:
-        model = Review
-        fields = ('user_profile', 'recipe', 'content', )
-
+#
+# class ReviewForm(forms.ModelForm):
+#     content = forms.CharField(max_length=Review.CONTENT_MAX_LENGTH,
+#                               help_text="Be nice, do not say fXXX word!")
+#
+#     class Meta:
+#         model = Review
+#         fields = ('user_profile', 'recipe', 'content', )
+#
 
 # class PageForm(forms.ModelForm):
 #     title = forms.CharField(max_length=Page.TITLE_MAX_LENGTH,
@@ -72,15 +72,15 @@ class ReviewForm(forms.ModelForm):
 #         return cleaned_data
 
 
-class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password', )
-
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('website', 'picture', )
-
+# class UserForm(forms.ModelForm):
+#     password = forms.CharField(widget=forms.PasswordInput())
+#
+#     class Meta:
+#         model = User
+#         fields = ('username', 'email', 'password', )
+#
+# class UserProfileForm(forms.ModelForm):
+#     class Meta:
+#         model = UserProfile
+#         fields = ('website', 'picture', )
+#

@@ -28,10 +28,5 @@ urlpatterns = [
     #path('changeuserinfo/', views.changeuserinfo),
     path('changeuserpassword/', views.changeuserpassword),
 
-    # path('about/', views.about, name="about"),
-    # path('user/login/', views.user_login),
-    # path('category/<slug:category_name_slug>/add_page/',
-    #      views.add_page, name='add_page'),
-    # path('restricted/', views.restricted, name='restricted'),
     re_path(r'^(?:.*)/?$', views.illegal_request_handler),
 ]

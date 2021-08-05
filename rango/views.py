@@ -39,7 +39,8 @@ def get_all_categories(request):
 
 
 def get_all_recipes(request):
-    recipe_list = Recipe.objects.order_by('-likes')
+    # get top10 most popular recipes
+    recipe_list = Recipe.objects.order_by('-likes')[:10]
     recipes = []
     for recipe in recipe_list:
         recipe_dict = {
@@ -144,6 +145,7 @@ def add_category(request):
             }
         }
     else:
+        # if the category is already exists, return false
         context_dict = {
             'success': False,
             'data': {
@@ -171,6 +173,7 @@ def category_add_like(request, category_name_slug):
 
     likes = category.likes + 1
     category.likes = likes
+    # save the object, otherwise the attribute will not change
     category.save()
 
     context_dict['data'] = {'likes': category.likes}
@@ -195,6 +198,7 @@ def show_recipe(request, recipe_id):
         context_dict['success'] = False
         return JsonResponse(context_dict)
 
+    # separate the string by \n
     ingredients = recipe.ingredients.split('\n')
     directions = recipe.directions.split('\n')
     owner_id = recipe.owner.id
