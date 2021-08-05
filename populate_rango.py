@@ -1,10 +1,9 @@
-from rango.models import Category, Recipe, FavouriteRecipe, UserProfile, User
-import django
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'tango_with_django_project.settings')
-
+import django
 django.setup()
+from rango.models import Category, Recipe, FavouriteRecipe, UserProfile, User
 
 
 def populate():
@@ -38,8 +37,7 @@ ground black pepper to taste
 """,
          'directions': """Preheat an outdoor grill for medium-high heat and lightly oil grate.
 Arrange the cabbage wedges into the bottom of a large metal baking dish. Pour the water into the dish. Place a teaspoon of butter on each cabbage wedge. Season liberally with garlic powder, seasoned salt, and pepper. Cover the dish with aluminum foil.
-Place the dish on the preheated grill; cook until cabbage is tender, about 30 minutes.
-""",
+Place the dish on the preheated grill; cook until cabbage is tender, about 30 minutes.""",
          'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F8711239.jpg&q=85',
          'likes': 26},
         {'title': 'Grilled Salmon',
@@ -556,17 +554,17 @@ Drizzle sauce over pork, apples, and sweet potatoes. Slice tenderloins and serve
 
     # favs = {'user': 'mockusername', 'recipe': 'Best Steak Marinade in Existence'}
 
-    # for cat, cat_data in cats.items():
-    #     c = add_cat(cat, likes=cat_data['likes'])
-    #     for r in cat_data['recipes']:
-    #         add_recipe(c, r['title'], r['ingredients'], r['directions'], r['url'], likes=r['likes'])
-    #
-    # for c in Category.objects.all():
-    #     for r in Recipe.objects.filter(category=c):
-    #         print(f'- {c}: {r}')
+    for cat, cat_data in cats.items():
+        c = add_cat(cat, likes=cat_data['likes'])
+        for r in cat_data['recipes']:
+            add_recipe(c, r['title'], r['ingredients'], r['directions'], r['url'], likes=r['likes'])
+
+    for c in Category.objects.all():
+        for r in Recipe.objects.filter(category=c):
+            print(f'- {c}: {r}')
 
     # add_user_profile()
-    create_favourite_recipe()
+    # create_favourite_recipe()
 
     # add_to_favourite_recipe(favs['user'], favs['title'])
 
