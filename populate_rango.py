@@ -462,29 +462,38 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
             }
 
     user2 = {
-        'username': "ckUser2",
-        'password': "12345",
-        'firstName': "John",
+        'username': "Jonnie",
+        'password': "abc123456",
+        'firstName': "Jonnie",
         'lastName': "Snow",
-        'email': "adadad.com"
+        'email': "adadad@163.com"
     }
 
     user3 = {
-        'username': "ckUser3",
-        'password': "12345",
-        'firstName': "Jonny",
-        'lastName': "Ada",
-        'email': "bilipili.com"
+        'username': "fan",
+        'password': "123456abc",
+        'firstName': "Fan",
+        'lastName': "Wu",
+        'email': "bilipili@143.com"
+    }
+
+    user4 = {
+        'username': "emily",
+        'password': "123456abcd",
+        'firstName': "Emily",
+        'lastName': "Wood",
+        'email': "bilipili@126.com"
     }
 
     users = {
         'user2': user2,
         'user3': user3,
+        'user4': user4,
     }
 
-    # for user, user_data in users.items():
-    #     u = create_user(user_data['username'], user_data['password'], user_data['firstName'], user_data['lastName'], user_data['email'])
-    #     print(f'create {u.username}')
+    for user, user_data in users.items():
+        u = create_user(user_data['username'], user_data['password'], user_data['firstName'], user_data['lastName'], user_data['email'])
+        print(f'create {u.username}')
 
     for cat, cat_data in cats.items():
         c = add_cat(cat, likes=cat_data['likes'])
@@ -495,15 +504,20 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
         for r in Recipe.objects.filter(category=c):
             print(f'- {c}: {r}')
 
-    # add recipe to favourite recipe
+    # add recipe to favourite recipe and post review
+    up1 = UserProfile.objects.get(user=User.objects.get(id=2))
+    i = 1
+    while i < 5:
+        add_to_favourite_recipe(up1, recipe_id=i)
+        add_review(up1, content="good recipe", recipe_id=i)
+        i = i+1
 
-    up = UserProfile.objects.get(user=User.objects.get(id=2))
-    add_to_favourite_recipe(up, recipe_id=1)
-    add_review(up, recipe_id=1)
-
-    up = UserProfile.objects.get(user=User.objects.get(id=3))
-    add_to_favourite_recipe(up, recipe_id=2)
-    add_review(up, recipe_id=2)
+    up2 = UserProfile.objects.get(user=User.objects.get(id=3))
+    i = 5
+    while i < 20:
+        add_to_favourite_recipe(up2, recipe_id=i)
+        add_review(up2, content="excellent!!!", recipe_id=i)
+        i = i+1
 
 
 def add_recipe(cat, title, ingredients, directions, url, likes=0):
@@ -546,10 +560,10 @@ def add_to_favourite_recipe(user_profile, recipe_id=1):
     recipe.favouriteRecipe.add(favourite_recipe)
 
 
-def add_review(user_profile, recipe_id=1):
+def add_review(user_profile, content, recipe_id=1):
     recipe = Recipe.objects.get(id=recipe_id)
     Review.objects.create(user_profile=user_profile, recipe=recipe,
-                          content="good recipe")
+                          content=content)
 
 
 if __name__ == '__main__':
