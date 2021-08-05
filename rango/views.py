@@ -429,7 +429,7 @@ def register(request):
         return JsonResponse(context_dict)
 
     u1 = user_tuple[0]
-    u1.password = password
+    u1.password = make_password(password, None, 'pbkdf2_sha256')
     u1.is_superuser = False
     u1.first_name = first_name
     u1.last_name = last_name
@@ -519,30 +519,6 @@ def get_user_info(request):
     return JsonResponse(context_dict)
 
 
-# @login_required
-# def update_info(request):
-#     context_dict = {
-#             'success': True,
-#             'data': {}
-#         }
-#     getusername = json.loads(request.body).get('username')
-#     try:
-#         u1 = User.objects.get(username=getusername)
-#     except User.DoesNotExist:
-#         u1 = None
-#
-#     # if u1 is None:
-#
-#     u1.username = getusername
-#     u1.first_name = json.loads(request.body).get('firstName')
-#     u1.last_name = json.loads(request.body).get('lastName')
-#     u1.email = json.loads(request.body).get('email')
-#     u1.save()
-#     context_dict['success'] = True
-#
-#     return JsonResponse(context_dict)
-
-
 @login_required
 def logout(request):
     auth.logout(request)
@@ -567,7 +543,7 @@ def update_password(request):
         context_dict = {
             'success': True,
             'data': {
-                'state': 'error',
+                'status': 'error',
             }
         }
         return JsonResponse(context_dict)
@@ -578,7 +554,7 @@ def update_password(request):
         context_dict = {
             'success': True,
             'data': {
-                'state': 'ok',
+                'status': 'ok',
             }
         }
         return JsonResponse(context_dict)
