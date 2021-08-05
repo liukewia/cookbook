@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
@@ -462,75 +463,83 @@ def register(request):
         }}
     return JsonResponse(context_dict)
 
-#登录页面
+
 def login(request):
-    enterusername = json.loads(request.body).get('username')
-    enterpassword = json.loads(request.body).get('password') #从前端获得password
-    # enterusername='a'
-    # enterpassword='c'
-    u1 = User.objects.get(username=enterusername)
-    if enterpassword == u1.password:
-        u1.is_active=True
-        u1.save()
-        print("密码正确")
-        # 判断用户状态
-        if u1.is_superuser=='1':
-            context_dict = {
-            'success': True,
-            'data': {
-                'status': 'ok',
-                'access': 'admin'
-            }}
-            return JsonResponse(context_dict)
-        else:
-           context_dict = {
-           'success': True,
-           'data': {
-               'status': 'ok',
-               'access': 'user',
-           }}
-           return JsonResponse(context_dict)
-    else:
-        context_dict = {
-        'success': False,
-        'data': {
+    context_dict = {
+                'success': True,
+                'data': {}
+            }
+
+
+    username = json.loads(request.body).get('username')
+    password = json.loads(request.body).get('password')
+
+    user = authenticate(username=username, password=password)
+    if user is None:
+        context_dict['success'] = False
+        context_dict['data'] = {
             'status': 'error',
-            'access': 'guest',
-        }}
+            'access': 'guest'
+        }
+        return JsonResponse(context_dict)
+
+    login(request)
+    if user.is_superuser:
+        context_dict['data'] = {
+            'status': 'ok',
+            'access': 'admin'
+        }
+    else:
+        context_dict['data'] = {
+            'status': 'ok',
+            'access': 'user'
+        }
+
     return JsonResponse(context_dict)
 
-
-
-
-
-#用户信息展示
 
 def getuserinfo(request):
     context_dict = {
                 'success': True,
                 'data': {}
             }
-    #getuserid=user_id #前端传入user_id
-    #getuserid='2'
-    getuserid = json.loads(request.body).get('id')
-    try:
-        u1 = User.objects.get(id=getuserid)
-    except User.DoesNotExist:
-        u1 = None
 
-    if u1 is None:
+    username = json.loads(request.body).get('username')
+    password = json.loads(request.body).get('password')
+    user = authenticate(username=username, password=password)
+
+    if user is None:
         context_dict['success'] = False
+        context_dict['data'] = {'access': 'guest'}
         return JsonResponse(context_dict)
 
-    context_dict = {
-                'success': True,
-                'data': {
-                    'infoName': u1.username,
-                    'infoEmail': u1.email,
+    if user.is_superuser:
+        context_dict = {
+                    'success': True,
+                    'data': {
+                        'userName': user.username,
+                        'firstName': user.first_name,
+                        'lastName': user.last_name,
+                        'id': user.id,
+                        'email': user.email,
+                        'access': 'admin'
+                    }
                 }
-            }
+    else:
+        context_dict = {
+                    'success': True,
+                    'data': {
+                        'userName': user.username,
+                        'firstName': user.first_name,
+                        'lastName': user.last_name,
+                        'id': user.id,
+                        'email': user.email,
+                        'access': 'user'
+                    }
+                }
 
     return JsonResponse(context_dict)
+
 #个人信息修改
 
 def updateInfo(request):

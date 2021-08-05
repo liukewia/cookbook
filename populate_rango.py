@@ -539,7 +539,7 @@ def add_cat(name, likes=0):
 
 
 def create_user(username, password, first_name, last_name, email):
-    user = User.objects.create_user(username, password, email)
+    user = User.objects.create_user(username, email, password)
     user.first_name = first_name
     user.last_name = last_name
     user.save()
