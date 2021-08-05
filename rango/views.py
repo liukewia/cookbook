@@ -540,7 +540,7 @@ def update_password(request):
         context_dict = {
             'success': True,
             'data': {
-                'state': 'error',
+                'status': 'error',
             }
         }
         return JsonResponse(context_dict)
@@ -551,7 +551,7 @@ def update_password(request):
         context_dict = {
             'success': True,
             'data': {
-                'state': 'ok',
+                'status': 'ok',
             }
         }
         return JsonResponse(context_dict)
