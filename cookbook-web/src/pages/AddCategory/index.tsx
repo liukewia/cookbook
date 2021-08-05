@@ -14,7 +14,7 @@ export default function AddCategory() {
   const [form] = Form.useForm();
   const { run } = useRequest(
     (values) => ({
-      url: 'api/add_category/',
+      url: '/api/add_category/',
       method: 'post',
       data: values,
     }),

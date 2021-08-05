@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
-
 from rango.models import Category, Recipe, FavouriteRecipe, Review, UserProfile
 
 
@@ -228,10 +227,13 @@ def show_recipe(request, recipe_id):
     return JsonResponse(context_dict)
 
 
-@login_required
+# @login_required
 def add_recipe(request):
     context_dict = {
         'success': True,
+        'data': {
+        
+        }
     }
     category_name_slug = json.loads(request.body).get('slug')
     user = User.objects.get(id=json.loads(request.body).get('id'))
@@ -253,6 +255,7 @@ def add_recipe(request):
                                    directions=json.loads(request.body).get('directions'),
                                    url=json.loads(request.body).get('url'))
 
+    context_dict['data']['status'] = 'ok'
     return JsonResponse(context_dict)
 
 
@@ -383,6 +386,7 @@ def search(request):
 
     return JsonResponse(context_dict)
 
+
 # @login_required
 # def show_my_recipe(request):
 
@@ -423,6 +427,7 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
+
 '''auth_user: 先写下简单的逻辑
 id int
 password string
@@ -452,7 +457,8 @@ def register(request):
     getfirst_name = json.loads(request.body).get('firstName')  # 从前端得到用户名
     getlast_name = json.loads(request.body).get('lastName')  # 从前端得到用户名
     getemail = json.loads(request.body).get('email')  # 从前端得到邮箱
-    u1 = User.objects.create(username=getusername, password=getpassword,is_superuser=False,first_name=getfirst_name,last_name=getlast_name,email=getemail)
+    u1 = User.objects.create(username=getusername, password=getpassword, is_superuser=False, first_name=getfirst_name,
+                             last_name=getlast_name, email=getemail)
     u1.save()
     context_dict = {
         'success': True,
@@ -462,56 +468,54 @@ def register(request):
         }}
     return JsonResponse(context_dict)
 
-#登录页面
+
+# 登录页面
 def login(request):
     enterusername = json.loads(request.body).get('username')
-    enterpassword = json.loads(request.body).get('password') #从前端获得password
+    enterpassword = json.loads(request.body).get('password')  # 从前端获得password
     # enterusername='a'
     # enterpassword='c'
     u1 = User.objects.get(username=enterusername)
     if enterpassword == u1.password:
-        u1.is_active=True
+        u1.is_active = True
         u1.save()
         print("密码正确")
         # 判断用户状态
-        if u1.is_superuser=='1':
+        if u1.is_superuser == '1':
             context_dict = {
-            'success': True,
-            'data': {
-                'status': 'ok',
-                'access': 'admin'
-            }}
+                'success': True,
+                'data': {
+                    'status': 'ok',
+                    'access': 'admin'
+                }}
             return JsonResponse(context_dict)
         else:
-           context_dict = {
-           'success': True,
-           'data': {
-               'status': 'ok',
-               'access': 'user',
-           }}
-           return JsonResponse(context_dict)
+            context_dict = {
+                'success': True,
+                'data': {
+                    'status': 'ok',
+                    'access': 'user',
+                }}
+            return JsonResponse(context_dict)
     else:
         context_dict = {
-        'success': False,
-        'data': {
-            'status': 'error',
-            'access': 'guest',
-        }}
+            'success': False,
+            'data': {
+                'status': 'error',
+                'access': 'guest',
+            }}
     return JsonResponse(context_dict)
 
 
-
-
-
-#用户信息展示
+# 用户信息展示
 
 def getuserinfo(request):
     context_dict = {
-                'success': True,
-                'data': {}
-            }
-    #getuserid=user_id #前端传入user_id
-    #getuserid='2'
+        'success': True,
+        'data': {}
+    }
+    # getuserid=user_id #前端传入user_id
+    # getuserid='2'
     getuserid = json.loads(request.body).get('id')
     try:
         u1 = User.objects.get(id=getuserid)
@@ -523,58 +527,60 @@ def getuserinfo(request):
         return JsonResponse(context_dict)
 
     context_dict = {
-                'success': True,
-                'data': {
-                    'infoName': u1.username,
-                    'infoEmail': u1.email,
-                }
-            }
+        'success': True,
+        'data': {
+            'infoName': u1.username,
+            'infoEmail': u1.email,
+        }
+    }
 
     return JsonResponse(context_dict)
-#个人信息修改
+
+
+# 个人信息修改
 
 def updateInfo(request):
-    getusername=json.loads(request.body).get('username')
+    getusername = json.loads(request.body).get('username')
     u1 = User.objects.get(username=getusername)
     getusername = json.loads(request.body).get('username')  # 从前端得到用户名
     getfirst_name = json.loads(request.body).get('firstName')  # 从前端得到用户名
     getlast_name = json.loads(request.body).get('lastName')  # 从前端得到用户名
     getemail = json.loads(request.body).get('email')  # 从前端得到邮箱
-    u1.username=getusername
-    u1.first_name=getfirst_name
-    u1.last_name=getlast_name
-    u1.email=getemail
+    u1.username = getusername
+    u1.first_name = getfirst_name
+    u1.last_name = getlast_name
+    u1.email = getemail
     u1.save()
     context_dict = {
-            'success': True,
-            'data': {
-            }
+        'success': True,
+        'data': {
         }
+    }
     return JsonResponse(context_dict)
 
 
-
-#登出页面
+# 登出页面
 def logout(request):
-    getusername = json.loads(request.body).get('username') #从前端获得username
+    getusername = json.loads(request.body).get('username')  # 从前端获得username
     u1 = User.objects.get(username=getusername)
-    u1.is_active =False
+    u1.is_active = False
     u1.save()
     context_dict = {
-                    'success': True,
-                    'data': {
-                    }
-                }
+        'success': True,
+        'data': {
+        }
+    }
     return JsonResponse(context_dict)
 
-#更改密码
+
+# 更改密码
 def updatePassword(request):
-    getusername=json.loads(request.body).get('username')
+    getusername = json.loads(request.body).get('username')
     # getusername='a'
     u1 = User.objects.get(username=getusername)
-    getnewpassword=json.loads(request.body).get('password') #从前端获取新密码
-    #getnewpassword='x'
-    if u1.password==getnewpassword:
+    getnewpassword = json.loads(request.body).get('password')  # 从前端获取新密码
+    # getnewpassword='x'
+    if u1.password == getnewpassword:
         context_dict = {
             'success': False,
             'data': {

@@ -29,11 +29,9 @@ export default function CategoryHub() {
     <PageContainer
       extra={
         data ? (
-          <span onClick={like}>
+          <span onClick={like} style={didLike ? undefined : { cursor: 'pointer' }}>
             {createElement(didLike ? LikeFilled : LikeOutlined)}
-            <span className={didLike ? styles['comment-action-liked'] : styles['comment-action']}>
-              {data?.categoryLikes}
-            </span>
+            <span style={{ paddingLeft: 8 }}>{data?.categoryLikes}</span>
           </span>
         ) : null
       }

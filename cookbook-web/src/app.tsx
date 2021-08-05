@@ -26,7 +26,6 @@ export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
-  // console.log('In getInitialState');
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();

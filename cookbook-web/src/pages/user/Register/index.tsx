@@ -149,7 +149,7 @@ const Register: FC = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <h1>Register</h1>
+        <h1>Sign Up</h1>
         <Form form={form} name="UserRegister" onFinish={onFinish}>
           <FormItem
             name="Username"

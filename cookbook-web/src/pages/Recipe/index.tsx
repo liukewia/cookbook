@@ -91,11 +91,9 @@ export default function Recipe() {
       title={`Recipe: ${data?.recipeTitle}`}
       extra={
         data ? (
-          <span onClick={like}>
+          <span onClick={like} style={didLike ? undefined : { cursor: 'pointer' }}>
             {createElement(didLike ? LikeFilled : LikeOutlined)}
-            <span className={didLike ? styles['comment-action-liked'] : styles['comment-action']}>
-              {data?.recipeLike}
-            </span>
+            <span style={{ paddingLeft: 8 }}>{data?.recipeLike}</span>
           </span>
         ) : null
       }

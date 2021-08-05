@@ -92,11 +92,7 @@ const Login: React.FC = (props) => {
         <div className={styles.top}>
           <div className={styles.header}>
             <Link to="/">
-              <img
-                alt="logo"
-                className={styles.logo}
-                src={`${isDev ? '/' : '/static/'}logo.svg`}
-              />
+              <img alt="logo" className={styles.logo} src={`${isDev ? '/' : '/static/'}logo.svg`} />
               <span className={styles.title}>{businessTitle}</span>
             </Link>
           </div>
@@ -140,7 +136,7 @@ const Login: React.FC = (props) => {
                     size: 'large',
                     prefix: <UserOutlined className={styles.prefixIcon} />,
                   }}
-                  placeholder={'Username: admin or user'}
+                  placeholder={'username'}
                   rules={[
                     {
                       required: true,
@@ -154,11 +150,11 @@ const Login: React.FC = (props) => {
                     size: 'large',
                     prefix: <LockOutlined className={styles.prefixIcon} />,
                   }}
-                  placeholder={'password: ant.design'}
+                  placeholder={'password'}
                   rules={[
                     {
                       required: true,
-                      message: 'Password required！',
+                      message: 'Password required!',
                     },
                   ]}
                 />
@@ -228,9 +224,10 @@ const Login: React.FC = (props) => {
                 marginBottom: 24,
               }}
             >
-              <ProFormCheckbox noStyle name="autoLogin">
+              {/* <ProFormCheckbox noStyle name="autoLogin">
                 auto login
-              </ProFormCheckbox>
+              </ProFormCheckbox> */}
+              <Link to="/">Visit as guest</Link>
               <Link
                 to="/user/register"
                 style={{
