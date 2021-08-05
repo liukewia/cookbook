@@ -60,7 +60,8 @@ const Login: React.FC = (props) => {
 
     try {
       // 登录
-      const msg = await login({ ...values, type });
+      console.log('values: ', values);
+      const msg = await login({ ...values });
 
       if (msg.status === 'ok') {
         message.success('Logged in successfully!');

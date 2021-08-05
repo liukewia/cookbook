@@ -29,6 +29,7 @@ export async function getInitialState(): Promise<{
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
+      console.log('msg: ', msg);
       return msg.data;
     } catch (error) {
       console.log('getInitialState error: ', error);
@@ -36,7 +37,7 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-  // 如果是登录页面，不执行
+
   if (history.location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
     console.log('InitialState, not loginPath: ', {

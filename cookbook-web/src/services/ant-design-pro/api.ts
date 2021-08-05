@@ -2,9 +2,9 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-/** 获取当前的用户 GET /api/currentUser */
+/** getuserinfo GET /api/getuserinfo */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request('/api/currentUser/', {
+  return request('/api/getuserinfo/', {
     method: 'GET',
     ...(options || {}),
   });
@@ -20,11 +20,11 @@ export async function logout(options?: { [key: string]: any }) {
 
 /** log in POST /api/login/account */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/login/account', {
+  return request<API.LoginResult>('/api/user/login/', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    // headers: {
+    //   'Content-Type': 'application/json',
+    // },
     data: body,
     ...(options || {}),
   });

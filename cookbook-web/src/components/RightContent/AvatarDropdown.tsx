@@ -15,7 +15,6 @@ import styles from './index.less';
 import { logout } from '@/services/ant-design-pro/api';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useAccess } from 'umi';
-import { avatars } from '@/global';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -96,8 +95,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   }
 
   const { currentUser } = initialState;
-
-  if (!currentUser || !currentUser.name) {
+  if (!currentUser?.access) {
     return loading;
   }
 
@@ -151,7 +149,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
           src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
           alt="avatar"
         />
-        <span className={`${styles.name} anticon`}>{currentUser.name}</span>
+        <span className={`${styles.name} anticon`}>{currentUser.name || 'Guest'}</span>
       </span>
     </HeaderDropdown>
   );
