@@ -463,7 +463,7 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
 
     user2 = {
         'username': "Jonnie",
-        'password': "abc123456",
+        'password': "abcd1",
         'firstName': "Jonnie",
         'lastName': "Snow",
         'email': "adadad@163.com"
@@ -471,7 +471,7 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
 
     user3 = {
         'username': "fan",
-        'password': "123456abc",
+        'password': "abcd2",
         'firstName': "Fan",
         'lastName': "Wu",
         'email': "bilipili@143.com"
@@ -479,7 +479,7 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
 
     user4 = {
         'username': "emily",
-        'password': "123456abcd",
+        'password': "abcd3",
         'firstName': "Emily",
         'lastName': "Wood",
         'email': "bilipili@126.com"

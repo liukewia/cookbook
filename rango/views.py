@@ -447,12 +447,12 @@ def register(request):
         'success': True,
         'data': {}
     }
-    getusername = json.loads(request.body).get('username')
-    getpassword = json.loads(request.body).get('password')
-    getfirst_name = json.loads(request.body).get('firstName')
-    getlast_name = json.loads(request.body).get('lastName')
-    getemail = json.loads(request.body).get('email')
-    user_tuple = User.objects.get_or_create(username=getusername)
+    username = json.loads(request.body).get('username')
+    password = json.loads(request.body).get('password')
+    first_name = json.loads(request.body).get('firstName')
+    last_name = json.loads(request.body).get('lastName')
+    email = json.loads(request.body).get('email')
+    user_tuple = User.objects.get_or_create(username=username)
     if not user_tuple[1]:
         # user already exist
         context_dict['data'] = {
@@ -461,11 +461,11 @@ def register(request):
         return JsonResponse(context_dict)
 
     u1 = user_tuple[0]
-    u1.password = getpassword
+    u1.password = password
     u1.is_superuser = False,
-    u1.first_name = getfirst_name
-    u1.last_name = getlast_name
-    u1.email = getemail
+    u1.first_name = first_name
+    u1.last_name = last_name
+    u1.email = email
     u1.save()
     context_dict = {
         'success': True,
@@ -507,7 +507,7 @@ def login(request):
     return JsonResponse(context_dict)
 
 
-def getuserinfo(request):
+def get_user_info(request):
     context_dict = {
                 'success': True,
                 'data': {}
@@ -551,7 +551,7 @@ def getuserinfo(request):
     return JsonResponse(context_dict)
 
 
-def updateInfo(request):
+def update_info(request):
     context_dict = {
             'success': True,
             'data': {}
@@ -584,30 +584,31 @@ def logout(request):
     return JsonResponse(context_dict)
 
 
-def updatePassword(request):
+def update_password(request):
     username = json.loads(request.body).get('username')
 
     u1 = User.objects.get(username=username)
     new_plain_password = json.loads(request.body).get('password')
-    new_password = make_password(new_plain_password)
-    same = check_password()
-
+    print(u1.password)
+    same = check_password(new_plain_password, u1.password)
 
     if same:
+        # same password
         context_dict = {
-            'success': False,
+            'success': True,
             'data': {
-                'newpassowrd': u1.password,
+                'state': 'error',
             }
         }
         return JsonResponse(context_dict)
     else:
-        u1.password = getnewpassword
+        new_password = make_password(new_plain_password, None, 'pbkdf2_sha256')
+        u1.password = new_password
         u1.save()
         context_dict = {
             'success': True,
             'data': {
-                'newpassowrd': u1.password,
+                'state': 'ok',
             }
         }
         return JsonResponse(context_dict)
