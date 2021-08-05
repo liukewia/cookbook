@@ -482,27 +482,33 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
         'user3': user3,
     }
 
-    # for cat, cat_data in cats.items():
-    #     c = add_cat(cat, likes=cat_data['likes'])
-    #     for r in cat_data['recipes']:
-    #         add_recipe(c, r['title'], r['ingredients'], r['directions'], r['url'], likes=r['likes'])
-    #
-    # for c in Category.objects.all():
-    #     for r in Recipe.objects.filter(category=c):
-    #         print(f'- {c}: {r}')
+    # for user, user_data in users.items():
+    #     u = create_user(user_data['username'], user_data['password'], user_data['firstName'], user_data['lastName'], user_data['email'])
+    #     print(f'create {u.username}')
 
-    for user, user_data in users.items():
-        u = create_user(user_data['username'], user_data['password'], user_data['firstName'], user_data['lastName'], user_data['email'])
-        print(f'create {u.username}')
+    for cat, cat_data in cats.items():
+        c = add_cat(cat, likes=cat_data['likes'])
+        for r in cat_data['recipes']:
+            add_recipe(c, r['title'], r['ingredients'], r['directions'], r['url'], likes=r['likes'])
 
+    for c in Category.objects.all():
+        for r in Recipe.objects.filter(category=c):
+            print(f'- {c}: {r}')
 
-    # create_favourite_recipe()
-    # favs = {'user': 'mockusername', 'recipe': 'Best Steak Marinade in Existence'}
-    # add_to_favourite_recipe(favs['user'], favs['title'])
+    # add recipe to favourite recipe
+
+    up = UserProfile.objects.get(user=User.objects.get(id=2))
+    add_to_favourite_recipe(up, recipe_id=1)
+    add_review(up, recipe_id=1)
+
+    up = UserProfile.objects.get(user=User.objects.get(id=3))
+    add_to_favourite_recipe(up, recipe_id=2)
+    add_review(up, recipe_id=2)
 
 
 def add_recipe(cat, title, ingredients, directions, url, likes=0):
-    r = Recipe.objects.get_or_create(category=cat, title=title)[0]
+    up = UserProfile.objects.get(id=1)
+    r = Recipe.objects.get_or_create(category=cat, owner=up, title=title)[0]
     r.ingredients = ingredients
     r.directions = directions
     r.url = url
@@ -519,7 +525,9 @@ def add_cat(name, likes=0):
 
 
 def create_user(username, password, first_name, last_name, email):
-    user = User.objects.create_user(username, email, password)
+    user = User.objects.create_user(username, password, email)
+    user.first_name = first_name
+    user.last_name = last_name
     user.save()
     add_user_profile(username=user.username)
     return user
@@ -529,8 +537,6 @@ def add_user_profile(username):
     user = User.objects.filter(username=username)[0]
     up = UserProfile.objects.create(user=user)
     up.save()
-    add_to_favourite_recipe(up, recipe_id=1)
-    add_review(up, recipe_id=2)
     return up
 
 
@@ -544,8 +550,6 @@ def add_review(user_profile, recipe_id=1):
     recipe = Recipe.objects.get(id=recipe_id)
     Review.objects.create(user_profile=user_profile, recipe=recipe,
                           content="good recipe")
-
-
 
 
 if __name__ == '__main__':
