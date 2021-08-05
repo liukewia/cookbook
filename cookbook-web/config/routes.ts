@@ -7,6 +7,10 @@ export default [
     path: '/home',
     component: './Home',
   },
+  {
+    path: '/recipe/:recipeId',
+    component: './Recipe',
+  },
   // {
   //   path: '/user',
   //   layout: false,
@@ -95,7 +99,11 @@ export default [
     component: './AddCategory',
     access: 'isLoggedin',
   },
-
+  {
+    path: '/post-recipe',
+    component: './PostRecipe',
+    access: 'isLoggedin',
+  },
   {
     path: '/about',
     component: './About',

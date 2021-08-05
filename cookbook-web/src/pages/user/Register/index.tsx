@@ -156,7 +156,6 @@ const Register: FC = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please enter your username!',
               },
               {
                 type: 'string',
@@ -201,7 +200,6 @@ const Register: FC = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please enter Email address!',
               },
               {
                 type: 'email',

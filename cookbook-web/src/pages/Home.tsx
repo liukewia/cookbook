@@ -1,9 +1,9 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Alert, Typography, Image, Space, Descriptions } from 'antd';
+import { Card, Image, Space, Descriptions } from 'antd';
 import styles from './Home.less';
 import { Link, useRequest } from 'umi';
-import LoadingFailureTip from '@/components/loading-failure-tip';
+import MultiClamp from 'react-multi-clamp';
 
 // const CodePreview: React.FC = ({ children }) => (
 //   <pre className={styles.pre}>
@@ -14,33 +14,35 @@ import LoadingFailureTip from '@/components/loading-failure-tip';
 // );
 
 export default (): React.ReactNode => {
-  const { data } = useRequest('api/get_all_recipes/');
+  const { data } = useRequest('/api/get_all_recipes/');
 
   return (
-    <PageContainer>
+    <PageContainer title="Home">
       <Card title="Most Liked Recipes">
         <Space direction="vertical">
-          {data?.recipes ? (
-            data?.recipes?.map((recipe: any) => (
-              <Link to={`/recipe/${recipe.recipeId}/`} key={`/recipe/${recipe.recipeId}/`}>
-                <Card hoverable>
-                  <Space size="large">
-                    <Image
-                      preview={false}
-                      alt={`${recipe.recipeTitle} Picture`}
-                      style={{ width: 200, height: 200 }}
-                      src={recipe.recipePicture}
-                    />
-                    <Descriptions title={recipe.recipeTitle}>
-                      <Descriptions.Item>{recipe.recipeDirection}</Descriptions.Item>
-                    </Descriptions>
-                  </Space>
-                </Card>
-              </Link>
-            ))
-          ) : (
-            <LoadingFailureTip />
-          )}
+          {data?.recipes
+            ? data?.recipes?.map((recipe: any) => (
+                <Link to={`/recipe/${recipe.recipeId}/`} key={`recipe-${recipe.recipeId}`}>
+                  <Card hoverable>
+                    <Space size="large">
+                      <Image
+                        preview={false}
+                        alt={`${recipe.recipeTitle} Picture`}
+                        style={{ width: 200, height: 200, objectFit: 'cover' }}
+                        src={recipe.recipePicture}
+                      />
+                      <Descriptions title={recipe.recipeTitle}>
+                        <Descriptions.Item>
+                          <MultiClamp ellipsis="..." clamp={3}>
+                            {recipe.recipeDirection as string}
+                          </MultiClamp>
+                        </Descriptions.Item>
+                      </Descriptions>
+                    </Space>
+                  </Card>
+                </Link>
+              ))
+            : null}
         </Space>
       </Card>
       {/* <Card

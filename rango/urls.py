@@ -5,8 +5,7 @@ from rango import views
 app_name = 'rango'
 
 urlpatterns = [
-    path('category/<slug:category_name_slug>/',
-         views.show_category, name='show_category'),
+    path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
     path('currentUser/', views.user_operation_demo),
     path('add_category/', views.add_category),
     path('show_favourite_recipe/', views.show_favourite_recipe, name='show_favourite_recipe'),
@@ -16,11 +15,11 @@ urlpatterns = [
     path('recipe/<int:recipe_id>/', views.show_recipe),
     path('add_recipe/', views.add_recipe),
     path('recipe/<int:recipe_id>/add_review/', views.add_review),
-    #path('login/', views.login),
-    #path('register/', views.register),
-    #path('getuserinfo/', views.getuserinfo),
-    #path('changeuserinfo/', views.changeuserinfo),
-    #path('logout/', views.logout),    
+    # path('login/', views.login),
+    # path('register/', views.register),
+    # path('getuserinfo/', views.getuserinfo),
+    # path('changeuserinfo/', views.changeuserinfo),
+    # path('logout/', views.logout),
 
     # path('about/', views.about, name="about"),
     # path('user/login/', views.user_login),

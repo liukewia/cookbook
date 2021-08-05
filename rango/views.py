@@ -92,6 +92,7 @@ def show_category(request, category_name_slug):
         recipe_dict = {
             'recipeId': recipe.id,
             'recipeTitle': recipe.title,
+            'recipeDirection': recipe.directions[0:40],
             'recipeLike': recipe.likes,
             'recipeUrl': recipe.url,
         }

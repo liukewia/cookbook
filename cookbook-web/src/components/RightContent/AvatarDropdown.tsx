@@ -1,5 +1,12 @@
 import React, { useCallback } from 'react';
-import { LoginOutlined, LogoutOutlined, PlusOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+  PlusOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { history, useModel } from 'umi';
 import { stringify } from 'querystring';
@@ -95,6 +102,12 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
+      {access.isLoggedin && (
+        <Menu.Item key="/post-recipe">
+          <EditOutlined />
+          Post Recipe
+        </Menu.Item>
+      )}
       {access.isLoggedin && (
         <Menu.Item key="/add-category">
           <PlusOutlined />
