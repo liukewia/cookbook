@@ -569,7 +569,7 @@ def getuserinfo(request):
     return JsonResponse(context_dict)
 #个人密码修改
 
-def changeuserinfo(request):
+def changeuserpassword(request):
     getusername=json.loads(request.body).get('username')
     # getusername='a'
     u1 = User.objects.get(username=getusername)
