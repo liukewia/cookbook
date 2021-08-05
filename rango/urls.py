@@ -19,6 +19,7 @@ urlpatterns = [
     path('<int:user_id>/my_recipe/', views.show_my_recipe),
     path('category/<slug:category_name_slug>/cate_add_like/', views.category_add_like),
     path('recipe/<int:recipe_id>/rec_add_like/', views.recipe_add_like),
+    path('search/', views.search),
     #path('login/', views.login),
     #path('register/', views.register),
     #path('getuserinfo/', views.getuserinfo),
