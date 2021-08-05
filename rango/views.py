@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
@@ -441,21 +441,35 @@ last_name
 '''
 
 
-# #注册页面
 def register(request):
-    getusername = json.loads(request.body).get('username')  # 从前端得到用户名
-    getpassword = json.loads(request.body).get('password')  # 从前端得到密码
-    getfirst_name = json.loads(request.body).get('firstName')  # 从前端得到用户名
-    getlast_name = json.loads(request.body).get('lastName')  # 从前端得到用户名
-    getemail = json.loads(request.body).get('email')  # 从前端得到邮箱
-    u1 = User.objects.create(username=getusername, password=getpassword, is_superuser=False,
-                             first_name=getfirst_name, last_name=getlast_name, email=getemail)
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
+    getusername = json.loads(request.body).get('username')
+    getpassword = json.loads(request.body).get('password')
+    getfirst_name = json.loads(request.body).get('firstName')
+    getlast_name = json.loads(request.body).get('lastName')
+    getemail = json.loads(request.body).get('email')
+    user_tuple = User.objects.get_or_create(username=getusername)
+    if not user_tuple[1]:
+        # user already exist
+        context_dict['data'] = {
+            'status': 'error',
+        }
+        return JsonResponse(context_dict)
+
+    u1 = user_tuple[0]
+    u1.password = getpassword
+    u1.is_superuser = False,
+    u1.first_name = getfirst_name
+    u1.last_name = getlast_name
+    u1.email = getemail
     u1.save()
     context_dict = {
         'success': True,
         'data': {
             'status': 'ok',
-            'access': 'user',
         }}
     return JsonResponse(context_dict)
 
@@ -471,7 +485,6 @@ def login(request):
 
     user = authenticate(username=username, password=password)
     if user is None:
-        context_dict['success'] = False
         context_dict['data'] = {
             'status': 'error',
             'access': 'guest'
@@ -501,8 +514,10 @@ def getuserinfo(request):
     user = request.user
 
     if not user.is_authenticated:
-        context_dict['success'] = False
-        context_dict['data'] = {'access': 'guest'}
+        context_dict['data'] = {
+            'access': 'guest',
+            'state': 'error'
+        }
         return JsonResponse(context_dict)
 
     if user.is_superuser:
@@ -514,7 +529,8 @@ def getuserinfo(request):
                         'lastName': user.last_name,
                         'id': user.id,
                         'email': user.email,
-                        'access': 'admin'
+                        'access': 'admin',
+                        'state': 'ok'
                     }
                 }
     else:
@@ -526,62 +542,47 @@ def getuserinfo(request):
                         'lastName': user.last_name,
                         'id': user.id,
                         'email': user.email,
-                        'access': 'user'
+                        'access': 'user',
+                        'state': 'ok'
                     }
                 }
 
     return JsonResponse(context_dict)
-
-
-    # request.uesr.is_authenticated
-    #
-    # username = request.user.username
-    # password = request.user.
-    # user = authenticate(username=username, password=password)
-
-    # if user is None:
-    #     context_dict['success'] = False
-    #     context_dict['data'] = {'access': 'guest'}
-    #     return JsonResponse(context_dict)
-
-
 
 
 def updateInfo(request):
-    getusername=json.loads(request.body).get('username')
-    u1 = User.objects.get(username=getusername)
-    getusername = json.loads(request.body).get('username')
-    getfirst_name = json.loads(request.body).get('firstName')
-    getlast_name = json.loads(request.body).get('lastName')
-    getemail = json.loads(request.body).get('email')
-    u1.username = getusername
-    u1.first_name = getfirst_name
-    u1.last_name = getlast_name
-    u1.email = getemail
-    u1.save()
     context_dict = {
             'success': True,
-            'data': {
-            }
+            'data': {}
         }
+    getusername = json.loads(request.body).get('username')
+    try:
+        u1 = User.objects.get(username=getusername)
+    except User.DoesNotExist:
+        u1 = None
+
+    # if u1 is None:
+
+    u1.username = getusername
+    u1.first_name = json.loads(request.body).get('firstName')
+    u1.last_name = json.loads(request.body).get('lastName')
+    u1.email = json.loads(request.body).get('email')
+    u1.save()
+    context_dict['success'] = True
+
     return JsonResponse(context_dict)
 
 
-
-#登出页面
 def logout(request):
-    getusername = json.loads(request.body).get('username') #从前端获得username
-    u1 = User.objects.get(username=getusername)
-    u1.is_active =False
-    u1.save()
+    user = request.user
+    auth.logout(request, user)
     context_dict = {
                     'success': True,
-                    'data': {
-                    }
+                    'data': {}
                 }
     return JsonResponse(context_dict)
 
-#更改密码
+
 def updatePassword(request):
     getusername=json.loads(request.body).get('username')
     # getusername='a'
