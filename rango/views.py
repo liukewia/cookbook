@@ -178,7 +178,7 @@ def add_recipe(request):
         'success': True,
     }
     category_name_slug = json.loads(request.body).get('slug')
-    user = User.objects.get(json.loads(request.body).get('id'))
+    user = User.objects.get(id=json.loads(request.body).get('id'))
     try:
         category = Category.objects.get(slug=category_name_slug)
         user_profile = UserProfile.objects.get(user=user)
