@@ -21,19 +21,6 @@ class Category(models.Model):
         return self.name
 
 
-class Page(models.Model):
-    TITLE_MAX_LENGTH = 128
-    URL_MAX_LENGTH = 200
-
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    title = models.CharField(max_length=TITLE_MAX_LENGTH)
-    url = models.URLField()
-    views = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.title
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -60,7 +47,7 @@ class Recipe(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     favouriteRecipe = models.ManyToManyField(FavouriteRecipe)
     slug = models.SlugField(unique=True, null=True)
-    title = models.CharField(max_length=TITLE_MAX_LENGTH)
+    title = models.CharField(max_length=TITLE_MAX_LENGTH, unique=True)
     likes = models.IntegerField(default=0)
     ingredients = models.CharField(max_length=SHORT_CONTENT_MAX_LENGHT)
     directions = models.CharField(max_length=LONG_CONTENT_MAX_LENGTH)
