@@ -151,6 +151,7 @@ def show_recipe(request, recipe_id):
 
     ingredients = recipe.ingredients.split('\n')
     directions = recipe.directions.split('\n')
+    owner_id = recipe.owner.id
 
     reviews_dict = []
     for review in reviews:
@@ -160,6 +161,7 @@ def show_recipe(request, recipe_id):
     context_dict['data'] = {
             'recipeId': recipe.id,
             'recipeTitle': recipe.title,
+            'recipeOwner': owner_id,
             'recipeLike': recipe.likes,
             'recipeUrl': recipe.url,
             'recipeIngredients': ingredients,
@@ -176,16 +178,20 @@ def add_recipe(request):
         'success': True,
     }
     category_name_slug = json.loads(request.body).get('slug')
+    user = User.objects.get(json.loads(request.body).get('id'))
     try:
         category = Category.objects.get(slug=category_name_slug)
+        user_profile = UserProfile.objects.get(user=user)
     except Category.DoesNotExist:
         category = None
+        user_profile = None
 
     if category is None:
         context_dict['success'] = False
         return JsonResponse(context_dict)
 
     recipe = Recipe.objects.create(category=category,
+                                   owner=user_profile,
                                    title=json.loads(request.body).get('title'),
                                    ingredients=json.loads(request.body).get('ingredients'),
                                    directions=json.loads(request.body).get('directions'),
@@ -196,13 +202,21 @@ def add_recipe(request):
 
 @login_required
 def add_review(request, recipe_id):
+    context_dict = {
+        'success': True,
+        'data': {},
+    }
     recipe = Recipe.objects.get(id=recipe_id)
     user = User.objects.get(id=json.loads(request.body).get('id'))
     user_profile = UserProfile.objects.get(user=user)
 
     review = Review.objects.create(user_profile=user_profile, recipe=recipe,
                                    content=json.loads(request.body).get('content'))
-    context_dict = {'success': True, }
+    context_dict['success'] = True
+    context_dict['data'] = {
+        'userID': user.id,
+        'userName': user.username,
+    }
 
     return JsonResponse(context_dict)
 
@@ -244,6 +258,11 @@ def add_to_favourite_recipe(request):
     recipe.favouriteRecipe.add(favourite_recipe)
 
     return JsonResponse(context_dict)
+
+# @login_required
+# def show_my_recipe(request):
+
+
 
 
 def about(request):

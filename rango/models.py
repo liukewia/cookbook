@@ -45,6 +45,7 @@ class Recipe(models.Model):
     SHORT_CONTENT_MAX_LENGHT = 500
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     favouriteRecipe = models.ManyToManyField(FavouriteRecipe)
     slug = models.SlugField(unique=True, null=True)
     title = models.CharField(max_length=TITLE_MAX_LENGTH, unique=True)
