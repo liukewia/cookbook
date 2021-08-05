@@ -1,7 +1,7 @@
 import { LikeFilled, LikeOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Descriptions, List, Space, Spin, Comment, Avatar, Form, Button, message } from 'antd';
-import { useParams, useRequest } from 'umi';
+import { useModel, useParams, useRequest } from 'umi';
 import ProCard from '@ant-design/pro-card';
 import styles from './index.less';
 import { avatars } from '@/global';
@@ -27,6 +27,7 @@ const Editor = ({ onRefresh }) => {
       },
     },
   );
+  const { initialState } = useModel('@@initialState');
 
   const { getFieldValue, resetFields, submit } = form;
 
@@ -37,7 +38,7 @@ const Editor = ({ onRefresh }) => {
       return;
     }
     submit();
-    run({ id: 3, content }); // TODO change id
+    run({ id: initialState?.currentUser?.id, content }); // TODO change id
     resetFields();
     setTimeout(() => {
       onRefresh();

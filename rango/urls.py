@@ -22,7 +22,6 @@ urlpatterns = [
     path('user/login/', views.login),
     path('user/register/', views.register),
     path('user/getuserinfo/', views.get_user_info),
-    # path('user/changeuserinfo/', views.),
     path('user/update_password/', views.update_password),
     # path('user/updateInfo/', views.update_info()),
     path('user/logout/', views.logout),

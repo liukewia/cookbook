@@ -4,7 +4,7 @@ import { request } from 'umi';
 
 /** getuserinfo GET /api/getuserinfo */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request('/api/getuserinfo/', {
+  return request('/api/user/getuserinfo/', {
     method: 'GET',
     ...(options || {}),
   });
@@ -12,15 +12,15 @@ export async function currentUser(options?: { [key: string]: any }) {
 
 /** log out POST /api/logout */
 export async function logout(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/logout', {
-    method: 'POST',
+  return request<Record<string, any>>('/api/user/logout/', {
+    method: 'GET',
     ...(options || {}),
   });
 }
 
 /** log in POST /api/login/account */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/user/login/', {
+  return request('/api/user/login/', {
     method: 'POST',
     // headers: {
     //   'Content-Type': 'application/json',

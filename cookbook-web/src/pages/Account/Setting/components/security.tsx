@@ -1,17 +1,30 @@
 import React from 'react';
-import { List } from 'antd';
-import { Button, Input, Upload, message } from 'antd';
-import ProForm, {
-  ProFormDependency,
-  ProFormFieldSet,
-  ProFormSelect,
-  ProFormText,
-  ProFormTextArea,
-} from '@ant-design/pro-form';
+import { Button, message } from 'antd';
+import ProForm, { ProFormText } from '@ant-design/pro-form';
 
 import styles from './BaseView.less';
+import { useModel } from '@/.umi/plugin-model/useModel';
 
 const SecurityView: React.FC = () => {
+  const [form] = Form.useForm();
+  const { initialState } = useModel('@@initialState');
+  const { run } = useRequest(
+    (values) => ({
+      url: '/api/user/update_password/',
+      method: 'post',
+      data: values,
+    }),
+    {
+      manual: true,
+      onSuccess: (result) => {
+        if (result?.status === 'ok') {
+          message.success('Successfully posted.');
+          resetFields();
+        }
+      },
+    },
+  );
+
   const handleFinish = async () => {
     message.success('Password Updated.');
   };
@@ -21,6 +34,7 @@ const SecurityView: React.FC = () => {
       <>
         <div className={styles.left}>
           <ProForm
+            form={form}
             layout="vertical"
             onFinish={handleFinish}
             submitter={{

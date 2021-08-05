@@ -32,7 +32,7 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC = (props) => {
   const [submitting, setSubmitting] = useState(false);
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [userLoginState, setUserLoginState] = useState({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
@@ -59,14 +59,10 @@ const Login: React.FC = (props) => {
     setSubmitting(true);
 
     try {
-      // 登录
-      console.log('values: ', values);
-      const msg = await login({ ...values });
-
+      const { data: msg } = await login({ ...values });
       if (msg.status === 'ok') {
         message.success('Logged in successfully!');
         await fetchUserInfo();
-        /** 此方法会跳转到 redirect 参数所在的位置 */
 
         if (!history) return;
         const { query } = history.location;
@@ -75,9 +71,9 @@ const Login: React.FC = (props) => {
         };
         history.push(redirect || '/');
         return;
-      } // 如果失败去设置用户错误信息
-
-      setUserLoginState(msg);
+      }
+      // console.log('msg: ', msg);
+      setUserLoginState({ ...msg, type: 'account' });
     } catch (error) {
       const defaultLoginFailureMessage = 'Login failed, please check!';
       message.error(defaultLoginFailureMessage);
@@ -86,6 +82,7 @@ const Login: React.FC = (props) => {
     setSubmitting(false);
   };
 
+  // @ts-ignore
   const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>

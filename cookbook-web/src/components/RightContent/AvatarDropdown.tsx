@@ -7,7 +7,7 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Avatar, Menu, Spin } from 'antd';
+import { Avatar, Menu, message, Spin } from 'antd';
 import { history, useModel } from 'umi';
 import { stringify } from 'querystring';
 import HeaderDropdown from '../HeaderDropdown';
@@ -25,9 +25,9 @@ export type GlobalHeaderRightProps = {
  */
 const loginOut = async () => {
   await logout();
+  message.success('Successfully logged out.');
   const { query = {}, pathname } = history.location;
   const { redirect } = query;
-  // Note: There may be security issues, please note
   if (window.location.pathname !== '/user/login' && !redirect) {
     history.replace({
       pathname: '/user/login',
@@ -93,7 +93,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   if (!initialState) {
     return loading;
   }
-
+  console.log('initialState: ', initialState);
   const { currentUser } = initialState;
   if (!currentUser?.access) {
     return loading;
@@ -149,7 +149,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
           src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
           alt="avatar"
         />
-        <span className={`${styles.name} anticon`}>{currentUser.name || 'Guest'}</span>
+        <span className={`${styles.name} anticon`}>{currentUser.firstName || currentUser.username || 'Guest'}</span>
       </span>
     </HeaderDropdown>
   );

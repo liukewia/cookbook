@@ -2,8 +2,6 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import { GridContent } from '@ant-design/pro-layout';
 import { Menu } from 'antd';
 import BaseView from './components/base';
-import BindingView from './components/binding';
-import NotificationView from './components/notification';
 import SecurityView from './components/security';
 import styles from './style.less';
 
@@ -17,7 +15,7 @@ type AccountSettingsState = {
 
 const AccountSettings: React.FC = () => {
   const menuMap: Record<string, React.ReactNode> = {
-    base: 'Basic Settings',
+    // base: 'Basic Settings',
     security: 'Password Settings',
     // binding: '账号绑定',
     // notification: '新消息通知',
@@ -25,7 +23,7 @@ const AccountSettings: React.FC = () => {
 
   const [initConfig, setInitConfig] = useState<AccountSettingsState>({
     mode: 'inline',
-    selectKey: 'base',
+    selectKey: 'security',
   });
   const dom = useRef<HTMLDivElement>();
 
@@ -63,8 +61,8 @@ const AccountSettings: React.FC = () => {
   const renderChildren = () => {
     const { selectKey } = initConfig;
     switch (selectKey) {
-      case 'base':
-        return <BaseView />;
+      // case 'base':
+      //   return <BaseView />;
       case 'security':
         return <SecurityView />;
       // case 'binding':

@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { Form, Input, Button, Card, message, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { useRequest } from 'umi';
+import { useModel, useRequest } from 'umi';
 
 const layout = {
   labelCol: { span: 8 },
@@ -33,12 +33,14 @@ export default function AddCategory() {
       },
     },
   );
+  const { initialState } = useModel('@@initialState');
+
 
   const onFinish = (values: any) => {
     console.log('values: ', values);
     run({
       slug: getFieldValue('category'),
-      id: 3, // TODO change id
+      id: initialState?.currentUser?.id,
       title: getFieldValue('recipeName'),
       ingredients: getFieldValue('ingredients'),
       directions: getFieldValue('directions'),

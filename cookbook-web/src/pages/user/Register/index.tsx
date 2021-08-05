@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState, useEffect } from 'react';
-import { Form, Button, Col, Input, Popover, Progress, Row, Select, message } from 'antd';
+import { Form, Button, Input, Popover, Progress, message } from 'antd';
 import type { Store } from 'antd/es/form/interface';
 import { Link, useRequest, history } from 'umi';
 import type { StateType } from './service';
@@ -9,8 +9,6 @@ import { fakeRegister } from './service';
 import styles from './style.less';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const InputGroup = Input.Group;
 
 const passwordStatusMap = {
   ok: (
@@ -56,18 +54,6 @@ const Register: FC = (props) => {
     [interval],
   );
 
-  // const onGetCaptcha = () => {
-  //   let counts = 59;
-  //   setCount(counts);
-  //   interval = window.setInterval(() => {
-  //     counts -= 1;
-  //     setCount(counts);
-  //     if (counts === 0) {
-  //       clearInterval(interval);
-  //     }
-  //   }, 1000);
-  // };
-
   const getPasswordStatus = () => {
     const value = form.getFieldValue('password');
     if (value && value.length > 9) {
@@ -79,21 +65,24 @@ const Register: FC = (props) => {
     return 'poor';
   };
 
-  const { loading: submitting, run: register } = useRequest<{ data: StateType }>(fakeRegister, {
-    manual: true,
-    onSuccess: (data, params) => {
-      if (data.status === 'ok') {
-        message.success('注册成功！');
-        history.push({
-          pathname: '/user/register-result',
-          state: {
-            account: params.email,
-          },
-        });
-      }
+  const { loading: submitting, run: register } = useRequest(
+    (values) => ({
+      url: '/api/user/register/',
+      method: 'POST',
+      data: values,
+    }),
+    {
+      manual: true,
+      onSuccess: (data, params) => {
+        if (data.status === 'ok') {
+          message.success('Successfully signed up!');
+          history.push('/user/login');
+        }
+      },
     },
-  });
-  const onFinish = (values: Store) => {
+  );
+  const onFinish = (values) => {
+    console.log('values: ', values);
     register(values);
   };
 
@@ -152,7 +141,7 @@ const Register: FC = (props) => {
         <h1>Sign Up</h1>
         <Form form={form} name="UserRegister" onFinish={onFinish}>
           <FormItem
-            name="Username"
+            name="username"
             rules={[
               {
                 required: true,
@@ -166,37 +155,37 @@ const Register: FC = (props) => {
             <Input size="large" placeholder="Username" />
           </FormItem>
           <FormItem
-            name="First Name"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: 'Please enter your first name!',
-            //   },
-            //   {
-            //     type: 'string',
-            //     message: 'Wrong name format!',
-            //   },
-            // ]}
+            name="firstName"
+            rules={[
+              {
+                required: true,
+                message: 'Please enter your first name!',
+              },
+              {
+                type: 'string',
+                message: 'Wrong name format!',
+              },
+            ]}
           >
             <Input size="large" placeholder="First Name" />
           </FormItem>
           <FormItem
-            name="Last Name"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: 'Please enter your last name!',
-            //   },
-            //   {
-            //     type: 'string',
-            //     message: 'Wrong name format!',
-            //   },
-            // ]}
+            name="lastName"
+            rules={[
+              {
+                required: true,
+                message: 'Please enter your last name!',
+              },
+              {
+                type: 'string',
+                message: 'Wrong name format!',
+              },
+            ]}
           >
             <Input size="large" placeholder="Last Name" />
           </FormItem>
           <FormItem
-            name="Email"
+            name="email"
             rules={[
               {
                 required: true,
