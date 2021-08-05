@@ -1,12 +1,15 @@
 import React from 'react';
-import { Button, message } from 'antd';
+import { Button, Form, message } from 'antd';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 
 import styles from './BaseView.less';
 import { useModel } from '@/.umi/plugin-model/useModel';
+import { useRequest } from 'umi';
 
 const SecurityView: React.FC = () => {
   const [form] = Form.useForm();
+  const { getFieldValue, resetFields } = form;
+
   const { initialState } = useModel('@@initialState');
   const { run } = useRequest(
     (values) => ({
@@ -18,15 +21,18 @@ const SecurityView: React.FC = () => {
       manual: true,
       onSuccess: (result) => {
         if (result?.status === 'ok') {
-          message.success('Successfully posted.');
+          message.success('Password Updated.');
           resetFields();
+        } else if (result?.status === 'error') {
+          message.error('Cannot update.');
         }
       },
     },
   );
 
-  const handleFinish = async () => {
-    message.success('Password Updated.');
+  const handleFinish = async (values) => {
+    console.log('values: ', values);
+    // run();
   };
 
   return (
