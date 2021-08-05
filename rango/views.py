@@ -387,7 +387,6 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
-
 '''auth_user: 先写下简单的逻辑
 id int
 password string
@@ -478,77 +477,125 @@ def changeinfo():
 #     return JsonResponse(context_dict)
 
 
-# 注册页面
-# def register(request):
-#     getusername = 'a' # 从前端得到用户名
-#     getpassword = 'b'  # 从前端得到密码
-#     getfirst_name = 'c'  # 从前端得到用户名
-#     getlast_name = 'd'  # 从前端得到用户名
-#     getemail = 'e'  # 从前端得到邮箱
-#
-#     # getusername = request.form.get('username')  # 从前端得到用户名
-#     # getpassword = request.form.get('password')  # 从前端得到密码
-#     # getfirst_name = request.form.get('first_name')  # 从前端得到用户名
-#     # getlast_name = request.form.get('last_name')  # 从前端得到用户名
-#     # getemail = request.form.get('email')  # 从前端得到邮箱
-#     u1 = User.objects.create(username=getusername, password=getpassword,first_name=getfirst_name,last_name=getlast_name,email=getemail)
-#     return render(request, 'rango/login.html', )
-#     # return JsonResponse({
-#     #     'user': u1.username,
+# #注册页面
+def register(request):
+    # getusername = 'q' # 从前端得到用户名
+    # getpassword = 'w'  # 从前端得到密码
+    # getfirst_name = 'e'  # 从前端得到用户名
+    # getlast_name = 'r'  # 从前端得到用户名
+    # getemail = 't'  # 从前端得到邮箱
 
-# #登录页面
-# def login(request,username,password):
-#     enterusername = request.form.get(username) #从前端获得username
-#     enterpassword = request.form.get(password) #从前端获得password
-#     #enterusername='thl'
-#     #enterpassword='123456'
-#     u1 = User.objects.get(username=enterusername)
-#     if enterpassword == u1.password:
-#         print("密码正确")
-#         # 改变用户状态登录中
-#         u1.is_active = '1'
-#         u1.save()
-#     #return render(request, 'rango/category.html', context=context_dict)
-#         return render(request, 'rango/user.html', )
-#     else:
-#         return render(request, 'rango/login.html', )
+    getusername = json.loads(request.body).get('username')  # 从前端得到用户名
+    getpassword = json.loads(request.body).get('password')  # 从前端得到密码
+    getfirst_name = json.loads(request.body).get('firstName')  # 从前端得到用户名
+    getlast_name = json.loads(request.body).get('lastName')  # 从前端得到用户名
+    getemail = json.loads(request.body).get('email')  # 从前端得到邮箱
+    u1 = User.objects.create(username=getusername, password=getpassword,is_superuser=False,first_name=getfirst_name,last_name=getlast_name,email=getemail)
+    u1.save()
+    context_dict = {
+        'success': True,
+        'data': {
+            'status': 'ok',
+            'access': 'user',
+        }}
+    return JsonResponse(context_dict)
 
-# # #用户信息展示
-# def getuserinfo(request,user_id):
-#     #getuserid=user_id #前端传入user_id
-#     getuserid='4'
-#     u1 = User.objects.get(id=getuserid)
-#     context_dict = {
-#                 'success': True,
-#                 'data': {
-#                     'infoName': u1.username,
-#                     'infoEmail': u1.email,
-#                 }
-#             }
-#     return render(request, 'rango/getuserinfo.html', context=context_dict)
-#
-#     # return JsonResponse(context_dict)
-# 个人密码修改
-# def changeuserinfo(request):
-#     #getuserid=user_id #前端传入user_id
-#     getuserid='4'
-#     u1 = User.objects.get(id=getuserid)
-#     #getnewpassword = request.form.get(password)#从前端获取新密码
-#     getnewpassword='xxxx' #从前端获取新密码
-#     u1.password=getnewpassword
-#     u1.save()
-#     return render(request, 'rango/getuserinfo.html', )
-#     # context_dict = {
-#     #                 'success': True,
-#     #                 'data': {
-#     #                     'newpassowrd': u1.password,
-#     #
-#     #                 }
-#     #             }
-#     # return JsonResponse(context_dict)
+#登录页面
+def login(request):
+    enterusername = json.loads(request.body).get('username')
+    enterpassword = json.loads(request.body).get('password') #从前端获得password
+    # enterusername='a'
+    # enterpassword='c'
+    u1 = User.objects.get(username=enterusername)
+    if enterpassword == u1.password:
+        print("密码正确")
+        # 判断用户状态
+        if u1.is_superuser=='1':
+            context_dict = {
+            'success': True,
+            'data': {
+                'status': 'ok',
+                'access': 'admin'
+            }}
+            return JsonResponse(context_dict)
+        else:
+           context_dict = {
+           'success': True,
+           'data': {
+               'status': 'ok',
+               'access': 'user',
+           }}
+           return JsonResponse(context_dict)
+    else:
+        context_dict = {
+        'success': False,
+        'data': {
+            'status': 'error',
+            'access': 'guest',
+        }}
+    return JsonResponse(context_dict)
 
 
-# 登出页面
+
+
+
+#用户信息展示
+
+def getuserinfo(request):
+    context_dict = {
+                'success': True,
+                'data': {}
+            }
+    #getuserid=user_id #前端传入user_id
+    #getuserid='2'
+    getuserid = json.loads(request.body).get('id')
+    try:
+        u1 = User.objects.get(id=getuserid)
+    except User.DoesNotExist:
+        u1 = None
+
+    if u1 is None:
+        context_dict['success'] = False
+        return JsonResponse(context_dict)
+
+    context_dict = {
+                'success': True,
+                'data': {
+                    'infoName': u1.username,
+                    'infoEmail': u1.email,
+                }
+            }
+
+    return JsonResponse(context_dict)
+#个人密码修改
+
+def changeuserinfo(request):
+    getusername=json.loads(request.body).get('username')
+    # getusername='a'
+    u1 = User.objects.get(username=getusername)
+    getnewpassword=json.loads(request.body).get('password') #从前端获取新密码
+    #getnewpassword='x'
+    if u1.password==getnewpassword:
+        context_dict = {
+            'success': False,
+            'data': {
+                'newpassowrd': u1.password,
+            }
+        }
+        return JsonResponse(context_dict)
+    else:
+        u1.password = getnewpassword
+        u1.save()
+        context_dict = {
+            'success': True,
+            'data': {
+                'newpassowrd': u1.password,
+            }
+        }
+        return JsonResponse(context_dict)
+
+
+#登出页面
 # def logout(request):
 #     #getusername = request.form.get(username) #从前端获得username
 #     getusername='a'
@@ -566,3 +613,4 @@ def changeinfo():
 #     #             }
 #     # return JsonResponse(context_dict)
 #     return render(request, 'rango/login.html', )
+
