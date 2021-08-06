@@ -25,30 +25,3 @@ class RecipeMethodTests(TestCase):
 
         self.assertEqual(old_likes, recipe.likes)
 
-#
-# class FavouriteRecipe(TestCase):
-#     # def setUp(self):
-#     #     populate()
-#
-#     def test_favourite_recipe(self):
-#         user = User.objects.get(username="fan")
-#         user_profile = UserProfile.objects.get(id=user)
-#         favourite_recipe = FavouriteRecipe.objects.get(user=user_profile)
-#         recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
-#         fc = add_recipes_to_dict(recipes)
-#
-#         recipes_dict = [
-#             {
-#                 'recipeId': 10,
-#                 'recipeSlug': "strawberry-rhubarb-buckle",
-#                 'recipeTitle': "Strawberry-Rhubarb Buckle",
-#             }
-#         ]
-#         context_dict = {
-#             'success': True,
-#             'data': {
-#                 'recipes': recipes_dict,
-#             }
-#         }
-#
-#         self.assertEqual(context_dict, fc)
