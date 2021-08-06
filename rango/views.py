@@ -501,7 +501,7 @@ def get_user_info(request):
     if not user.is_authenticated:
         context_dict['data'] = {
             'access': 'guest',
-            'state': 'error'
+            'status': 'error'
         }
         return JsonResponse(context_dict)
 
@@ -515,7 +515,7 @@ def get_user_info(request):
                 'id': user.id,
                 'email': user.email,
                 'access': 'admin',
-                'state': 'ok'
+                'status': 'ok'
             }
         }
     else:
@@ -528,7 +528,7 @@ def get_user_info(request):
                 'id': user.id,
                 'email': user.email,
                 'access': 'user',
-                'state': 'ok'
+                'status': 'ok'
             }
         }
 
