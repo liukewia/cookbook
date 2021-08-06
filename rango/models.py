@@ -42,7 +42,7 @@ class Recipe(models.Model):
     TITLE_MAX_LENGTH = 128
     URL_MAX_LENGTH = 200
     LONG_CONTENT_MAX_LENGTH = 2083
-    SHORT_CONTENT_MAX_LENGHT = 500
+    SHORT_CONTENT_MAX_LENGTH = 500
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -50,7 +50,7 @@ class Recipe(models.Model):
     slug = models.SlugField(unique=True, null=True)
     title = models.CharField(max_length=TITLE_MAX_LENGTH, unique=True)
     likes = models.IntegerField(default=0)
-    ingredients = models.CharField(max_length=SHORT_CONTENT_MAX_LENGHT)
+    ingredients = models.CharField(max_length=SHORT_CONTENT_MAX_LENGTH)
     directions = models.CharField(max_length=LONG_CONTENT_MAX_LENGTH)
     url = models.URLField(max_length=URL_MAX_LENGTH, null=True)
 
