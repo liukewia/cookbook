@@ -1,9 +1,9 @@
+from rango.models import Category, Recipe, FavouriteRecipe, UserProfile, User, Review
+import django
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'tango_with_django_project.settings')
-import django
 django.setup()
-from rango.models import Category, Recipe, FavouriteRecipe, UserProfile, User, Review
 
 
 def populate():
@@ -34,7 +34,7 @@ ground black pepper to taste""",
          'directions': """Preheat an outdoor grill for medium-high heat and lightly oil grate.
 Arrange the cabbage wedges into the bottom of a large metal baking dish. Pour the water into the dish. Place a teaspoon of butter on each cabbage wedge. Season liberally with garlic powder, seasoned salt, and pepper. Cover the dish with aluminum foil.
 Place the dish on the preheated grill; cook until cabbage is tender, about 30 minutes.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F8711239.jpg&q=85',
+         'url': 'https://www.tasteofhome.com/wp-content/uploads/2018/01/Grilled-Cabbage_EXPS_FTTMZ18_25369_D11_15_3b-6.jpg?fit=700,1024',
          'likes': 26},
         {'title': 'Grilled Salmon',
          'ingredients': """1.5 pounds salmon fillets
@@ -49,7 +49,7 @@ salt to taste
 In a small bowl, stir together soy sauce, brown sugar, water, and vegetable oil until sugar is dissolved. Place fish in a large resealable plastic bag with the soy sauce mixture, seal, and turn to coat. Refrigerate for at least 2 hours.
 Preheat grill for medium heat.
 Lightly oil grill grate. Place salmon on the preheated grill, and discard marinade. Cook salmon for 6 to 8 minutes per side, or until the fish flakes easily with a fork.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4537394.jpg&w=958&h=958&c=sc&poi=face&q=85',
+         'url': 'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/grilled-miso-salmon-with-rice-noodles-58a2bbb.jpg?webp=true&quality=90&resize=500%2C454',
          'likes': 23}]
 
     Bread_recipes = [
@@ -67,7 +67,7 @@ Lightly oil grill grate. Place salmon on the preheated grill, and discard marina
 Slice strawberries and place in medium-sized bowl. Sprinkle lightly with sugar, and set aside while preparing batter.
 Combine flour, sugar, cinnamon, salt and baking soda in large bowl; mix well. Blend oil and eggs into strawberries. Add strawberry mixture to flour mixture, blending until dry ingredients are just moistened. Stir in pecans. Divide batter into pans.
 Bake in preheated oven until a tester inserted in the center comes out clean, 45 to 50 minutes (test each loaf separately). Let cool in pans on wire rack for 10 minutes. Turn loaves out of pans, and allow to cool before slicing.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5470594.jpg&w=767&h=767&c=sc&poi=face&q=85',
+         'url': 'https://www.tastesoflizzyt.com/wp-content/uploads/2018/05/strawberry-bread-recipe-1.jpg',
          'likes': 30},
         {'title': 'Whole Wheat Beer Bread ',
          'ingredients': """1/2 cups all-purpose flour
@@ -79,7 +79,7 @@ Bake in preheated oven until a tester inserted in the center comes out clean, 45
          'directions': """Preheat oven to 350 degrees F (175 degrees C). Lightly grease a 9x5 inch loaf pan.
 In a large mixing bowl, combine all-purpose flour, whole wheat flour, baking powder, salt and brown sugar. Pour in beer, stir until a stiff batter is formed. It may be necessary to mix dough with your hands. Scrape dough into prepared loaf pan.
 Bake in preheated oven for 50 to 60 minutes, until a toothpick inserted into center of the loaf comes out clean.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F128314.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5222018.jpg&w=596&h=399&c=sc&poi=face&q=85',
          'likes': 26},
         {'title': 'Garlic Naan',
          'ingredients': """1/2 cup warm water
@@ -100,7 +100,7 @@ Punch down dough and turn out onto the counter. Shape into a rough rectangle and
 Roll each piece into an oval about 1/8 inch thick. Sprinkle some cilantro on top and press lightly to adhere.
 Preheat a cast iron skillet until very, very hot, about 5 minutes. Cook each naan until large bubbles form, 1 to 2 minutes. Flip over, press gently, and cook until bubbles on the bottom are charred, 2 to 3 minutes more.
 Brush naan with more garlic butter before serving.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6599025.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://cafedelites.com/wp-content/uploads/2020/06/Garlic-Naan-Recipe-IMAGE-76.jpg',
          'likes': 23}]
 
     Breakfast_and_Brunch_recipes = [
@@ -131,7 +131,7 @@ Bake in the preheated oven until eggs are set and biscuit dough is golden, 15 to
 4 (6 inch) pita bread (Optional)""",
          'directions': """Heat the vegetable oil in a deep skillet over medium heat. Stir in the garlic, onion, and bell pepper; cook and stir until the onion has softened and turned translucent, about 5 minutes. Add the canned tomatoes, paprika and jalapenos; stir, using the back of a spoon to break up the tomatoes. Simmer for about 25 minutes.
 Crack an egg into a small bowl, then gently slip the egg into the tomato sauce. Repeat with the remaining eggs. Cook the eggs until the whites are firm and the yolks have thickened but are not hard, 2 1/2 to 3 minutes. If the tomato sauce gets dry, add a few tablespoons of water. Remove the eggs with a slotted spoon, place onto a warm plate, and serve with the tomato sauce and pita bread.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F400925.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://cookieandkate.com/images/2019/02/best-shakshuka-recipe-3-768x1154.jpg',
          'likes': 26},
         {'title': 'Lemon-Ricotta Cornmeal Waffles',
          'ingredients': """1 cup all-purpose flour
@@ -198,7 +198,7 @@ Bake 30 to 35 minutes in the preheated oven, until the cake tests done with a to
 In a medium bowl, blend together softened butter, 2 cups flour and 1/2 cup sugar. Press into the bottom of an ungreased 9x13 inch pan.
 Bake for 15 to 20 minutes in the preheated oven, or until firm and golden. In another bowl, whisk together the remaining 1 1/2 cups sugar and 1/4 cup flour. Whisk in the eggs and lemon juice. Pour over the baked crust.
 Bake for an additional 20 minutes in the preheated oven. The bars will firm up as they cool. For a festive tray, make another pan using limes instead of lemons and adding a drop of green food coloring to give a very pale green. After both pans have cooled, cut into uniform 2 inch squares and arrange in a checker board fashion.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F3598469.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://cdn.sallysbakingaddiction.com/wp-content/uploads/2019/02/lemon-bars-2-600x900.jpg.webp',
          'likes': 23}]
 
     Dinner_Recipes_recipes = [
@@ -243,7 +243,7 @@ Place onion and green pepper in covered microwave container and cook until softe
 In large mixing bowl, combine garlic, eggs, thyme, seasoned salt, black pepper, mustard, Worcestershire sauce, hot sauce, milk, and oats. Mix well. Stir in cooked onion and green pepper. Add ground beef, pork, and veal. With gloved hands, work all ingredients together until completely mixed and uniform.
 Divide meatloaf mixture in half and pat half of mixture into each prepared loaf pan. Brush loaves with half of the glaze; set remainder of glaze aside.
 Bake in preheated oven for 50 minutes. Remove pans from oven; carefully drain fat. Brush loaves with remaining glaze. Return to oven and bake for 10 minutes more. Remove pans from oven and allow meatloaf to stand for 15 minutes before slicing.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1092268.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1044986.jpg',
          'likes': 26},
         {'title': 'Tasty Baked Mac n Cheese',
          'ingredients': """1 (16 ounce) package elbow macaroni
@@ -263,7 +263,7 @@ Bring a large pot of water to a boil. Cook elbow macaroni in the boiling water, 
 Mix 1/4 cup butter, sour cream, cream cheese, sharp Cheddar cheese, and egg yolk together in a bowl. Stir flour, 1/2 teaspoon salt, cayenne pepper, and milk into the sour cream mixture.
 Spread 1/4 cup sour cream sauce over bottom of prepared baking dish. Stir remaining sour cream sauce into macaroni. Pour macaroni into baking dish atop sauce layer; sprinkle mild Cheddar cheese over the casserole.
 Bake in the preheated oven until heated through and cheese topping has melted, about 15 minutes.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F6100203.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://www.recipetineats.com/wp-content/uploads/2020/11/Baked-Mac-and-Cheese-pull-shot.jpg?resize=747,747',
          'likes': 23}]
 
     Everyday_Cooking_recipes = [
@@ -321,7 +321,7 @@ Combine flour, baking powder, and salt in a bowl for the dumplings. Cut in cold 
 Shred cooled chicken and return to the pot. Taste the broth and adjust the seasoning if needed. Add peas and green beans. Stir in the flour-butter paste. Select Saute function to bring broth back to a boil.
 Pour buttermilk into the dumpling mixture and stir until combined. Drop the dumpling dough by heaping spoonfuls on top of the stew; a small cookie scoop works well.
 Cover pot with the lid, leaving the steam vent open. Select Slow Cooker function and simmer on Low, covered, until dumplings are cooked through, 10 to 12 minutes. A skewer inserted in the center of a dumpling should come out clean.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F7242436.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://www.pressurecookrecipes.com/wp-content/uploads/2018/05/instant-pot-chicken-and-dumplings.webp',
          'likes': 26},
         {'title': 'Taco Meat',
          'ingredients': """1 pound lean ground beef
@@ -356,7 +356,7 @@ In a medium bowl, mix together tuna and mayonnaise. Mix in egg, celery, relish, 
 1 jalapeno pepper, chopped""",
          'directions': """Heat a large skillet over low heat. Spread butter or margarine onto one side of two slices of bread. Place both pieces buttered side down in the skillet. 
 Lay a slice of cheese on each one, and top with slices of tomato, onion and jalapeno. Butter one side of the remaining slices of bread, and place on top buttered side up. When the bottom of the sandwiches are toasted, flip and fry until brown on the other side.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F5434462.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://2.bp.blogspot.com/-yXlWTfaIGV4/VwQXAu6NwdI/AAAAAAAAbyQ/6p1gbjOGk3oDP1BLu9ipAdrhHlm6L1f-A/s640/Ultimate%2BSpicy%2BGrilled%2BCheese%2B1.jpg',
          'likes': 26},
         {'title': 'Chicago-Inspired Italian Beef Sandwich',
          'ingredients': """1/2 pounds boneless beef chuck, cut into 2-inch pieces
@@ -382,7 +382,7 @@ Transfer meat with a strainer or slotted spoon to a separate pot; pour about 1/4
 Skim excess grease from top of broth remaining in the first pot; season with salt and pepper to taste. Cover pot with a lid or aluminum foil and keep broth warm.
 Lay halves of a roll out on a work surface and spoon 2 to 3 tablespoons meat broth over each half. Top bottom half of roll with a generous portion of meat and a spoonful of pickled vegetables. Place tops on sandwich. Repeat with remaining buns, broth, meat, and pickled vegetables to make 3 more sandwiches.
 Spoon hot meat broth into ramekins and top each ramekin with 1/2 teaspoon parsley. Serve sandwiches with hot broth for dipping.""",
-         'url': 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1100724.jpg&w=1200&h=678&c=sc&poi=face&q=85',
+         'url': 'https://media.blueapron.com/recipes/21571/square_newsletter_images/1552574397-423-0019-5124/Chicago_RecipeCard_Square.jpg?quality=80&width=850',
          'likes': 23}]
 
     Main_Dishes_recipes = [
@@ -492,13 +492,15 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
     }
 
     for user, user_data in users.items():
-        u = create_user(user_data['username'], user_data['password'], user_data['firstName'], user_data['lastName'], user_data['email'])
+        u = create_user(user_data['username'], user_data['password'],
+                        user_data['firstName'], user_data['lastName'], user_data['email'])
         print(f'create {u.username}')
 
     for cat, cat_data in cats.items():
         c = add_cat(cat, likes=cat_data['likes'])
         for r in cat_data['recipes']:
-            add_recipe(c, r['title'], r['ingredients'], r['directions'], r['url'], likes=r['likes'])
+            add_recipe(c, r['title'], r['ingredients'],
+                       r['directions'], r['url'], likes=r['likes'])
 
     for c in Category.objects.all():
         for r in Recipe.objects.filter(category=c):
@@ -555,7 +557,8 @@ def add_user_profile(username):
 
 
 def add_to_favourite_recipe(user_profile, recipe_id=1):
-    favourite_recipe = FavouriteRecipe.objects.get_or_create(user=user_profile)[0]
+    favourite_recipe = FavouriteRecipe.objects.get_or_create(user=user_profile)[
+        0]
     recipe = Recipe.objects.get(id=recipe_id)
     recipe.favouriteRecipe.add(favourite_recipe)
 
