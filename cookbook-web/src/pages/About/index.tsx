@@ -8,15 +8,15 @@ export default (): React.ReactNode => {
   return (
     <PageContainer title="About">
       <Card>
-        <Title>介绍</Title>
+        <Title level={2}>Hi! Meet Team Yellow Duck</Title>
         <Paragraph>
-          蚂蚁的企业级产品是一个庞大且复杂的体系。这类产品不仅量级巨大且功能复杂，而且变动和并发频繁，常常需要设计与开发能够快速的做出响应。同时这类产品中有存在很多类似的页面以及组件，可以通过抽象得到一些稳定且高复用性的内容。
+          Hi! We're Team Yellow Duck. Kick back, stay a while, won't you? When you visit our corner of the internet, we want you to feel comfortable. Like <Text italic>did we just become best friends?!</Text> kind of comfortable. We're not here to shame you into making beef bourguignon when all you really want is Fireball meatballs. And if you do attempt that fancy-shmancy dish and fail spectacularly, we're not going to <Text italic>tsk-tsk</Text> you—because we've had plenty of <Text italic>OH, S#!T</Text> moments, too.
         </Paragraph>
         <Paragraph>
-          随着商业化的趋势，越来越多的企业级产品对更好的用户体验有了进一步的要求。带着这样的一个终极目标，我们（蚂蚁金服体验技术部）经过大量的项目实践和总结，逐步打磨出一个服务于企业级产品的设计体系
-          Ant Design。基于<Text mark>『确定』和『自然』</Text>
-          的设计价值观，通过模块化的解决方案，降低冗余的生产成本，让设计者专注于
-          <Text strong>更好的用户体验</Text>。
+          That's not to say we're not serious about food. If you've come here to finally tackle an exasperatingly intense sourdough recipe, we can help explain the technique, step by step. We celebrate anyone who really loves to eat as much as those who actually get in the kitchen to cook. So wherever you fall on that spectrum, you'll find your people here.
+        </Paragraph>
+        <Paragraph>
+          That's why we want you to get to know us, too—the team behind Yellow Duck. We want you to love reading on and cooking from Delish as much as we love creating this space for you, so holler if you've got something you want us to know. We're all ears. (Did you know you can rate and comment on all our recipes, too?)
         </Paragraph>
       </Card>
     </PageContainer>
