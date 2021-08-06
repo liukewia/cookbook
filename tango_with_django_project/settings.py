@@ -129,8 +129,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'cookbook-web', 'public'),
 ]
 
-# print("STATICFILES_DIRS", STATICFILES_DIRS)
-
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 

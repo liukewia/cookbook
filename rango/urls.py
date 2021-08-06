@@ -6,7 +6,6 @@ app_name = 'rango'
 
 urlpatterns = [
     path('category/<slug:category_name_slug>/', views.show_category),
-    path('currentUser/', views.user_operation_demo),
     path('add_category/', views.add_category),
     path('show_favourite_recipe/<int:user_id>/', views.show_favourite_recipe),
     path('add_to_favourite_recipe/', views.add_to_favourite_recipe),
