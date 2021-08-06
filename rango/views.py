@@ -99,7 +99,7 @@ def user_operation_demo(request):
     })
 
 
-def show_category(request, category_name_slug):
+def show_category(category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
         recipes = Recipe.objects.filter(category=category)
@@ -167,7 +167,7 @@ def if_category_exist(category_name_slug):
 
 
 @login_required
-def category_add_like(request, category_name_slug):
+def category_add_like(category_name_slug):
     context_dict = {
         'success': True,
         'data': {}
@@ -356,7 +356,7 @@ def show_favourite_recipe(request):
     return JsonResponse(context_dict)
 
 
-@login_required
+# @login_required
 def add_to_favourite_recipe(request):
     context_dict = {
         'success': True,
@@ -366,9 +366,9 @@ def add_to_favourite_recipe(request):
     user = User.objects.get(id=json.loads(request.body).get('userId'))
     recipe = Recipe.objects.get(id=json.loads(request.body).get('recipeId'))
     user_profile = UserProfile.objects.get(user=user)
-    favourite_recipe = FavouriteRecipe.objects.filter(user=user_profile)[0]
+    favourite_recipe = FavouriteRecipe.objects.get_or_create(user=user_profile)[0]
     recipe.favouriteRecipe.add(favourite_recipe)
-    
+
     context_dict['data'] = {'status': 'ok'}
 
     return JsonResponse(context_dict)
