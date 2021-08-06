@@ -350,7 +350,7 @@ def show_my_recipe(request, user_id):
 def show_favourite_recipe(request, user_id):
     user = User.objects.get(id=user_id)
     user_profile = UserProfile.objects.get(user=user)
-    favourite_recipe = FavouriteRecipe.objects.get(user=user_profile)
+    favourite_recipe = FavouriteRecipe.objects.get_or_create(user=user_profile)[0]
     recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
 
     context_dict = add_recipes_to_dict(recipes)
