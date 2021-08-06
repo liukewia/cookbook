@@ -99,7 +99,7 @@ def user_operation_demo(request):
     })
 
 
-def show_category(category_name_slug):
+def show_category(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
         recipes = Recipe.objects.filter(category=category)
@@ -167,7 +167,7 @@ def if_category_exist(category_name_slug):
 
 
 @login_required
-def category_add_like(category_name_slug):
+def category_add_like(request, category_name_slug):
     context_dict = {
         'success': True,
         'data': {}
