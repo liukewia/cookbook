@@ -29,7 +29,7 @@ class PageTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-    def test_home(self):
+    def test_homepage(self):
         response = self.client.get('/')
         self.assertTrue(response.status_code, 200)
 
