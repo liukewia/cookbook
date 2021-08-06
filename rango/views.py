@@ -358,13 +358,18 @@ def show_favourite_recipe(request):
 
 @login_required
 def add_to_favourite_recipe(request):
-    context_dict = {'success': True, }
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
 
     user = User.objects.get(id=json.loads(request.body).get('userId'))
     recipe = Recipe.objects.get(id=json.loads(request.body).get('recipeId'))
     user_profile = UserProfile.objects.get(user=user)
     favourite_recipe = FavouriteRecipe.objects.filter(user=user_profile)[0]
     recipe.favouriteRecipe.add(favourite_recipe)
+    
+    context_dict['data'] = {'status': 'ok'}
 
     return JsonResponse(context_dict)
 
