@@ -2,7 +2,6 @@ from django.test import TestCase
 from rango.views import category_add_like, recipe_add_like, if_category_exist, add_recipes_to_dict
 from rango.models import Category, Recipe, FavouriteRecipe, UserProfile
 from django.contrib.auth.models import User
-from populate_rango import populate
 import json
 import os
 
