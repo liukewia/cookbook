@@ -344,9 +344,9 @@ def show_my_recipe(request, user_id):
     return JsonResponse(context_dict)
 
 
-@login_required
-def show_favourite_recipe(request):
-    user = User.objects.get(id=json.loads(request.body).get('id'))
+# @login_required
+def show_favourite_recipe(request, user_id):
+    user = User.objects.get(id=user_id)
     user_profile = UserProfile.objects.get(user=user)
     favourite_recipe = FavouriteRecipe.objects.get(user=user_profile)
     recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)

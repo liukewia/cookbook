@@ -10,8 +10,6 @@ import os
 
 
 class CategoryMethodTests(TestCase):
-    def setUp(self):
-        populate()
 
     def add_like(self):
         category = Category.objects.get(id=1)
@@ -20,16 +18,8 @@ class CategoryMethodTests(TestCase):
 
         self.assertEqual(old_likes, category.likes)
 
-    # def test_category(self):
-    #     a1 = if_category_exist("dinner")
-    #
-    #     self.assertTrue(a1)
-
 
 class RecipeMethodTests(TestCase):
-    def setUp(self):
-        populate()
-
     def add_likes(self):
         recipe = Recipe.objects.get(id=1)
         old_likes = recipe.likes

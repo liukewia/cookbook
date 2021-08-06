@@ -493,8 +493,9 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
     }
 
     # create user profile for our superuser
-    add_user_profile(username="mycookbook")
-    print('create mycookbook')
+    user = User.objects.get(id=1)
+    add_user_profile(username=user.username)
+    print(f'create {user.username}')
 
     for user, user_data in users.items():
         u = create_user(user_data['username'], user_data['password'],
