@@ -16,7 +16,7 @@ export default (): React.ReactNode => {
           That's not to say we're not serious about food. If you've come here to finally tackle an exasperatingly intense sourdough recipe, we can help explain the technique, step by step. We celebrate anyone who really loves to eat as much as those who actually get in the kitchen to cook. So wherever you fall on that spectrum, you'll find your people here.
         </Paragraph>
         <Paragraph>
-          That's why we want you to get to know us, too—the team behind Yellow Duck. We want you to love reading on and cooking from Delish as much as we love creating this space for you, so holler if you've got something you want us to know. We're all ears. (Did you know you can rate and comment on all our recipes, too?)
+          That's why we want you to get to know us, too—the team behind Yellow Duck. We want you to love reading on and cooking from <Text italic>the Cookbook</Text> as much as we love creating this space for you, so holler if you've got something you want us to know. We're all ears. (Did you know you can rate and comment on all our recipes, too?)
         </Paragraph>
       </Card>
     </PageContainer>
