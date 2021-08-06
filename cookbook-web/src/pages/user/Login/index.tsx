@@ -35,7 +35,6 @@ const Login: React.FC = (props) => {
   const [userLoginState, setUserLoginState] = useState({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
-
   // go to the redirect url if already logged in
   useEffect(() => {
     if (
@@ -224,7 +223,20 @@ const Login: React.FC = (props) => {
               {/* <ProFormCheckbox noStyle name="autoLogin">
                 auto login
               </ProFormCheckbox> */}
-              <Link to="/">Visit as guest</Link>
+              <Link
+                to="/"
+                onClick={() =>
+                  setInitialState((s) => ({
+                    ...s,
+                    currentUser: {
+                      access: 'guest',
+                      state: 'error',
+                    },
+                  }))
+                }
+              >
+                Visit as guest
+              </Link>
               <Link
                 to="/user/register"
                 style={{
@@ -235,13 +247,13 @@ const Login: React.FC = (props) => {
               </Link>
             </div>
           </ProForm>
-          <Space className={styles.other}>
+          {/* <Space className={styles.other}>
             Other login methods:
             <TwitterCircleFilled className={styles.icon} />
-            {/* <AlipayCircleOutlined className={styles.icon} />
+            <AlipayCircleOutlined className={styles.icon} />
             <TaobaoCircleOutlined className={styles.icon} />
-            <WeiboCircleOutlined className={styles.icon} /> */}
-          </Space>
+            <WeiboCircleOutlined className={styles.icon} />
+          </Space> */}
         </div>
       </div>
       <Footer />

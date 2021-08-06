@@ -5,11 +5,9 @@ import { useRequest } from 'umi';
 import styles from './BaseView.less';
 import { history, useModel } from 'umi';
 import { stringify } from 'querystring';
-import { loginOut } from '@/components/RightContent/AvatarDropdown';
 
 const SecurityView: React.FC = () => {
   const [form] = Form.useForm();
-  const { getFieldValue, resetFields } = form;
   const { initialState, setInitialState } = useModel('@@initialState');
 
   const { run } = useRequest(
@@ -24,6 +22,13 @@ const SecurityView: React.FC = () => {
         if (result?.status === 'ok') {
           message.success('Password Updated.');
           message.info('Please log in again.');
+          setInitialState((s) => ({
+            ...s,
+            currentUser: {
+              access: 'guest',
+              state: 'error',
+            },
+          }));
           const { query = {}, pathname } = history.location;
           const { redirect } = query;
           if (window.location.pathname !== '/user/login' && !redirect) {

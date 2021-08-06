@@ -30,7 +30,6 @@ export async function getInitialState(): Promise<{
       const msg = await queryCurrentUser();
       return msg.data;
     } catch (error) {
-      console.log('getInitialState error: ', error);
       history.push(loginPath);
     }
     return undefined;
@@ -38,7 +37,6 @@ export async function getInitialState(): Promise<{
 
   if (history.location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
-    console.log('currentUser, not loginPath: ', currentUser);
     return {
       fetchUserInfo,
       currentUser,
@@ -46,10 +44,6 @@ export async function getInitialState(): Promise<{
     };
   }
 
-  console.log('InitialState, is loginPath: ', {
-    fetchUserInfo,
-    settings: {},
-  });
   return {
     fetchUserInfo,
     settings: {},
@@ -105,12 +99,10 @@ let extraRoutes: any;
 export function render(oldRender: any) {
   umiRequest('/api/get_all_categories/')
     .then((res) => {
-      // console.log('res?.data: ', res?.data?.categories);
       extraRoutes = res?.data?.categories?.map((cat: any) => ({
         name: cat.categoryName,
         path: `/${cat.categorySlug}`,
       }));
-      // console.log('extraRoutes: ', extraRoutes);
       oldRender();
     })
     .catch((err) => {
@@ -123,7 +115,6 @@ export function render(oldRender: any) {
 // https://www.codenong.com/cs109219288/
 // https://umijs.org/zh-CN/docs/runtime-config
 export function patchRoutes({ routes }) {
-  // console.log('extraRoutes: ', extraRoutes);
   if (extraRoutes) {
     const _routes = routes.find((ele) => ele.path === '/').routes;
     const tmpRouteIdx = _routes.indexOf(_routes.find((ele) => ele.routeKey === 'tmp'));
@@ -138,6 +129,4 @@ export function patchRoutes({ routes }) {
       }),
     );
   }
-
-  // console.log('routes: ', routes);
 }

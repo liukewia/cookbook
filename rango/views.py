@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+import requests
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
@@ -604,3 +605,28 @@ def update_password(request):
 #     }
 #
 #     return JsonResponse(context_dict)
+
+def bing_search(request):
+    bing_key = "f9332617e5b046dba910de810c7a0829"
+    search_url = 'https://api.bing.microsoft.com/v7.0/search'
+    headers = {'Ocp-Apim-Subscription-Key': bing_key}
+    params = {'q': request.GET.get('q'), 'textDecorations': True, 'textFormat': 'HTML'}
+
+    response = requests.get(search_url, headers=headers, params=params)
+    response.raise_for_status()
+    search_results = response.json()
+
+    results = []
+    for result in search_results['webPages']['value']:
+        results.append({
+            'title': result['name'],
+            'link': result['url'],
+            'summary': result['snippet']})
+    print(results)
+    context_dict = {
+        'success': True,
+        'data': {
+            'results': results,
+        }
+    }
+    return JsonResponse(context_dict)
