@@ -622,7 +622,6 @@ def bing_search(request):
             'title': result['name'],
             'link': result['url'],
             'summary': result['snippet']})
-    print(results)
     context_dict = {
         'success': True,
         'data': {
