@@ -1,59 +1,42 @@
 import React from 'react';
-import { StarTwoTone, LikeOutlined, MessageFilled } from '@ant-design/icons';
-import { useRequest } from 'umi';
-import { List, Tag } from 'antd';
-import ArticleListContent from '../ArticleListContent';
-import type { ListItemDataType } from '../../data.d';
-import { queryFakeList } from '../../service';
+import { Link, useRequest, useModel } from 'umi';
+import { Card, List } from 'antd';
+import MultiClamp from 'react-multi-clamp';
 import styles from './index.less';
 
 const Articles: React.FC = () => {
-  const IconText: React.FC<{
-    icon: React.ReactNode;
-    text: React.ReactNode;
-  }> = ({ icon, text }) => (
-    <span>
-      {icon} {text}
-    </span>
+  const { initialState } = useModel('@@initialState');
+  const { data: listData } = useRequest(
+    `/api/my_recipe/${initialState?.currentUser?.id}/`,
   );
-
-  // 获取tab列表数据
-  const { data: listData } = useRequest(() => {
-    return queryFakeList({
-      count: 30,
-    });
-  });
   return (
-    <List<ListItemDataType>
-      size="large"
-      className={styles.articleList}
+    <List
+      className={styles.coverCardList}
       rowKey="id"
-      itemLayout="vertical"
-      dataSource={listData?.list || []}
-      renderItem={(item) => (
-        <List.Item
-          key={item.id}
-          actions={[
-            <IconText key="star" icon={<StarTwoTone />} text={item.star} />,
-            <IconText key="like" icon={<LikeOutlined />} text={item.like} />,
-            <IconText key="message" icon={<MessageFilled />} text={item.message} />,
-          ]}
-        >
-          <List.Item.Meta
-            title={
-              <a className={styles.listItemMetaTitle} href={item.href}>
-                {item.title}
-              </a>
-            }
-            description={
-              <span>
-                <Tag>Ant Design</Tag>
-                <Tag>设计语言</Tag>
-                <Tag>蚂蚁金服</Tag>
-              </span>
-            }
-          />
-          <ArticleListContent data={item} />
+      grid={{ gutter: 24, xxl: 3, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}
+      dataSource={listData?.recipes || []}
+      renderItem={(recipe: any) => (
+        <List.Item>
+          <Link to={`/recipe/${recipe.recipeId}`} key={`recipe-${recipe.recipeId}`}>
+            <Card
+              hoverable
+              cover={
+                <img
+                  alt={`${recipe.recipeTitle} Picture`}
+                  src={recipe.recipePic}
+                  style={{ width: '100%', height: 240, objectFit: 'cover' }}
+                />
+              }
+            >
+              <Card.Meta
+                title={
+                  <MultiClamp ellipsis="..." clamp={1}>
+                    {recipe.recipeTitle}
+                  </MultiClamp>
+                }
+              />
+            </Card>
+          </Link>
         </List.Item>
       )}
     />

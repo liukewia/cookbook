@@ -23,6 +23,7 @@ export default function AddCategory() {
       onSuccess: (result) => {
         if (result?.status === 'ok') {
           message.success('Successfully added.');
+          window.location.reload();
         }
       },
     },

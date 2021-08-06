@@ -3,7 +3,7 @@
 import { request } from 'umi';
 
 /** getuserinfo GET /api/getuserinfo */
-export async function currentUser(options?: { [key: string]: any }) {
+export async function queryCurrentUser(options?: { [key: string]: any }) {
   return request('/api/user/getuserinfo/', {
     method: 'GET',
     ...(options || {}),

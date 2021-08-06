@@ -72,7 +72,6 @@ const Login: React.FC = (props) => {
         history.push(redirect || '/');
         return;
       }
-      // console.log('msg: ', msg);
       setUserLoginState({ ...msg, type: 'account' });
     } catch (error) {
       const defaultLoginFailureMessage = 'Login failed, please check!';

@@ -1,4 +1,4 @@
-import { MailOutlined, HomeOutlined, ContactsOutlined, ClusterOutlined } from '@ant-design/icons';
+import { MailOutlined, HomeOutlined, ContactsOutlined, ClusterOutlined, IdcardOutlined, CrownOutlined } from '@ant-design/icons';
 import { Avatar, Card, Col, Divider, Input, Row, Tag } from 'antd';
 import React, { useState, useRef } from 'react';
 import { GridContent } from '@ant-design/pro-layout';
@@ -8,8 +8,8 @@ import Favourites from './components/Favourites';
 import Articles from './components/Articles';
 import Applications from './components/Applications';
 import type { CurrentUser, TagType, tabKeyType } from './data.d';
-import { queryCurrent } from './service';
 import styles from './Center.less';
+import { queryCurrentUser } from '@/services/ant-design-pro/api';
 
 const operationTabList = [
   {
@@ -88,22 +88,34 @@ const operationTabList = [
 const Center: React.FC<RouteChildrenProps> = () => {
   const [tabKey, setTabKey] = useState<tabKeyType>('posts');
 
-  //  获取用户信息
-  const { data: currentUser, loading } = useRequest(() => {
-    return queryCurrent();
-  });
-
-  //  渲染用户信息
-  const renderUserInfo = ({ title, group, geographic }: Partial<CurrentUser>) => {
+  const { data: currentUser, loading } = useRequest(queryCurrentUser);
+  console.log('currentUser: ', currentUser);
+  const renderUserInfo = ({}: Partial<CurrentUser>) => {
     return (
       <div className={styles.detail}>
+        <p>
+          <IdcardOutlined
+            style={{
+              marginRight: 8,
+            }}
+          />
+          {currentUser?.userName}
+        </p>
         <p>
           <MailOutlined
             style={{
               marginRight: 8,
             }}
           />
-          xxx@gmail.com
+          {currentUser?.email}
+        </p>
+        <p>
+          <CrownOutlined
+            style={{
+              marginRight: 8,
+            }}
+          />
+          {currentUser?.access}
         </p>
         {/* <p>
           <ClusterOutlined
@@ -156,12 +168,18 @@ const Center: React.FC<RouteChildrenProps> = () => {
             {!loading && currentUser && (
               <div>
                 <div className={styles.avatarHolder}>
-                  <img alt="" src={currentUser.avatar} />
-                  <div className={styles.name}>{currentUser.firstName}</div>
+                  <img
+                    alt=""
+                    src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+                  />
+                  <div className={styles.name}>
+                    {currentUser.firstName + ' ' + currentUser.lastName}
+                  </div>
                   {/* <div>{currentUser?.signature}</div> */}
                 </div>
+                <Divider dashed />
                 {renderUserInfo(currentUser)}
-                {/* <Divider dashed />
+                {/* 
                 <TagList tags={currentUser.tags || []} />
                 <Divider style={{ marginTop: 16 }} dashed />
                 <div className={styles.team}>

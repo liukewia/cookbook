@@ -1,45 +1,42 @@
 import { Card, List } from 'antd';
-import { useRequest } from 'umi';
+import { Link, useRequest, useModel } from 'umi';
 import React from 'react';
-import moment from 'moment';
-import { queryFakeList } from '../../service';
-import AvatarList from '../AvatarList';
-import type { ListItemDataType } from '../../data';
 import styles from './index.less';
+import MultiClamp from 'react-multi-clamp';
 
 const Favourites: React.FC = () => {
-  // 获取tab列表数据
-  const { data: listData } = useRequest(() => {
-    return queryFakeList({
-      count: 30,
-    });
-  });
-
+  const { initialState } = useModel('@@initialState');
+  const { data: listData } = useRequest(
+    `/api/show_favourite_recipe/${initialState?.currentUser?.id}/`,
+  );
   return (
-    <List<ListItemDataType>
+    <List
       className={styles.coverCardList}
       rowKey="id"
       grid={{ gutter: 24, xxl: 3, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}
-      dataSource={listData?.list || []}
-      renderItem={(item) => (
+      dataSource={listData?.recipes || []}
+      renderItem={(recipe: any) => (
         <List.Item>
-          <Card className={styles.card} hoverable cover={<img alt={item.title} src={item.cover} />}>
-            <Card.Meta title={<a>{item.title}</a>} description={item.subDescription} />
-            <div className={styles.cardItemContent}>
-              <span>{moment(item.updatedAt).fromNow()}</span>
-              <div className={styles.avatarList}>
-                <AvatarList size="small">
-                  {item.members.map((member) => (
-                    <AvatarList.Item
-                      key={`${item.id}-avatar-${member.id}`}
-                      src={member.avatar}
-                      tips={member.name}
-                    />
-                  ))}
-                </AvatarList>
-              </div>
-            </div>
-          </Card>
+          <Link to={`/recipe/${recipe.recipeId}`} key={`recipe-${recipe.recipeId}`}>
+            <Card
+              hoverable
+              cover={
+                <img
+                  alt={`${recipe.recipeTitle} Picture`}
+                  src={recipe.recipePic}
+                  style={{ width: '100%', height: 240, objectFit: 'cover' }}
+                />
+              }
+            >
+              <Card.Meta
+                title={
+                  <MultiClamp ellipsis="..." clamp={1}>
+                    {recipe.recipeTitle}
+                  </MultiClamp>
+                }
+              />
+            </Card>
+          </Link>
         </List.Item>
       )}
     />

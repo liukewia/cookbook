@@ -85,7 +85,6 @@ const Register: FC = (props) => {
     },
   );
   const onFinish = (values) => {
-    console.log('values: ', values);
     register(values);
   };
 

@@ -1,4 +1,4 @@
-import { LikeFilled, LikeOutlined } from '@ant-design/icons';
+import { HeartOutlined, LikeFilled, LikeOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Descriptions, List, Space, Spin, Comment, Avatar, Form, Button, message } from 'antd';
 import { useModel, useParams, useRequest } from 'umi';
@@ -72,10 +72,30 @@ export default function Recipe() {
     },
   });
   const access = useAccess();
+  const { initialState } = useModel('@@initialState');
   const [didLike, setDidLike] = useState(false);
   const { run: runLike } = useRequest(`/api/recipe/${recipeId}/rec_add_like/`, {
     manual: true,
   });
+
+  const { run: runAddToFav } = useRequest(
+    (values) => ({
+      url: '/api/add_to_favourite_recipe/',
+      method: 'post',
+      data: values,
+    }),
+    {
+      manual: true,
+      debounceInterval: 1000,
+      onSuccess: (result) => {
+        if (result?.status === 'ok') {
+          message.success('Successfully added to favourite!');
+          return;
+        }
+        message.error('Cannot add to favourite!');
+      },
+    },
+  );
 
   const like = () => {
     if (!access.isLoggedin) {
@@ -91,17 +111,36 @@ export default function Recipe() {
     }
   };
 
+  const addToFav = () => {
+    if (!access.isLoggedin) {
+      message.warn('Need login to add to favourite!');
+      return;
+    }
+    runAddToFav({ userId: initialState?.currentUser?.id, recipeId: data?.recipeId });
+  };
+
   return (
     <PageContainer
       title={`Recipe: ${data?.recipeTitle}`}
-      extra={
-        data ? (
-          <span onClick={like} style={didLike ? undefined : { cursor: 'pointer' }}>
+      extra={[
+        access.isLoggedin && data && (
+          <Button
+            shape="round"
+            icon={<HeartOutlined />}
+            style={{ marginRight: 10 }}
+            key="dasdase3qe"
+            onClick={addToFav}
+          >
+            Add to favourite
+          </Button>
+        ),
+        data && (
+          <span onClick={like} style={didLike ? undefined : { cursor: 'pointer' }} key="3x321d">
             {createElement(didLike ? LikeFilled : LikeOutlined)}
             <span style={{ paddingLeft: 8 }}>{data?.recipeLike}</span>
           </span>
-        ) : null
-      }
+        ),
+      ]}
     >
       <Space size="large" direction="vertical" className={styles['page-card']}>
         <ProCard split="vertical" layout="center">

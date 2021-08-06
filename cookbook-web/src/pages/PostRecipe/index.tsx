@@ -37,7 +37,6 @@ export default function AddCategory() {
 
 
   const onFinish = (values: any) => {
-    console.log('values: ', values);
     run({
       slug: getFieldValue('category'),
       id: initialState?.currentUser?.id,

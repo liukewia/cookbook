@@ -23,9 +23,6 @@ const SecurityView: React.FC = () => {
       onSuccess: (result) => {
         if (result?.status === 'ok') {
           message.success('Password Updated.');
-          // resetFields();
-          setInitialState((s) => ({ ...s, currentUser: undefined }));
-          // loginOut();
           message.info('Please log in again.');
           const { query = {}, pathname } = history.location;
           const { redirect } = query;
@@ -45,7 +42,6 @@ const SecurityView: React.FC = () => {
   );
 
   const handleFinish = async (values) => {
-    console.log('values: ', values);
     run(values);
   };
 
