@@ -1,16 +1,17 @@
 import React from 'react';
 import { Button, Form, message } from 'antd';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
-
-import styles from './BaseView.less';
-import { useModel } from '@/.umi/plugin-model/useModel';
 import { useRequest } from 'umi';
+import styles from './BaseView.less';
+import { history, useModel } from 'umi';
+import { stringify } from 'querystring';
+import { loginOut } from '@/components/RightContent/AvatarDropdown';
 
 const SecurityView: React.FC = () => {
   const [form] = Form.useForm();
   const { getFieldValue, resetFields } = form;
+  const { initialState, setInitialState } = useModel('@@initialState');
 
-  const { initialState } = useModel('@@initialState');
   const { run } = useRequest(
     (values) => ({
       url: '/api/user/update_password/',
@@ -22,7 +23,20 @@ const SecurityView: React.FC = () => {
       onSuccess: (result) => {
         if (result?.status === 'ok') {
           message.success('Password Updated.');
-          resetFields();
+          // resetFields();
+          setInitialState((s) => ({ ...s, currentUser: undefined }));
+          // loginOut();
+          message.info('Please log in again.');
+          const { query = {}, pathname } = history.location;
+          const { redirect } = query;
+          if (window.location.pathname !== '/user/login' && !redirect) {
+            history.replace({
+              pathname: '/user/login',
+              search: stringify({
+                redirect: pathname,
+              }),
+            });
+          }
         } else if (result?.status === 'error') {
           message.error('Cannot update.');
         }
@@ -32,7 +46,7 @@ const SecurityView: React.FC = () => {
 
   const handleFinish = async (values) => {
     console.log('values: ', values);
-    // run();
+    run(values);
   };
 
   return (
@@ -60,7 +74,7 @@ const SecurityView: React.FC = () => {
           >
             <ProFormText
               width="md"
-              name="currentPassword"
+              name="oldPassword"
               label="Current Password"
               placeholder=""
               rules={[

@@ -63,6 +63,7 @@ export default [
   },
   {
     path: '/account',
+    access: 'isLoggedin',
     routes: [
       {
         name: 'center',

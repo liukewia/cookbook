@@ -38,7 +38,7 @@ const Editor = ({ onRefresh }) => {
       return;
     }
     submit();
-    run({ id: initialState?.currentUser?.id, content }); // TODO change id
+    run({ id: initialState?.currentUser?.id, content });
     resetFields();
     setTimeout(() => {
       onRefresh();
@@ -78,6 +78,10 @@ export default function Recipe() {
   });
 
   const like = () => {
+    if (!access.isLoggedin) {
+      message.warn('Need login to like');
+      return;
+    }
     if (!didLike) {
       setDidLike(true);
       runLike();

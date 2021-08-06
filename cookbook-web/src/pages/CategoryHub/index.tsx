@@ -1,10 +1,10 @@
 import { LikeFilled, LikeOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Space } from 'antd';
+import { Card, message, Space } from 'antd';
 import { Link, useLocation, useRequest } from 'umi';
 import MultiClamp from 'react-multi-clamp';
-import styles from './index.less';
 import { createElement, useState } from 'react';
+import { useAccess } from 'umi';
 
 export default function CategoryHub() {
   const { pathname } = useLocation();
@@ -14,8 +14,13 @@ export default function CategoryHub() {
   const { run: runLike } = useRequest(`/api/category${pathname}/cate_add_like/`, {
     manual: true,
   });
+  const access = useAccess();
 
   const like = () => {
+    if (!access.isLoggedin) {
+      message.warn('Need login to like');
+      return;
+    }
     if (!didLike) {
       setDidLike(true);
       runLike();
