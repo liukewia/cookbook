@@ -10,7 +10,6 @@ import os
 
 
 class CategoryMethodTests(TestCase):
-
     def add_like(self):
         category = Category.objects.get(id=1)
         old_likes = category.likes
@@ -29,11 +28,11 @@ class RecipeMethodTests(TestCase):
 
 #
 # class FavouriteRecipe(TestCase):
-#     def setUp(self):
-#         populate()
+#     # def setUp(self):
+#     #     populate()
 #
 #     def test_favourite_recipe(self):
-#         user = User.objects.get(id=3)
+#         user = User.objects.get(username="fan")
 #         user_profile = UserProfile.objects.get(id=user)
 #         favourite_recipe = FavouriteRecipe.objects.get(user=user_profile)
 #         recipes = Recipe.objects.filter(favouriteRecipe=favourite_recipe)
@@ -54,7 +53,3 @@ class RecipeMethodTests(TestCase):
 #         }
 #
 #         self.assertEqual(context_dict, fc)
-#
-#
-#
-#

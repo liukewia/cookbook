@@ -70,6 +70,7 @@ def add_recipes_to_dict(recipes):
             'recipeId': recipe.id,
             'recipeSlug': recipe.slug,
             'recipeTitle': recipe.title,
+            'recipePict': recipe.url,
         }
         recipes_dict.append(recipe)
 
@@ -336,6 +337,7 @@ def show_my_recipe(request, user_id):
             'recipeId': recipe.id,
             'recipeSlug': recipe.slug,
             'recipeTitle': recipe.title,
+            'recipePic': recipe.url,
         }
         recipe_list.append(recipe)
 
