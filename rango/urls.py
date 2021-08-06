@@ -25,6 +25,7 @@ urlpatterns = [
     path('user/update_password/', views.update_password),
     # path('user/updateInfo/', views.update_info()),
     path('user/logout/', views.logout),
+    # path('user/oauth_login/', views.oauth_login),
 
     re_path(r'^(?:.*)/?$', views.illegal_request_handler),
 ]

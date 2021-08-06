@@ -154,21 +154,30 @@ def add_category(request):
     return JsonResponse(context_dict)
 
 
-@login_required
-def category_add_like(request, category_name_slug):
-    context_dict = {
-        'success': True,
-        'data': {}
-    }
+def if_category_exist(category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
         category = None
 
     if category is None:
+        return False
+
+    return True
+
+
+@login_required
+def category_add_like(request, category_name_slug):
+    context_dict = {
+        'success': True,
+        'data': {}
+    }
+    if_exist = if_category_exist(category_name_slug)
+    if not if_exist:
         context_dict['success'] = False
         return JsonResponse(context_dict)
 
+    category = Category.objects.get(slug=category_name_slug)
     likes = category.likes + 1
     category.likes = likes
     # save the object, otherwise the attribute will not change
@@ -435,6 +444,8 @@ def register(request):
     u1.last_name = last_name
     u1.email = email
     u1.save()
+    up = UserProfile.objects.create(user=u1)
+    up.save()
     context_dict = {
         'success': True,
         'data': {
@@ -575,3 +586,14 @@ def update_password(request):
             }
         }
         return JsonResponse(context_dict)
+
+
+# def oauth_login(request):
+#     user = User.objects.get(id=2)
+#     auth.login(request, user)
+#
+#     context_dict = {
+#         'success': 'True'
+#     }
+#
+#     return JsonResponse(context_dict)

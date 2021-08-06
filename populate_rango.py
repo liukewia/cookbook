@@ -1,9 +1,10 @@
-from rango.models import Category, Recipe, FavouriteRecipe, UserProfile, User, Review
-import django
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'tango_with_django_project.settings')
+import django
 django.setup()
+from rango.models import Category, Recipe, FavouriteRecipe, UserProfile, User, Review
+
 
 
 def populate():
@@ -490,6 +491,10 @@ Remove lemongrass and lime leaves. Garnish curry with the fried shallots and cil
         'user3': user3,
         'user4': user4,
     }
+
+    # create user profile for our superuser
+    add_user_profile(username="mycookbook")
+    print('create mycookbook')
 
     for user, user_data in users.items():
         u = create_user(user_data['username'], user_data['password'],
