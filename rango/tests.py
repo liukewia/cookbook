@@ -1,9 +1,8 @@
-from django.test import TestCase
-from rango.views import category_add_like, recipe_add_like, if_category_exist, add_recipes_to_dict
-from rango.models import Category, Recipe, FavouriteRecipe, UserProfile
-from django.contrib.auth.models import User
-import json
-import os
+from django.test import TestCase, Client
+
+from rango.models import Category, Recipe
+from rango.views import category_add_like, recipe_add_like
+
 
 # Create your tests here.
 
@@ -25,3 +24,20 @@ class RecipeMethodTests(TestCase):
 
         self.assertEqual(old_likes, recipe.likes)
 
+
+class PageTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_home(self):
+        response = self.client.get('/')
+        self.assertTrue(response.status_code, 200)
+
+
+class BingApiTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_bing_search(self):
+        response = self.client.get('/api/bing_search?q=recipe')
+        self.assertTrue(response.status_code, 200)
