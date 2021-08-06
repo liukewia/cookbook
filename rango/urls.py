@@ -17,7 +17,6 @@ urlpatterns = [
     path('my_recipe/<int:user_id>/', views.show_my_recipe),
     path('category/<slug:category_name_slug>/cate_add_like/', views.category_add_like),
     path('recipe/<int:recipe_id>/rec_add_like/', views.recipe_add_like),
-    # path('search', views.bing_search),
     path('bing_search', views.bing_search),
     path('user/login/', views.login),
     path('user/register/', views.register),

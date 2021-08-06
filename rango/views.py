@@ -85,22 +85,6 @@ def add_recipes_to_dict(recipes):
     return context_dict
 
 
-def user_operation_demo(request):
-    return JsonResponse({
-        'success': True,
-        'data': {
-            'name': 'mockusername',
-            'avatar': 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-            'firstName': 'mock',
-            'lastName': 'user',
-            'userid': 1,
-            'email': 'antdesign@alipay.com',
-            'access': 'user',
-            # 'guest' means not logged in, 'user' means logged in, 'admin' means logged in and is super user.
-        },
-    })
-
-
 def show_category(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -237,7 +221,7 @@ def show_recipe(request, recipe_id):
     return JsonResponse(context_dict)
 
 
-# @login_required
+@login_required
 def add_recipe(request):
     context_dict = {
         'success': True,
@@ -347,7 +331,7 @@ def show_my_recipe(request, user_id):
     return JsonResponse(context_dict)
 
 
-# @login_required
+@login_required
 def show_favourite_recipe(request, user_id):
     user = User.objects.get(id=user_id)
     user_profile = UserProfile.objects.get(user=user)
@@ -359,7 +343,7 @@ def show_favourite_recipe(request, user_id):
     return JsonResponse(context_dict)
 
 
-# @login_required
+@login_required
 def add_to_favourite_recipe(request):
     context_dict = {
         'success': True,
@@ -595,16 +579,6 @@ def update_password(request):
         }
         return JsonResponse(context_dict)
 
-
-# def oauth_login(request):
-#     user = User.objects.get(id=2)
-#     auth.login(request, user)
-#
-#     context_dict = {
-#         'success': 'True'
-#     }
-#
-#     return JsonResponse(context_dict)
 
 def bing_search(request):
     bing_key = "f9332617e5b046dba910de810c7a0829"
