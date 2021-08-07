@@ -8,6 +8,7 @@ import { avatars } from '@/global';
 import TextArea from 'antd/lib/input/TextArea';
 import { createElement, useState } from 'react';
 import { useAccess } from 'umi';
+import Exception404Page from '../404';
 
 const Editor = ({ onRefresh }) => {
   const [form] = Form.useForm();
@@ -62,7 +63,7 @@ const Editor = ({ onRefresh }) => {
 export default function Recipe() {
   const [randAvatars, setRandAvatars] = useState<string[]>([]);
   const { recipeId } = useParams<{ recipeId: string }>();
-  const { data, run: refresh } = useRequest(`/api/recipe/${recipeId}/`, {
+  const { data, run: refresh, loading } = useRequest(`/api/recipe/${recipeId}/`, {
     onSuccess: (result) => {
       const newArr = [...randAvatars];
       for (let i = 0; i < result?.reviews?.length - randAvatars.length; i++) {
@@ -71,6 +72,8 @@ export default function Recipe() {
       setRandAvatars(newArr);
     },
   });
+  console.log('data: ', data);
+
   const access = useAccess();
   const { initialState } = useModel('@@initialState');
   const [didLike, setDidLike] = useState(false);
@@ -86,7 +89,7 @@ export default function Recipe() {
     }),
     {
       manual: true,
-      debounceInterval: 1000,
+      debounceInterval: 100,
       onSuccess: (result) => {
         if (result?.status === 'ok') {
           message.success('Successfully added to favourite!');
@@ -96,6 +99,9 @@ export default function Recipe() {
       },
     },
   );
+  if (!loading && !data) {
+    return <Exception404Page />;
+  }
 
   const like = () => {
     if (!access.isLoggedin) {
@@ -121,7 +127,7 @@ export default function Recipe() {
 
   return (
     <PageContainer
-      title={`Recipe: ${data?.recipeTitle}`}
+      title={`Recipe: ${data?.recipeTitle || ''}`}
       extra={[
         access.isLoggedin && data && (
           <Button

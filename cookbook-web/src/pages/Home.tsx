@@ -19,20 +19,20 @@ export default (): React.ReactNode => {
   return (
     <PageContainer title="Home">
       <Card title="Most Liked Recipes">
-        <Space direction="vertical">
+        <Space direction="vertical" style={{ width: '100%' }}>
           {data?.recipes
             ? data?.recipes?.map((recipe: any) => (
                 <Link to={`/recipe/${recipe.recipeId}/`} key={`recipe-${recipe.recipeId}`}>
                   <Card hoverable>
-                    <Space size="large">
+                    <Space size="large" style={{ width: '100%' }}>
                       <Image
                         preview={false}
                         alt={`${recipe.recipeTitle} Picture`}
                         style={{ width: 200, height: 200, objectFit: 'cover' }}
                         src={recipe.recipePicture}
                       />
-                      <Descriptions title={recipe.recipeTitle}>
-                        <Descriptions.Item>
+                      <Descriptions title={recipe.recipeTitle} style={{ width: '100%' }}>
+                        <Descriptions.Item style={{ width: '100%' }}>
                           <MultiClamp ellipsis="..." clamp={3}>
                             {recipe.recipeDirection as string}
                           </MultiClamp>

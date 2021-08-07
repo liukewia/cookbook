@@ -79,7 +79,7 @@ const Register: FC = (props) => {
           history.push('/user/login');
         }
         if (data.status === 'error') {
-          message.success('Cannot sign up!');
+          message.error('Cannot sign up!');
         }
       },
     },
