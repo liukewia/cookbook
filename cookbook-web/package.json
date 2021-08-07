@@ -62,7 +62,8 @@
     "react-multi-clamp": "^2.0.4",
     "react-router": "^4.3.1",
     "umi": "^3.5.0",
-    "umi-serve": "^1.9.10"
+    "umi-serve": "^1.9.10",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@ant-design/pro-card": "^1.14.10",

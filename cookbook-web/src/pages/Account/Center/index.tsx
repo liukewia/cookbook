@@ -89,7 +89,6 @@ const Center: React.FC<RouteChildrenProps> = () => {
   const [tabKey, setTabKey] = useState<tabKeyType>('posts');
 
   const { data: currentUser, loading } = useRequest(queryCurrentUser);
-  console.log('currentUser: ', currentUser);
   const renderUserInfo = ({}: Partial<CurrentUser>) => {
     return (
       <div className={styles.detail}>

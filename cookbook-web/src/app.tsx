@@ -8,6 +8,7 @@ import { queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import Exception403Page from './pages/403';
 import { message } from 'antd';
+import Cookies from 'universal-cookie';
 import { isDev } from './global';
 
 const loginPath = '/user/login';
@@ -90,7 +91,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 // https://umijs.org/plugins/plugin-request#%E8%BF%90%E8%A1%8C%E6%97%B6%E9%85%8D%E7%BD%AE
 export const request: RequestConfig = {
   errorHandler: (err) => {
-    console.log('err: ', JSON.stringify(err));
     message.error(
       err.data?.data?.message ||
         (err.request?.options?.method &&
@@ -99,6 +99,18 @@ export const request: RequestConfig = {
         err.name,
     );
   },
+  requestInterceptors: [
+    (url, options) => {
+      const cookie = new Cookies();
+      if (options.headers) {
+        options.headers['X-CSRFToken'] = cookie.get('csrftoken');
+      }
+      return {
+        url,
+        options,
+      };
+    },
+  ],
 };
 
 let extraRoutes: any;
