@@ -156,7 +156,9 @@ export default function Recipe() {
           : null
       }
     >
-      {data && (
+      {loading ? (
+        <CenteredSpinner />
+      ) : (
         <Space size="large" direction="vertical" className={styles['page-card']}>
           <RcResizeObserver
             key="resize-observer"
