@@ -156,90 +156,86 @@ export default function Recipe() {
           : null
       }
     >
-      {loading ? (
-        <CenteredSpinner />
-      ) : (
-        <Space size="large" direction="vertical" className={styles['page-card']}>
-          <RcResizeObserver
-            key="resize-observer"
-            onResize={(offset) => {
-              setResponsive(offset.width < 596);
-            }}
-          >
-            <ProCard split={responsive ? 'horizontal' : 'vertical'} layout="center">
-              <ProCard colSpan="30%">
-                {data ? (
-                  <img
-                    alt={`${data?.recipeTitle} Picture`}
-                    src={data?.recipeUrl}
-                    className={styles['recipe-img']}
-                  />
-                ) : (
-                  <CenteredSpinner />
-                )}
-              </ProCard>
-              <ProCard>
-                <Descriptions
-                  title="Recipe Detail"
-                  column={1}
-                  bordered
-                  labelStyle={{ fontSize: '1.005rem' }}
-                  contentStyle={{ fontSize: '1.005rem' }}
-                >
-                  <Descriptions.Item label="Recipe Name">{data?.recipeTitle}</Descriptions.Item>
-                  <Descriptions.Item label="Ingredients">
-                    {data?.recipeIngredients.map((ingredient: any, index: number) => (
-                      <div key={`ing-idx-${index}`}>{`${
-                        index + 1
-                      }.${'\u00A0'}${'\u00A0'}${ingredient}`}</div>
-                    ))}
-                  </Descriptions.Item>
-                </Descriptions>
-              </ProCard>
+      <Space size="large" direction="vertical" className={styles['page-card']}>
+        <RcResizeObserver
+          key="resize-observer"
+          onResize={(offset) => {
+            setResponsive(offset.width < 596);
+          }}
+        >
+          <ProCard split={responsive ? 'horizontal' : 'vertical'} layout="center">
+            <ProCard colSpan="30%">
+              {data ? (
+                <img
+                  alt={`${data?.recipeTitle} Picture`}
+                  src={data?.recipeUrl}
+                  className={styles['recipe-img']}
+                />
+              ) : (
+                <CenteredSpinner />
+              )}
             </ProCard>
-          </RcResizeObserver>
-          <ProCard title="Directions" className={styles['desc']}>
-            {data?.recipeDirections.map((dir: any, index: number) => (
-              <div key={`ing-idx-${index}`}>{`Step ${
-                index + 1
-              }:${'\u00A0'}${'\u00A0'}${'\u00A0'}${dir}`}</div>
-            ))}
+            <ProCard>
+              <Descriptions
+                title="Recipe Detail"
+                column={1}
+                bordered
+                labelStyle={{ fontSize: '1.005rem' }}
+                contentStyle={{ fontSize: '1.005rem' }}
+              >
+                <Descriptions.Item label="Recipe Name">{data?.recipeTitle}</Descriptions.Item>
+                <Descriptions.Item label="Ingredients">
+                  {data?.recipeIngredients.map((ingredient: any, index: number) => (
+                    <div key={`ing-idx-${index}`}>{`${
+                      index + 1
+                    }.${'\u00A0'}${'\u00A0'}${ingredient}`}</div>
+                  ))}
+                </Descriptions.Item>
+              </Descriptions>
+            </ProCard>
           </ProCard>
-          <ProCard title="Comment">
-            {access.isLoggedin && (
-              <Comment
-                avatar={
-                  <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt="Han Solo"
-                  />
-                }
-                content={<Editor onRefresh={refresh} />}
-              />
-            )}
-            {data?.reviews ? (
-              <List
-                className="comment-list"
-                header={`${data?.reviews?.length} repl${data?.reviews?.length > 1 ? 'ies' : 'y'}`}
-                itemLayout="horizontal"
-                dataSource={data?.reviews}
-                renderItem={(item: any, index: number) => {
-                  return (
-                    <li>
-                      <Comment
-                        author={item.posterName}
-                        avatar={randAvatars[index]}
-                        content={item.reviewContent}
-                        // datetime={item.datetime}
-                      />
-                    </li>
-                  );
-                }}
-              />
-            ) : null}
-          </ProCard>
-        </Space>
-      )}
+        </RcResizeObserver>
+        <ProCard title="Directions" className={styles['desc']}>
+          {data?.recipeDirections.map((dir: any, index: number) => (
+            <div key={`ing-idx-${index}`}>{`Step ${
+              index + 1
+            }:${'\u00A0'}${'\u00A0'}${'\u00A0'}${dir}`}</div>
+          ))}
+        </ProCard>
+        <ProCard title="Comment">
+          {access.isLoggedin && (
+            <Comment
+              avatar={
+                <Avatar
+                  src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+                  alt="Han Solo"
+                />
+              }
+              content={<Editor onRefresh={refresh} />}
+            />
+          )}
+          {data?.reviews ? (
+            <List
+              className="comment-list"
+              header={`${data?.reviews?.length} repl${data?.reviews?.length > 1 ? 'ies' : 'y'}`}
+              itemLayout="horizontal"
+              dataSource={data?.reviews}
+              renderItem={(item: any, index: number) => {
+                return (
+                  <li>
+                    <Comment
+                      author={item.posterName}
+                      avatar={randAvatars[index]}
+                      content={item.reviewContent}
+                      // datetime={item.datetime}
+                    />
+                  </li>
+                );
+              }}
+            />
+          ) : null}
+        </ProCard>
+      </Space>
     </PageContainer>
   );
 }

@@ -1,10 +1,11 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
+import Cookies from 'universal-cookie';
 
 /** get_csrf_token GET /api/get_csrf_token */
 export async function getCsrfToken(options?: { [key: string]: any }) {
-  return request('/api/get_csrf_token/', {
+  return new Cookies().get('csrftoken') || request('/api/get_csrf_token/', {
     method: 'GET',
     ...(options || {}),
   });

@@ -26,10 +26,7 @@ export async function getInitialState(): Promise<{
   currentUser?: any;
   fetchUserInfo?: () => Promise<any>;
 }> {
-  const cookie = new Cookies();
-  if (!cookie.get('csrftoken')) {
-    await getCsrfToken();
-  }
+  await getCsrfToken();
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
