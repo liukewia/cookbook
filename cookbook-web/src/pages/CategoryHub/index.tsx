@@ -5,6 +5,7 @@ import { Link, useLocation, useRequest } from 'umi';
 import MultiClamp from 'react-multi-clamp';
 import { createElement, useState } from 'react';
 import { useAccess } from 'umi';
+import CenteredSpinner from '@/components/CenteredSpinner';
 
 export default function CategoryHub() {
   const { pathname } = useLocation();
@@ -41,32 +42,36 @@ export default function CategoryHub() {
         ) : null
       }
     >
-      <Space wrap size="middle">
-        {data?.recipes?.map((recipe: any) => (
-          <Link to={`/recipe/${recipe.recipeId}`} key={`recipe-${recipe.recipeId}`}>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img
-                  alt={`${recipe.recipeTitle} Picture`}
-                  src={recipe.recipeUrl}
-                  style={{ width: 240, height: 240, objectFit: 'cover' }}
-                />
-              }
-            >
-              <Card.Meta
-                title={recipe.recipeTitle}
-                description={
-                  <MultiClamp ellipsis="..." clamp={1}>
-                    {recipe.recipeDirection}
-                  </MultiClamp>
+      {data?.recipes ? (
+        <Space wrap size="middle">
+          {data?.recipes?.map((recipe: any) => (
+            <Link to={`/recipe/${recipe.recipeId}`} key={`recipe-${recipe.recipeId}`}>
+              <Card
+                hoverable
+                style={{ width: 240 }}
+                cover={
+                  <img
+                    alt={`${recipe.recipeTitle} Picture`}
+                    src={recipe.recipeUrl}
+                    style={{ width: 240, height: 240, objectFit: 'cover' }}
+                  />
                 }
-              />
-            </Card>
-          </Link>
-        ))}
-      </Space>
+              >
+                <Card.Meta
+                  title={recipe.recipeTitle}
+                  description={
+                    <MultiClamp ellipsis="..." clamp={1}>
+                      {recipe.recipeDirection}
+                    </MultiClamp>
+                  }
+                />
+              </Card>
+            </Link>
+          ))}
+        </Space>
+      ) : (
+        <CenteredSpinner />
+      )}
     </PageContainer>
   );
 }

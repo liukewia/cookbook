@@ -90,7 +90,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 // https://umijs.org/plugins/plugin-request#%E8%BF%90%E8%A1%8C%E6%97%B6%E9%85%8D%E7%BD%AE
 export const request: RequestConfig = {
   errorHandler: (err) => {
-    message.error(err.data?.data?.message || `${err.request?.options?.method} ${err.request?.url} Failed`);
+    console.log('err: ', JSON.stringify(err));
+    message.error(
+      err.data?.data?.message ||
+        (err.request?.options?.method &&
+          err.request?.url &&
+          `${err.request?.options?.method} ${err.request?.url} Failed`) ||
+        err.name,
+    );
   },
 };
 

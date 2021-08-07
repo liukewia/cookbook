@@ -3,12 +3,18 @@ import { Link, useRequest, useModel } from 'umi';
 import React from 'react';
 import styles from './index.less';
 import MultiClamp from 'react-multi-clamp';
+import CenteredSpinner from '@/components/CenteredSpinner';
 
 const Favourites: React.FC = () => {
   const { initialState } = useModel('@@initialState');
-  const { data: listData } = useRequest(
+  const { data: listData, loading } = useRequest(
     `/api/show_favourite_recipe/${initialState?.currentUser?.id}/`,
   );
+
+  if (loading) {
+    return <CenteredSpinner />;
+  }
+
   return (
     <List
       className={styles.coverCardList}
