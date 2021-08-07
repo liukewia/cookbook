@@ -23,6 +23,7 @@ urlpatterns = [
     path('user/getuserinfo/', views.get_user_info),
     path('user/update_password/', views.update_password),
     path('user/logout/', views.logout),
+    path('get_csrf_token/', views.get_csrf_token),
 
     re_path(r'^(?:.*)/?$', views.illegal_request_handler),
 ]

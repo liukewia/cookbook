@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
+from django.middleware import csrf
 from django.shortcuts import render
 
 from rango.models import Category, Recipe, FavouriteRecipe, Review, UserProfile
@@ -603,3 +604,8 @@ def bing_search(request):
         }
     }
     return JsonResponse(context_dict)
+
+
+def get_csrf_token(request):
+    token = csrf.get_token(request)
+    return JsonResponse({'token': token})

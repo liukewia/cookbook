@@ -4,7 +4,7 @@ import { request as umiRequest, RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import { queryCurrentUser } from './services/ant-design-pro/api';
+import { getCsrfToken, queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import Exception403Page from './pages/403';
 import { message } from 'antd';
@@ -26,6 +26,10 @@ export async function getInitialState(): Promise<{
   currentUser?: any;
   fetchUserInfo?: () => Promise<any>;
 }> {
+  const cookie = new Cookies();
+  if (!cookie.get('csrftoken')) {
+    await getCsrfToken();
+  }
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
@@ -102,12 +106,13 @@ export const request: RequestConfig = {
   requestInterceptors: [
     (url, options) => {
       const cookie = new Cookies();
-      if (options.headers) {
-        options.headers['X-CSRFToken'] = cookie.get('csrftoken');
+      const opt = options;
+      if (opt.headers && opt.method?.toLowerCase() === 'post' && cookie.get('csrftoken')) {
+        opt.headers['X-CSRFToken'] = cookie.get('csrftoken');
       }
       return {
         url,
-        options,
+        options: opt,
       };
     },
   ],

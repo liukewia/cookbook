@@ -2,6 +2,15 @@
 /* eslint-disable */
 import { request } from 'umi';
 
+/** get_csrf_token GET /api/get_csrf_token */
+export async function getCsrfToken(options?: { [key: string]: any }) {
+  return request('/api/get_csrf_token/', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+
 /** getuserinfo GET /api/getuserinfo */
 export async function queryCurrentUser(options?: { [key: string]: any }) {
   return request('/api/user/getuserinfo/', {
