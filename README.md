@@ -8,11 +8,22 @@
 
 进入首屏时使用服务端传回的食谱种类数据加载路由，并展示在顶栏，实现不依赖前端初始路由的动态菜单栏。
 
-借 webpack 能力将前端构建中的静态产物部署在子路由上，供后端识别; 首次加载时从服务端获取 CSRF token 并附在后 续 POST 请求头部，提高站点通信安全性。
+借 webpack 能力将前端构建中的静态产物部署在 /static/ 子路由上，供 django 后端识别; 首次加载时从服务端获取 CSRF token 并附在后 续 POST 请求头部，提高站点通信安全性。
 
 支持响应式布局，完全适配各类移动端浏览。
 
-前端构建产物部署时，将文件部署在 /static/ 子路由下，供 django 识别；
+按工业级标准设计前后端通信 JSON 格式。
+
+```js
+{
+  success: bool,
+  data: {
+    ...
+  }
+  code: number,
+  message: string,
+}
+```
 
 外部 Bing API 通过 django 后端来代理请求，再将 json response 返回前端。
 
@@ -22,10 +33,21 @@ Modify the permission logic. The permissions can be configured declaratively in 
 
 When entering the first screen, use the recipe type data returned by the server to load the route and display it on the top bar to realize a dynamic menu bar that does not rely on the initial route of the front end.
 
-With the help of webpack capabilities, the static products in the front-end construction are deployed on the sub-routes for the back-end identification; the CSRF token is obtained from the server at the first load and attached to the header of the subsequent POST request to improve site communication security.
+Use webpack capabilities to deploy the static products in the front-end construction on the /static/ sub-route for identification by the django back-end; obtain the CSRF token from the server when it is first loaded and attach it to the header of the subsequent POST request to improve site communication security.
 
 Support responsive layout, fully adapt to all kinds of mobile terminal browsing.
 
-When the front-end build product is deployed, the file is deployed under the /static/ sub-route for django to recognize;
+The front-end and back-end communication JSON format is designed according to industrial standards.
+
+```js
+{
+   success: bool,
+   data: {
+     ...
+   }
+   code: number,
+   message: string,
+}
+```
 
 The external Bing API proxy requests through the django backend, and then returns the json response to the frontend.
