@@ -132,7 +132,7 @@ const Login: React.FC = (props) => {
                     size: 'large',
                     prefix: <UserOutlined className={styles.prefixIcon} />,
                   }}
-                  placeholder={'username'}
+                  placeholder={'username (for demo, enter \'emily\')'}
                   rules={[
                     {
                       required: true,
@@ -146,7 +146,7 @@ const Login: React.FC = (props) => {
                     size: 'large',
                     prefix: <LockOutlined className={styles.prefixIcon} />,
                   }}
-                  placeholder={'password'}
+                  placeholder={'password (for demo, enter \'abcd3\')'}
                   rules={[
                     {
                       required: true,
