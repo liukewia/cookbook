@@ -27,7 +27,7 @@ export default (): React.ReactNode => {
                   >
                     <Space
                       size="large"
-                      style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      style={{ width: '100%', display: 'flex', alignItems: 'center' }}
                       direction={responsive ? 'vertical' : 'horizontal'}
                     >
                       <Image
